@@ -1,0 +1,32 @@
+{
+  "$schema": "./node_modules/oxfmt/configuration_schema.json",
+  "tabWidth": 2,
+  "useTabs": false,
+  "singleQuote": true,
+  "trailingComma": "none",
+  "semi": false,
+  "arrowParens": "avoid",
+  "endOfLine": "lf",
+  "printWidth": 100,
+  "sortPackageJson": false,
+  "ignorePatterns": [],
+  "sortImports": {
+    "newlinesBetween": true,
+    "ignoreCase": true,
+    "internalPattern": ["@/**", "@generated/**", "@app/**"],
+    "customGroups": [
+      {
+        "groupName": "generated",
+        "elementNamePattern": ["@generated/**", "@app/**"]
+      }
+    ],
+    "groups": [
+      "type-import",
+      ["value-builtin", "value-external"],
+      "generated",
+      "value-internal",
+      ["value-parent", "value-sibling", "value-index"],
+      "unknown"
+    ]
+  }
+}

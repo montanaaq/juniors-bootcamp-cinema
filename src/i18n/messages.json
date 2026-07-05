@@ -1,0 +1,10 @@
+{
+  "defaultLocale": "ru",
+  "messages": {
+    "ru": {
+      "hall.name.Blue": "Синий зал",
+      "hall.name.Green": "Зелёный зал",
+      "hall.name.Red": "Красный зал"
+    }
+  }
+}

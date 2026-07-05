@@ -1,0 +1,21 @@
+{
+  "editor.defaultFormatter": "oxc.oxc-vscode",
+  "editor.formatOnSave": true,
+  "editor.codeActionsOnSave": {
+    "source.fixAll.oxc": "explicit",
+    "source.fixAll.oxlint": "explicit"
+  },
+
+  "cSpell.words": [
+    "Bootcamp",
+    "imdb",
+    "juniorsbootcamp",
+    "kinopoisk",
+    "magicui",
+    "otps",
+    "pixelify",
+    "reactuse",
+    "siberiacancode",
+    "vercel"
+  ]
+}

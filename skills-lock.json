@@ -1,0 +1,17 @@
+{
+  "version": 1,
+  "skills": {
+    "migrate-to-vinext": {
+      "source": "cloudflare/vinext",
+      "sourceType": "github",
+      "skillPath": ".agents/skills/migrate-to-vinext/SKILL.md",
+      "computedHash": "e45fee21a0bd2f86d5b29291115b82a5e16bafd6a5f13371a9937e0ddae64388"
+    },
+    "reactuse": {
+      "source": "siberiacancode/agent-skills",
+      "sourceType": "github",
+      "skillPath": "skills/reactuse/SKILL.md",
+      "computedHash": "10492c058dee8e6207592791499088fdb5aa0e69401f02dd398f0952c57e19b0"
+    }
+  }
+}

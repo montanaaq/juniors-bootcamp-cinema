@@ -1,0 +1,25 @@
+commit-msg:
+  commands:
+    prepend-branch:
+      run: |
+        emoji=$(git config user.emoji || echo "🌶️")
+        branch=$(git symbolic-ref --short HEAD)
+        message=$(cat "{1}")
+
+        if echo "$message" | (! grep -q "^${branch} ${emoji}") &&\
+           echo "$message" | (! grep -q "^Merge branch") &&\
+           echo "$message" | (! grep -q "^Merge remote-tracking branch");\
+        then
+          echo "$branch $emoji $message" > "{1}"
+        fi
+
+pre-commit:
+  parallel: true
+  commands:
+    format:
+      glob: '*.{js,jsx,ts,tsx,json,css,scss,md}'
+      run: pnpm format
+      stage_fixed: true
+    lint:
+      glob: '*.{js,jsx,ts,tsx}'
+      run: pnpm lint
