@@ -2,6 +2,8 @@
 @import 'tw-animate-css';
 @import 'shadcn/tailwind.css';
 
+@custom-variant dark (&:where(.dark, .dark *));
+
 @theme inline {
   --text-*: initial;
   --radius-*: initial;
@@ -233,7 +235,7 @@
 
   /* Muted */
   --color-muted: var(--color-neutral-200);
-  --color-muted-fg: var(--color-neutral-600);
+  --color-muted-fg: var(--color-neutral-800);
 
   /* Surface */
   --color-surface: var(--color-neutral-700);
@@ -283,8 +285,62 @@
   --default-transition-duration: 300ms;
 }
 
+:root.dark {
+  /* Base - инверсия фона и текста */
+  --color-background: var(--color-neutral-900);
+  --color-foreground: var(--color-neutral-50);
+
+  /* Primary - светлая кнопка на тёмном фоне */
+  --color-primary: var(--color-neutral-100);
+  --color-primary-hover: var(--color-neutral-200);
+  --color-primary-fg: var(--color-neutral-900);
+
+  /* Secondary */
+  --color-secondary: var(--color-neutral-800);
+  --color-secondary-hover: var(--color-neutral-700);
+  --color-secondary-fg: var(--color-neutral-200);
+
+  /* Muted */
+  --color-muted: var(--color-neutral-700);
+  --color-muted-fg: var(--color-neutral-500);
+
+  /* Surface - более светлая поверхность */
+  --color-surface: var(--color-neutral-800);
+  --color-surface-fg: var(--color-neutral-200);
+
+  /* Borders & UI - более мягкие границы */
+  --color-border-hard: var(--color-neutral-300);
+  --color-border-soft: var(--color-neutral-500);
+  --color-input: var(--color-neutral-500);
+  --color-ring: var(--color-neutral-400);
+
+  /* Accent - чуть светлее для контраста на тёмном */
+  --color-accent-primary: var(--color-yellow-400);
+  --color-accent-primary-hover: var(--color-yellow-500);
+  --color-accent-primary-fg: var(--color-neutral-900);
+
+  --color-accent-secondary: var(--color-violet-400);
+  --color-accent-secondary-hover: var(--color-violet-500);
+  --color-accent-secondary-fg: var(--color-neutral-50);
+
+  --color-accent-tertiary: var(--color-orange-500);
+  --color-accent-tertiary-hover: var(--color-orange-600);
+  --color-accent-tertiary-fg: var(--color-neutral-50);
+
+  --color-accent-quaternary: var(--color-pink-500);
+  --color-accent-quaternary-hover: var(--color-pink-600);
+  --color-accent-quaternary-fg: var(--color-neutral-50);
+
+  /* Brand */
+  --color-brand-vercel: var(--color-white);
+  --color-brand-vercel-fg: var(--color-black);
+
+  /* Status - ярче для видимости */
+  --color-danger: var(--color-red-400);
+}
+
 @media (prefers-color-scheme: dark) {
-  :root {
+  :root:not(.light) {
     /* Base - инверсия фона и текста */
     --color-background: var(--color-neutral-900);
     --color-foreground: var(--color-neutral-50);
@@ -360,6 +416,15 @@
   }
 }
 
+html {
+  scrollbar-gutter: stable;
+}
+
 body {
   font-family: var(--font-nunito), var(--font-pixelify-sans), sans-serif;
+}
+
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
 }

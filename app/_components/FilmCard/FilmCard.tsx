@@ -1,6 +1,6 @@
 import type { FC } from 'react'
 
-import { Button } from '@/components/ui/button'
+import { Button } from '@/components/ui'
 import { cn } from '@/lib/utils'
 import Link from 'next/link'
 

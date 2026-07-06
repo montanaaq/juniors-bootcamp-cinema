@@ -2,11 +2,12 @@
 
 import type { FC } from 'react'
 
-import { Logo } from '@/components/shared/Logo'
-import { Button } from '@/components/ui/button'
-import { IconButton } from '@/components/ui/icon-button'
+import { Logo } from '@/components/shared'
+import { Button, IconButton } from '@/components/ui'
 import { LogOutIcon, TicketIcon, UserIcon } from 'lucide-react'
 import Link from 'next/link'
+
+import { ThemeToggle } from './components/ThemeToggle/ThemeToggle'
 
 const Header: FC = () => {
   return (
@@ -15,6 +16,7 @@ const Header: FC = () => {
         <Logo />
       </Link>
       <div className="flex items-center justify-center gap-4">
+        <ThemeToggle />
         <IconButton rounded variant="secondary">
           <TicketIcon size={16} />
         </IconButton>

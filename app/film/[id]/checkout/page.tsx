@@ -1,7 +1,7 @@
 import { getFilmByIdOrNotFound, getFilmScheduleById } from '@/lib/cinema-api.server'
 import { notFound } from 'next/navigation'
 
-import { CheckoutWizard } from './_components/CheckoutWizard'
+import { CheckoutWizard } from './_components/CheckoutWizard/CheckoutWizard'
 
 type CheckoutPageProps = {
   params: Promise<{ id: string }>

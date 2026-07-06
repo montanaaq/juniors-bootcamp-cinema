@@ -2,8 +2,7 @@
 
 import type { FC } from 'react'
 
-import { Button } from '@/components/ui/button'
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
+import { Button, Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui'
 import { XIcon } from 'lucide-react'
 import Link from 'next/link'
 import { useState } from 'react'

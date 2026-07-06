@@ -1,7 +1,7 @@
-import { FC } from 'react'
+import type { FC } from 'react'
 
 import ActorAvatar from '@app/_components/FilmCard/ActorAvatar/ActorAvatar'
-import { Film } from '@generated/api'
+import type { Film } from '@generated/api'
 
 type FilmAboutProps = {
   film: Film
@@ -21,7 +21,7 @@ const FilmAbout: FC<FilmAboutProps> = ({ film }) => {
         </span>
       </div>
       <h1 className="mt-3 font-extrabold text-3xl leading-8">{film.name}</h1>
-      <span className="mt-3 text-muted capitalize text-lg">{film.genres.join(', ')}</span>
+      <span className="text-muted-fg capitalize text-lg">{film.genres.join(', ')}</span>
       <p className="mt-3 text-base">{film.description}</p>
       {film.actors.length > 0 && (
         <div className="mt-6">
