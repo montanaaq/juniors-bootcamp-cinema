@@ -1,6 +1,6 @@
 {
   "$schema": "./node_modules/oxlint/configuration_schema.json",
-  "plugins": ["typescript", "unicorn", "oxc"],
+  "plugins": ["typescript", "unicorn", "oxc", "react", "nextjs"],
   "categories": {
     "correctness": "error"
   },
@@ -8,7 +8,40 @@
     "typescript/no-explicit-any": "off",
     "no-template-curly-in-string": "off",
     "no-console": "warn",
-    "no-debugger": "error"
+    "no-debugger": "error",
+
+    "react/rules-of-hooks": "error",
+    "react/exhaustive-deps": "off",
+    "react/jsx-key": "error",
+    "react/jsx-no-duplicate-props": "error",
+    "react/jsx-no-undef": "error",
+    "react/no-direct-mutation-state": "error",
+    "react/no-children-prop": "error",
+    "react/no-danger-with-children": "error",
+    "react/jsx-no-target-blank": "error",
+    "react/prefer-function-component": "error",
+    "react/forward-ref-uses-ref": "warn",
+    "react/no-unknown-property": "error",
+
+    "nextjs/no-img-element": "off",
+    "nextjs/no-html-link-for-pages": "error",
+    "nextjs/no-head-element": "error",
+    "nextjs/no-document-import-in-page": "error",
+    "nextjs/no-head-import-in-document": "error",
+    "nextjs/no-title-in-document-head": "error",
+    "nextjs/no-script-component-in-head": "error",
+    "nextjs/no-styled-jsx-in-document": "error",
+    "nextjs/no-css-tags": "error",
+    "nextjs/no-sync-scripts": "error",
+    "nextjs/no-before-interactive-script-outside-document": "error",
+    "nextjs/inline-script-id": "error",
+    "nextjs/no-typos": "warn",
+    "nextjs/no-assign-module-variable": "error",
+    "nextjs/no-async-client-component": "error",
+    "nextjs/no-duplicate-head": "error",
+    "nextjs/google-font-display": "warn",
+    "nextjs/google-font-preconnect": "warn",
+    "nextjs/next-script-for-ga": "warn"
   },
   "env": {
     "builtin": true
