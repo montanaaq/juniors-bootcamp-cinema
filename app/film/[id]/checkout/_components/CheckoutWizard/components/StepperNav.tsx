@@ -3,51 +3,67 @@
 import {
   Breadcrumb,
   BreadcrumbItem,
+  BreadcrumbLink,
   BreadcrumbList,
   BreadcrumbPage,
   BreadcrumbSeparator
 } from '@/components/ui'
+import { HomeIcon } from 'lucide-react'
+import Link from 'next/link'
 import { Fragment } from 'react'
 
-const steps = [
-  { id: 1, label: 'Выбор места' },
-  { id: 2, label: 'Информация о билетах' },
-  { id: 3, label: 'Ваши данные' },
-  { id: 4, label: 'Карта для оплаты' }
-]
+import { STEPS } from '../const/steps.const'
 
-type StepperNavProps = {
+interface StepperNavProps {
   stepId: number
+  onStepChange: (step: number) => void
 }
 
-export const StepperNav = ({ stepId }: StepperNavProps) => {
-  const currentStepTitle = steps.find(step => step.id === stepId)?.label
-  const visibleSteps = steps.filter(step => step.id <= stepId)
+export const StepperNav = ({ stepId, onStepChange }: StepperNavProps) => {
+  const currentStepTitle = STEPS.find(step => step.id === stepId)?.label
+  const visibleSTEPS = STEPS.filter(step => step.id <= stepId)
 
   return (
-    <div className="flex flex-col gap-3">
+    <div className="flex flex-col">
       <Breadcrumb>
         <BreadcrumbList>
-          {visibleSteps.map((step, index) => (
+          <BreadcrumbItem>
+            <Link href="/">
+              <HomeIcon size={20} strokeWidth={1.5} />
+            </Link>
+          </BreadcrumbItem>
+          <BreadcrumbSeparator />
+          {visibleSTEPS.map((step, index) => (
             <Fragment key={step.id}>
-              <BreadcrumbItem>
+              <BreadcrumbItem className="text-base">
                 {step.id === stepId ? (
-                  <BreadcrumbPage>{step.label}</BreadcrumbPage>
+                  <BreadcrumbPage className="text-primary">{step.label}</BreadcrumbPage>
                 ) : (
-                  <span>{step.label}</span>
+                  <BreadcrumbLink asChild>
+                    <button
+                      type="button"
+                      className="bg-transparent p-0"
+                      onClick={() => onStepChange(step.id)}
+                    >
+                      {step.label}
+                    </button>
+                  </BreadcrumbLink>
                 )}
               </BreadcrumbItem>
-              {index < visibleSteps.length - 1 && <BreadcrumbSeparator />}
+              {index < visibleSTEPS.length - 1 && <BreadcrumbSeparator />}
             </Fragment>
           ))}
         </BreadcrumbList>
       </Breadcrumb>
 
-      <div className="flex flex-col gap-1">
+      <div className="flex flex-col gap-6 mt-6">
         <h1 className="text-3xl font-extrabold">{currentStepTitle}</h1>
-        <p className="text-sm font-bold text-muted-fg">
-          Шаг {stepId} из {steps.length}
-        </p>
+        <div>
+          <p className="text-base font-semibold text-muted-fg">
+            Шаг {stepId} из {STEPS.length}
+          </p>
+          <progress value={stepId} max={STEPS.length} className="stepper-progress-bar"></progress>
+        </div>
       </div>
     </div>
   )

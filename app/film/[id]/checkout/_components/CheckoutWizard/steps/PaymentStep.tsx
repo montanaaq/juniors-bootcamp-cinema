@@ -6,7 +6,7 @@ import { useForm } from 'react-hook-form'
 
 import { type DebitCardFormValues, debitCardSchema } from '../schemas/schemas'
 
-type PaymentStepProps = {
+interface PaymentStepProps {
   totalPrice: number
   defaultValues?: Partial<DebitCardFormValues>
   onSubmit: (values: DebitCardFormValues) => void

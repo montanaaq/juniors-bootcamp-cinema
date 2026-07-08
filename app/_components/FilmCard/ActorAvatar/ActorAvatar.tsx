@@ -2,7 +2,7 @@ import type { FC } from 'react'
 
 import type { FilmStaff } from '@generated/api'
 
-type ActorAvatarProps = {
+interface ActorAvatarProps {
   actor: FilmStaff
 }
 

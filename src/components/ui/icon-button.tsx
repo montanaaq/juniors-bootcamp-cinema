@@ -36,6 +36,11 @@ const iconButtonVariants = cva(
   }
 )
 
+interface IconButtonProps
+  extends ComponentProps<'button'>, VariantProps<typeof iconButtonVariants> {
+  asChild?: boolean
+}
+
 const IconButton = ({
   className,
   variant = 'primary',
@@ -43,10 +48,7 @@ const IconButton = ({
   rounded = false,
   asChild = false,
   ...props
-}: ComponentProps<'button'> &
-  VariantProps<typeof iconButtonVariants> & {
-    asChild?: boolean
-  }) => {
+}: IconButtonProps) => {
   const Comp = asChild ? Slot.Root : 'button'
 
   return (

@@ -3,7 +3,7 @@ import { getFilmByIdOrNotFound, getFilmScheduleById } from '@/lib/cinema-api.ser
 import FilmAbout from './_components/FilmAbout/FilmAbout'
 import { ScheduleBlock } from './_components/ScheduleBlock/ScheduleBlock'
 
-type FilmPageProps = {
+interface FilmPageProps {
   params: Promise<{ id: string }>
 }
 

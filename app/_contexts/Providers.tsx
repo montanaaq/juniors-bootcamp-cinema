@@ -6,7 +6,7 @@ import { IntlProvider } from 'react-intl'
 
 import { ThemeProvider } from './theme/ThemeProvider'
 
-type ProvidersProps = {
+interface ProvidersProps {
   children: ReactNode
   defaultLocale: string
   locale: string

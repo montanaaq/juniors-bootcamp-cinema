@@ -2,7 +2,7 @@
 
 import { cn } from '@/lib/utils'
 
-type TextFieldProps = React.ComponentProps<'input'> & {
+interface TextFieldProps extends React.ComponentProps<'input'> {
   label: string
   error?: string
 }

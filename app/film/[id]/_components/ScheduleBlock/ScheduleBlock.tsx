@@ -13,7 +13,7 @@ import type { FilmSchedule, SelectedSlot } from '@generated/api'
 import { ScheduleNotFound } from './NotFound'
 import { formatScheduleDate, groupSeancesByHall } from './utils'
 
-type FilmScheduleProps = {
+interface FilmScheduleProps {
   filmId: string
   filmSchedule: FilmSchedule[]
 }

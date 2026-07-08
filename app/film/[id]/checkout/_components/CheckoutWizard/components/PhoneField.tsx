@@ -5,7 +5,7 @@ import { useMask } from '@siberiacancode/reactuse'
 import { useEffect } from 'react'
 import { useController, type Control } from 'react-hook-form'
 
-type PhoneFieldProps = {
+interface PhoneFieldProps {
   control: Control<PersonFormValues>
   defaultValue?: string
   error?: string

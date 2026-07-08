@@ -7,7 +7,7 @@ import { useForm } from 'react-hook-form'
 import PhoneField from '../components/PhoneField'
 import { personSchema, type PersonFormValues } from '../schemas/schemas'
 
-type PersonStepProps = {
+interface PersonStepProps {
   defaultValues?: Partial<PersonFormValues>
   onSubmit: (values: PersonFormValues) => void
 }

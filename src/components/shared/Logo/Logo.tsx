@@ -2,7 +2,10 @@ import type { ComponentProps } from 'react'
 
 import Image from 'next/image'
 
-export type LogoProps = Omit<ComponentProps<typeof Image>, 'alt' | 'height' | 'src' | 'width'>
+export interface LogoProps extends Omit<
+  ComponentProps<typeof Image>,
+  'alt' | 'height' | 'src' | 'width'
+> {}
 
 export const Logo = ({ className, ...props }: LogoProps) => {
   return (

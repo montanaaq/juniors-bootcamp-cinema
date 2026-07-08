@@ -28,17 +28,17 @@ export const useCheckoutWizard = (
 
   const totalPrice = tickets.length * 350
 
-  const handleSeatsNext = (nextTickets: Ticket[]) => {
+  const onSeatsNext = (nextTickets: Ticket[]) => {
     setTickets(nextTickets)
     stepper.next()
   }
 
-  const handlePersonSubmit = (values: PersonFormValues) => {
+  const onPersonSubmit = (values: PersonFormValues) => {
     setPerson(values)
     stepper.next()
   }
 
-  const handlePaymentSubmit = async (values: DebitCardFormValues) => {
+  const onPaymentSubmit = async (values: DebitCardFormValues) => {
     if (!person) return
 
     await paymentMutation.mutateAsync({
@@ -68,8 +68,8 @@ export const useCheckoutWizard = (
     totalPrice,
     paymentMutation,
     paymentError,
-    handleSeatsNext,
-    handlePersonSubmit,
-    handlePaymentSubmit
+    onSeatsNext,
+    onPersonSubmit,
+    onPaymentSubmit
   }
 }

@@ -3,7 +3,7 @@ import { notFound } from 'next/navigation'
 
 import { CheckoutWizard } from './_components/CheckoutWizard/CheckoutWizard'
 
-type CheckoutPageProps = {
+interface CheckoutPageProps {
   params: Promise<{ id: string }>
   searchParams: Promise<{
     date?: string

@@ -1,23 +1,58 @@
 'use client'
 
 import { Button } from '@/components/ui'
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui'
 import { cn } from '@/lib/utils'
-import { useState } from 'react'
+import { TicketIcon, XIcon } from 'lucide-react'
+import Link from 'next/link'
+import { useState, type CSSProperties } from 'react'
+import { useIntl } from 'react-intl'
 
-import type { FilmScheduleSeance } from '@generated/api'
+import type { CreatePaymentTicketsDto, FilmScheduleSeance, Seat } from '@generated/api'
 
-type Ticket = { row: number; column: number }
+import CheckoutSummaryCard from '../components/CheckoutSummaryCard'
+import SummaryField from '../components/SummaryField'
+import { HELP_LABELS } from '../const/help-labels.const'
+import { formatDate } from '../utils/format-date'
 
-type SeatsStepProps = {
+interface SeatsStepProps {
+  filmName: string
+  selectedDate: string
+  selectedSlot: FilmScheduleSeance
+  filmId: string
   hall: FilmScheduleSeance['hall']
-  initialTickets: Ticket[]
-  onSubmit: (tickets: Ticket[]) => void
+  initialTickets: CreatePaymentTicketsDto[]
+  onSubmit: (tickets: CreatePaymentTicketsDto[]) => void
 }
 
-export const SeatsStep = ({ hall, initialTickets, onSubmit }: SeatsStepProps) => {
-  const [tickets, setTickets] = useState<Ticket[]>(initialTickets)
+type SummaryItem = {
+  label: string
+  value: string
+}
 
-  const toggleTicket = (ticket: Ticket) => {
+export const SeatsStep = ({
+  filmName,
+  selectedDate,
+  selectedSlot,
+  filmId,
+  hall,
+  initialTickets,
+  onSubmit
+}: SeatsStepProps) => {
+  const intl = useIntl()
+  const [tickets, setTickets] = useState<CreatePaymentTicketsDto[]>(initialTickets)
+  const selectedSeatsLabel = tickets
+    .map(ticket => `${ticket.row} ряд, ${ticket.column} место`)
+    .join(', ')
+  const summaryItems: SummaryItem[] = [
+    { label: 'Количество билетов', value: String(tickets.length) },
+    { label: 'Фильм', value: filmName },
+    { label: 'Дата и время', value: `${formatDate(selectedDate)}, ${selectedSlot.time}` },
+    { label: 'Зал', value: intl.formatMessage({ id: `hall.name.${hall.name}` }) },
+    { label: 'Места', value: selectedSeatsLabel || 'Места не выбраны' }
+  ]
+
+  const toggleTicket = (ticket: CreatePaymentTicketsDto) => {
     setTickets(currentTickets => {
       const exists = currentTickets.some(
         currentTicket => currentTicket.row === ticket.row && currentTicket.column === ticket.column
@@ -34,51 +69,112 @@ export const SeatsStep = ({ hall, initialTickets, onSubmit }: SeatsStepProps) =>
     })
   }
 
-  const isSelected = (ticket: Ticket) =>
-    tickets.some(
+  const findTicket = (ticket: Pick<CreatePaymentTicketsDto, 'row' | 'column'>) =>
+    tickets.find(
       currentTicket => currentTicket.row === ticket.row && currentTicket.column === ticket.column
     )
 
   return (
-    <div className="flex flex-col gap-6">
-      <div className="mx-auto h-3 w-3/4 rounded-full bg-muted" />
+    <div className="flex gap-4">
+      <div className="w-[60%] flex gap-6 flex-col py-6">
+        <TooltipProvider>
+          <div className="flex flex-col gap-3 overflow-x-auto w-fit">
+            <div className="flex min-w-max items-center">
+              <span className="w-8 font-semibold text-muted-fg">Ряд</span>
+            </div>
+            {hall.places.map((row, rowIndex) => (
+              <div
+                key={rowIndex}
+                style={{ '--seats': row.length } as CSSProperties}
+                className="flex min-w-max items-center gap-[clamp(0.75rem,calc(1.875rem-var(--seats)*0.075rem),1.5rem)]"
+              >
+                <span className="w-8 font-semibold text-muted-fg">{rowIndex + 1}</span>
+                {(row as Seat[]).map((seat, columnIndex) => {
+                  const base = { row: rowIndex + 1, column: columnIndex + 1 }
+                  const selected = findTicket(base)
+                  const isBlocked = seat.type === 'blocked'
+                  const price = seat.price
 
-      <div className="flex flex-col gap-2 overflow-x-auto">
-        {hall.places.map((row, rowIndex) => (
-          <div key={rowIndex} className="flex min-w-max items-center gap-2">
-            <span className="w-8 text-sm font-bold text-muted-fg">{rowIndex + 1}</span>
-            {row.map((_, columnIndex) => {
-              const ticket = { row: rowIndex + 1, column: columnIndex + 1 }
-
-              return (
-                <button
-                  key={columnIndex}
-                  type="button"
-                  aria-pressed={isSelected(ticket)}
-                  aria-label={`${ticket.row} ряд, ${ticket.column} место`}
-                  onClick={() => toggleTicket(ticket)}
-                  className={cn(
-                    'flex size-10 items-center justify-center rounded-8 border border-ring text-sm font-extrabold transition hover:border-border-hard',
-                    isSelected(ticket) && 'bg-primary text-primary-fg'
-                  )}
-                >
-                  {columnIndex + 1}
-                </button>
-              )
-            })}
+                  return (
+                    <Tooltip key={columnIndex} open={!!selected}>
+                      <TooltipTrigger asChild>
+                        <button
+                          type="button"
+                          disabled={isBlocked}
+                          aria-pressed={!!selected}
+                          aria-label={`${base.row} ряд, ${base.column} место, ${price} рублей`}
+                          onClick={() => toggleTicket(base)}
+                          className={cn(
+                            'size-5 rounded-4 border border-seat-available bg-seat-available transition hover:border-seat-available-hover',
+                            !!selected && 'border-seat-selected-border bg-seat-selected',
+                            isBlocked &&
+                              'cursor-not-allowed border-transparent bg-seat-blocked hover:border-transparent'
+                          )}
+                        >
+                          <span className="sr-only">
+                            {base.row} ряд, {base.column} место
+                          </span>
+                        </button>
+                      </TooltipTrigger>
+                      <TooltipContent className="flex items-center gap-2 px-3 py-2 rounded-12">
+                        <div className="flex flex-col gap-0.5">
+                          <div className="flex justify-between items-center h-full">
+                            <span className="text-base">{price} ₽</span>
+                            <button
+                              type="button"
+                              aria-label="Убрать место"
+                              onClick={e => {
+                                e.stopPropagation()
+                                toggleTicket(base)
+                              }}
+                              className="shrink-0 rounded-full p-0.5 opacity-70 hover:opacity-100"
+                            >
+                              <XIcon className="size-5" />
+                            </button>
+                          </div>
+                          <span className="text-sm text-surface">
+                            {base.row} ряд, {base.column} место
+                          </span>
+                        </div>
+                      </TooltipContent>
+                    </Tooltip>
+                  )
+                })}
+              </div>
+            ))}
+            <div className="flex items-center justify-around mt-3">
+              {HELP_LABELS.map(el => (
+                <div key={`${el.color}-${el.label}`} className="flex items-center gap-2">
+                  <div className={`bg-${el.color} size-5 rounded-4`}></div>
+                  <span>{el.label}</span>
+                </div>
+              ))}
+            </div>
           </div>
-        ))}
+        </TooltipProvider>
+        <div className="grid grid-cols-2 gap-4">
+          <Button variant="secondary" size="lg" asChild className="w-full">
+            <Link href={`/film/${filmId}`} prefetch="auto">
+              Назад
+            </Link>
+          </Button>
+          <Button
+            type="button"
+            size="lg"
+            disabled={tickets.length === 0}
+            onClick={() => onSubmit(tickets)}
+            className="w-full"
+          >
+            Продолжить
+          </Button>
+        </div>
       </div>
 
-      <Button
-        type="button"
-        size="lg"
-        className="w-fit self-end"
-        disabled={tickets.length === 0}
-        onClick={() => onSubmit(tickets)}
-      >
-        Продолжить
-      </Button>
+      <CheckoutSummaryCard title="Ваши билеты" icon={<TicketIcon color="white" size={24} />}>
+        {summaryItems.map(item => (
+          <SummaryField key={item.label} label={item.label} value={item.value} />
+        ))}
+      </CheckoutSummaryCard>
     </div>
   )
 }

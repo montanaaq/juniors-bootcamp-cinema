@@ -6,13 +6,13 @@ import Link from 'next/link'
 import type { Film, FilmScheduleSeance } from '@generated/api'
 
 import { StepperNav } from './components/StepperNav'
-import { PaymentStep, PAYMENT_STEP_FORM_ID } from './steps/PaymentStep'
-import { PersonStep, PERSON_STEP_FORM_ID } from './steps/PersonStep'
+import { PaymentStep } from './steps/PaymentStep'
+import { PersonStep } from './steps/PersonStep'
 import { SeatsStep } from './steps/SeatsStep'
 import { TicketsSummaryStep } from './steps/TicketsSummaryStep'
 import { useCheckoutWizard } from './useCheckoutWizard'
 
-type CheckoutWizardProps = {
+interface CheckoutWizardProps {
   film: Film
   selectedDate: string
   selectedSlot: FilmScheduleSeance
@@ -25,9 +25,9 @@ export const CheckoutWizard = ({ film, selectedDate, selectedSlot }: CheckoutWiz
     totalPrice,
     paymentMutation,
     paymentError,
-    handleSeatsNext,
-    handlePersonSubmit,
-    handlePaymentSubmit
+    onSeatsNext,
+    onPersonSubmit,
+    onPaymentSubmit
   } = useCheckoutWizard(film, selectedDate, selectedSlot)
 
   if (paymentMutation.data?.success) {
@@ -46,55 +46,33 @@ export const CheckoutWizard = ({ film, selectedDate, selectedSlot }: CheckoutWiz
 
   return (
     <section className="mx-auto flex w-full max-w-5xl flex-col gap-8">
-      <StepperNav stepId={stepper.currentStep} />
+      <StepperNav stepId={stepper.currentStep} onStepChange={stepper.set} />
 
-      <div className="rounded-16 border border-ring bg-background p-4 sm:p-6">
-        {stepper.currentStep === 1 && (
-          <SeatsStep hall={selectedSlot.hall} initialTickets={tickets} onSubmit={handleSeatsNext} />
-        )}
-        {stepper.currentStep === 2 && (
-          <TicketsSummaryStep
-            film={film}
-            selectedDate={selectedDate}
-            selectedSlot={selectedSlot}
-            tickets={tickets}
-            totalPrice={totalPrice}
-          />
-        )}
-        {stepper.currentStep === 3 && <PersonStep onSubmit={handlePersonSubmit} />}
-        {stepper.currentStep === 4 && (
-          <PaymentStep totalPrice={totalPrice} onSubmit={handlePaymentSubmit} />
-        )}
-      </div>
-
+      {stepper.currentStep === 1 && (
+        <SeatsStep
+          filmName={film.name}
+          selectedDate={selectedDate}
+          selectedSlot={selectedSlot}
+          filmId={film.id}
+          hall={selectedSlot.hall}
+          initialTickets={tickets}
+          onSubmit={onSeatsNext}
+        />
+      )}
+      {stepper.currentStep === 2 && (
+        <TicketsSummaryStep
+          film={film}
+          selectedDate={selectedDate}
+          selectedSlot={selectedSlot}
+          tickets={tickets}
+          totalPrice={totalPrice}
+        />
+      )}
+      {stepper.currentStep === 3 && <PersonStep onSubmit={onPersonSubmit} />}
+      {stepper.currentStep === 4 && (
+        <PaymentStep totalPrice={totalPrice} onSubmit={onPaymentSubmit} />
+      )}
       {paymentError && <p className="text-danger">{paymentError}</p>}
-
-      <div className="flex flex-wrap justify-between gap-3">
-        <Button variant="secondary" size="lg" disabled={stepper.isFirst} onClick={stepper.back}>
-          Назад
-        </Button>
-
-        {stepper.currentStep === 3 && (
-          <Button type="submit" form={PERSON_STEP_FORM_ID} size="lg">
-            Продолжить
-          </Button>
-        )}
-        {stepper.currentStep === 4 && (
-          <Button
-            type="submit"
-            form={PAYMENT_STEP_FORM_ID}
-            size="lg"
-            disabled={paymentMutation.isLoading}
-          >
-            {paymentMutation.isLoading ? 'Оплата...' : 'Оплатить'}
-          </Button>
-        )}
-        {stepper.currentStep === 2 && (
-          <Button size="lg" onClick={stepper.next}>
-            Продолжить
-          </Button>
-        )}
-      </div>
     </section>
   )
 }

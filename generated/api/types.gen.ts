@@ -306,6 +306,8 @@ export type FilmSchedule = {
   seances: Array<FilmScheduleSeance>
 }
 
+export type Seat = { price: number; type: string }
+
 export type ScheduleResponse = {
   /**
    * Статус запроса

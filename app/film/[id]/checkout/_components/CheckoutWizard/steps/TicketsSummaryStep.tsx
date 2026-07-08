@@ -8,12 +8,17 @@ import { formatDate } from '../utils/format-date'
 
 type Ticket = { row: number; column: number }
 
-type TicketsSummaryStepProps = {
+interface TicketsSummaryStepProps {
   film: Film
   selectedDate: string
   selectedSlot: FilmScheduleSeance
   tickets: Ticket[]
   totalPrice: number
+}
+
+interface SummaryItemProps {
+  label: string
+  value: string
 }
 
 export const TicketsSummaryStep = ({
@@ -46,7 +51,7 @@ export const TicketsSummaryStep = ({
   )
 }
 
-const SummaryItem = ({ label, value }: { label: string; value: string }) => (
+const SummaryItem = ({ label, value }: SummaryItemProps) => (
   <div className="rounded-12 bg-secondary p-4">
     <span className="block text-sm text-muted-fg">{label}</span>
     <strong>{value}</strong>

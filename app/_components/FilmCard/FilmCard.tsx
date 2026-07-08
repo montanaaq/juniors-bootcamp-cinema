@@ -8,7 +8,7 @@ import type { Film } from '@generated/api'
 
 import ActorAvatar from './ActorAvatar/ActorAvatar'
 
-type FilmCardProps = {
+interface FilmCardProps {
   film: Film
   isFeatured?: boolean
 }

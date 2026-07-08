@@ -3,7 +3,7 @@ import type { FC } from 'react'
 import ActorAvatar from '@app/_components/FilmCard/ActorAvatar/ActorAvatar'
 import type { Film } from '@generated/api'
 
-type FilmAboutProps = {
+interface FilmAboutProps {
   film: Film
 }
 
