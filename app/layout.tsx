@@ -39,7 +39,7 @@ export default function RootLayout({
       className={cn('h-full', 'antialiased', nunito.variable, pixelifySans.variable, 'font-sans')}
     >
       <head>
-        <link href="/public/favicon.ico" rel="icon" sizes="any" />
+        <link href="/favicon.ico" rel="icon" sizes="any" />
         <meta content="noindex, nofollow" name="robots" />
       </head>
       <body className="flex flex-1 flex-col px-4 py-8 sm:px-8 lg:px-16 lg:py-12 xl:px-30 xl:py-16">
