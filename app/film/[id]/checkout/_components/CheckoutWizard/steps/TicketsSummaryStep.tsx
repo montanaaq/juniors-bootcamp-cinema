@@ -2,6 +2,7 @@
 
 import type { FC } from 'react'
 
+import { Button } from '@/components/ui'
 import { useIntl } from 'react-intl'
 
 import type { CreatePaymentTicketsDto, Film, FilmScheduleSeance, Seat } from '@generated/api'
@@ -16,6 +17,8 @@ interface TicketsSummaryStepProps {
   tickets: CreatePaymentTicketsDto[]
   seats: Seat[]
   totalPrice: number
+  onNext: () => void
+  onBack: () => void
 }
 
 export const TicketsSummaryStep: FC<TicketsSummaryStepProps> = ({
@@ -23,7 +26,9 @@ export const TicketsSummaryStep: FC<TicketsSummaryStepProps> = ({
   selectedDate,
   selectedSlot,
   tickets,
-  totalPrice
+  totalPrice,
+  onNext,
+  onBack
 }) => {
   const intl = useIntl()
 
@@ -43,6 +48,14 @@ export const TicketsSummaryStep: FC<TicketsSummaryStepProps> = ({
       />
       <SummaryField label="Места" value={formatSelectedSeatsLabel(tickets)} />
       <p className="text-3xl font-bold">Сумма: {totalPrice} ₽</p>
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+        <Button variant="secondary" size="lg" className="w-full" onClick={onBack}>
+          Назад
+        </Button>
+        <Button type="button" size="lg" onClick={onNext} className="w-full">
+          Купить билеты
+        </Button>
+      </div>
     </div>
   )
 }

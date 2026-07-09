@@ -68,6 +68,8 @@ export const CheckoutWizard = ({ film, selectedDate, selectedSlot }: CheckoutWiz
           tickets={tickets}
           seats={selectedSeats}
           totalPrice={totalPrice}
+          onNext={stepper.next}
+          onBack={stepper.back}
         />
       )}
       {stepper.currentStep === 3 && <PersonStep onSubmit={onPersonSubmit} />}
