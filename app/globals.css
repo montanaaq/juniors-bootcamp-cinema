@@ -243,7 +243,7 @@
 
   /* Muted */
   --color-muted: var(--color-neutral-200);
-  --color-muted-fg: var(--color-neutral-800);
+  --color-muted-fg: var(--color-neutral-700);
 
   /* Surface */
   --color-surface: var(--color-neutral-700);

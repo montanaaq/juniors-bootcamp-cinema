@@ -70,8 +70,8 @@ export const SeatsStep = ({
     { label: 'Итого', value: `${totalPrice} ₽` }
   ]
   return (
-    <div className="flex gap-4">
-      <div className="w-[60%] flex gap-6 flex-col py-6">
+    <div className="flex justify-between gap-4">
+      <div className="w-[55%] flex gap-6 flex-col py-6">
         <TooltipProvider>
           <div className="flex flex-col gap-3 overflow-x-auto w-fit">
             <div className="flex min-w-max items-center">

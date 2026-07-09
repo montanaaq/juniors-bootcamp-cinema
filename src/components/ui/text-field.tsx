@@ -8,11 +8,11 @@ interface TextFieldProps extends React.ComponentProps<'input'> {
 }
 
 const fieldClassName =
-  'h-12 w-full rounded-12 border border-input bg-background px-4 text-base outline-none transition focus:border-border-hard focus:ring-3 focus:ring-ring/50'
+  'h-12 w-full rounded-full border border-input bg-background px-4 text-base outline-none transition focus:border-border-hard focus:ring-3 focus:ring-ring/50'
 
 export const TextField = ({ label, error, className, ...props }: TextFieldProps) => (
   <label className="flex flex-col gap-2">
-    <span>{label}</span>
+    <span className="text-foreground font-medium">{label}</span>
     <input className={cn(fieldClassName, error && 'border-danger', className)} {...props} />
     {error && <span className="text-sm text-danger">{error}</span>}
   </label>

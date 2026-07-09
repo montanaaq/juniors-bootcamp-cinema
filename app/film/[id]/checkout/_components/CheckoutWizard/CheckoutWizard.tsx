@@ -72,7 +72,7 @@ export const CheckoutWizard = ({ film, selectedDate, selectedSlot }: CheckoutWiz
           onBack={stepper.back}
         />
       )}
-      {stepper.currentStep === 3 && <PersonStep onSubmit={onPersonSubmit} />}
+      {stepper.currentStep === 3 && <PersonStep onSubmit={onPersonSubmit} onBack={stepper.back} />}
       {stepper.currentStep === 4 && (
         <PaymentStep totalPrice={totalPrice} onSubmit={onPaymentSubmit} />
       )}

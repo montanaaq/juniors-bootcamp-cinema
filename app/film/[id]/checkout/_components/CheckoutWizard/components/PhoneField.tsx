@@ -22,7 +22,7 @@ const PhoneField: FC<PhoneFieldProps> = ({ control, defaultValue, error }) => {
 
   const phoneMask = useMask(RU_PHONE_MASK, {
     showMask: 'never',
-    initialValue: defaultValue ?? '+7 ',
+    initialValue: defaultValue,
     beforeMaskedChange: ({ nextState }) => ({
       ...nextState,
       selection: { start: nextState.value.length, end: nextState.value.length }
