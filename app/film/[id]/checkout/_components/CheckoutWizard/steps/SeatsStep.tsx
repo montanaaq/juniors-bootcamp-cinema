@@ -8,9 +8,8 @@ import Link from 'next/link'
 import { useState, type CSSProperties } from 'react'
 import { useIntl } from 'react-intl'
 
-import type { CreatePaymentTicketsDto, FilmScheduleSeance, Seat } from '@generated/api'
+import type { CreatePaymentTicketsDto, FilmHall, FilmScheduleSeance, Seat } from '@generated/api'
 
-import CheckoutSummaryCard from '../components/CheckoutSummaryCard'
 import SummaryField from '../components/SummaryField'
 import { HELP_LABELS } from '../const/help-labels.const'
 import { formatDate } from '../utils/format-date'
@@ -20,7 +19,7 @@ interface SeatsStepProps {
   selectedDate: string
   selectedSlot: FilmScheduleSeance
   filmId: string
-  hall: FilmScheduleSeance['hall']
+  hall: FilmHall
   initialTickets: CreatePaymentTicketsDto[]
   onSubmit: (tickets: CreatePaymentTicketsDto[]) => void
 }
@@ -161,7 +160,7 @@ export const SeatsStep = ({
           <Button
             type="button"
             size="lg"
-            disabled={tickets.length === 0}
+            disabled={!tickets.length}
             onClick={() => onSubmit(tickets)}
             className="w-full"
           >
@@ -169,12 +168,17 @@ export const SeatsStep = ({
           </Button>
         </div>
       </div>
-
-      <CheckoutSummaryCard title="Ваши билеты" icon={<TicketIcon color="white" size={24} />}>
+      <div className="w-[40%] flex flex-col gap-4 bg-secondary rounded-24 px-10 py-6 h-fit">
+        <div className="flex items-center justify-between mb-2">
+          <h1 className="font-bold text-2xl">Ваши билеты</h1>
+          <div className="flex items-center justify-center bg-accent-quaternary size-12 rounded-full">
+            <TicketIcon color="white" size={24} />
+          </div>
+        </div>
         {summaryItems.map(item => (
           <SummaryField key={item.label} label={item.label} value={item.value} />
         ))}
-      </CheckoutSummaryCard>
+      </div>
     </div>
   )
 }
