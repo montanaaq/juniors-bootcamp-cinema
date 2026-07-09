@@ -2,7 +2,7 @@ import type { PersonFormValues } from '../schemas/schemas'
 
 import { TextField } from '@/components/ui'
 import { useMask } from '@siberiacancode/reactuse'
-import { useEffect } from 'react'
+import { useEffect, type FC } from 'react'
 import { useController, type Control } from 'react-hook-form'
 
 interface PhoneFieldProps {
@@ -11,18 +11,18 @@ interface PhoneFieldProps {
   error?: string
 }
 
-const RU_PHONE_MASK = '+9 (999) 999-99-99'
+const RU_PHONE_MASK = '+7 (999) 999-99-99'
 
-const PhoneField = ({ control, defaultValue, error }: PhoneFieldProps) => {
+const PhoneField: FC<PhoneFieldProps> = ({ control, defaultValue, error }) => {
   const { field } = useController({
     name: 'phone',
     control,
-    defaultValue: defaultValue ?? ''
+    defaultValue: defaultValue ?? '+7 '
   })
 
   const phoneMask = useMask(RU_PHONE_MASK, {
     showMask: 'never',
-    initialValue: defaultValue,
+    initialValue: defaultValue ?? '+7 ',
     beforeMaskedChange: ({ nextState }) => ({
       ...nextState,
       selection: { start: nextState.value.length, end: nextState.value.length }
@@ -39,7 +39,7 @@ const PhoneField = ({ control, defaultValue, error }: PhoneFieldProps) => {
 
   return (
     <TextField
-      label="Телефон"
+      label="Телефон*"
       inputMode="tel"
       placeholder="+7 (___) ___-__-__"
       error={error}

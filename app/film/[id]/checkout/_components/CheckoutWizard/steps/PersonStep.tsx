@@ -35,7 +35,7 @@ export const PersonStep = ({ defaultValues, onSubmit }: PersonStepProps) => {
       className="grid gap-4 sm:grid-cols-2"
     >
       <TextField
-        label="Фамилия"
+        label="Фамилия*"
         placeholder="Иванов"
         error={errors.lastname?.message}
         {...register('lastname')}
@@ -47,7 +47,7 @@ export const PersonStep = ({ defaultValues, onSubmit }: PersonStepProps) => {
         {...register('city')}
       />
       <TextField
-        label="Имя"
+        label="Имя*"
         placeholder="Иван"
         error={errors.firstname?.message}
         {...register('firstname')}
@@ -58,7 +58,7 @@ export const PersonStep = ({ defaultValues, onSubmit }: PersonStepProps) => {
         error={errors.phone?.message}
       />
       <TextField
-        label="Отчество"
+        label="Отчество*"
         placeholder="Иванович"
         error={errors.middlename?.message}
         {...register('middlename')}
