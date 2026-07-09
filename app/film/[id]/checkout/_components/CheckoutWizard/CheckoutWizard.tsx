@@ -22,6 +22,7 @@ export const CheckoutWizard = ({ film, selectedDate, selectedSlot }: CheckoutWiz
   const {
     stepper,
     tickets,
+    selectedSeats,
     totalPrice,
     paymentMutation,
     paymentError,
@@ -65,6 +66,7 @@ export const CheckoutWizard = ({ film, selectedDate, selectedSlot }: CheckoutWiz
           selectedDate={selectedDate}
           selectedSlot={selectedSlot}
           tickets={tickets}
+          seats={selectedSeats}
           totalPrice={totalPrice}
         />
       )}

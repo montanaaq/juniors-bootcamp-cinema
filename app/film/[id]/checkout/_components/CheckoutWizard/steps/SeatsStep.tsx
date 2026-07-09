@@ -3,9 +3,10 @@
 import { Button } from '@/components/ui'
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui'
 import { cn } from '@/lib/utils'
+import { useMap } from '@siberiacancode/reactuse'
 import { TicketIcon, XIcon } from 'lucide-react'
 import Link from 'next/link'
-import { useState, type CSSProperties } from 'react'
+import { type CSSProperties } from 'react'
 import { useIntl } from 'react-intl'
 
 import type { CreatePaymentTicketsDto, FilmHall, FilmScheduleSeance, Seat } from '@generated/api'
@@ -21,12 +22,7 @@ interface SeatsStepProps {
   filmId: string
   hall: FilmHall
   initialTickets: CreatePaymentTicketsDto[]
-  onSubmit: (tickets: CreatePaymentTicketsDto[]) => void
-}
-
-type SummaryItem = {
-  label: string
-  value: string
+  onSubmit: (seats: Seat[], tickets: CreatePaymentTicketsDto[]) => void
 }
 
 export const SeatsStep = ({
@@ -39,40 +35,40 @@ export const SeatsStep = ({
   onSubmit
 }: SeatsStepProps) => {
   const intl = useIntl()
-  const [tickets, setTickets] = useState<CreatePaymentTicketsDto[]>(initialTickets)
-  const selectedSeatsLabel = tickets
-    .map(ticket => `${ticket.row} ряд, ${ticket.column} место`)
-    .join(', ')
-  const summaryItems: SummaryItem[] = [
-    { label: 'Количество билетов', value: String(tickets.length) },
-    { label: 'Фильм', value: filmName },
-    { label: 'Дата и время', value: `${formatDate(selectedDate)}, ${selectedSlot.time}` },
-    { label: 'Зал', value: intl.formatMessage({ id: `hall.name.${hall.name}` }) },
-    { label: 'Места', value: selectedSeatsLabel || 'Места не выбраны' }
-  ]
+  const tickets = useMap<string, CreatePaymentTicketsDto>(
+    initialTickets.map(t => [`${t.row}-${t.column}`, t])
+  )
 
   const toggleTicket = (ticket: CreatePaymentTicketsDto) => {
-    setTickets(currentTickets => {
-      const exists = currentTickets.some(
-        currentTicket => currentTicket.row === ticket.row && currentTicket.column === ticket.column
-      )
-
-      if (exists) {
-        return currentTickets.filter(
-          currentTicket =>
-            currentTicket.row !== ticket.row || currentTicket.column !== ticket.column
-        )
-      }
-
-      return [...currentTickets, ticket]
-    })
+    const key = `${ticket.row}-${ticket.column}`
+    if (tickets.has(key)) {
+      tickets.remove(key)
+    } else {
+      tickets.set(key, ticket)
+    }
   }
 
   const findTicket = (ticket: Pick<CreatePaymentTicketsDto, 'row' | 'column'>) =>
-    tickets.find(
-      currentTicket => currentTicket.row === ticket.row && currentTicket.column === ticket.column
-    )
+    tickets.value.get(`${ticket.row}-${ticket.column}`)
 
+  const selectedSeats = [...tickets.value.values()]
+    .map(ticket => hall.places[ticket.row - 1]?.[ticket.column - 1] as Seat | undefined)
+    .filter((seat): seat is Seat => !!seat)
+
+  const totalPrice = selectedSeats.reduce((sum, seat) => sum + seat.price, 0)
+
+  const selectedSeatsLabel = [...tickets.value.values()]
+    .map(ticket => `${ticket.row} ряд ${ticket.column} место`)
+    .join(', ')
+
+  const summaryItems = [
+    { label: 'Количество билетов', value: String(tickets.size) },
+    { label: 'Фильм', value: filmName },
+    { label: 'Дата и время', value: `${formatDate(selectedDate)}, ${selectedSlot.time}` },
+    { label: 'Зал', value: intl.formatMessage({ id: `hall.name.${hall.name}` }) },
+    { label: 'Места', value: selectedSeatsLabel || 'Места не выбраны' },
+    { label: 'Итого', value: `${totalPrice} ₽` }
+  ]
   return (
     <div className="flex gap-4">
       <div className="w-[60%] flex gap-6 flex-col py-6">
@@ -143,9 +139,12 @@ export const SeatsStep = ({
             ))}
             <div className="flex items-center justify-around mt-3">
               {HELP_LABELS.map(el => (
-                <div key={`${el.color}-${el.label}`} className="flex items-center gap-2">
+                <div
+                  key={`${el.color}-${el.label}`}
+                  className="flex items-center justify-between gap-2"
+                >
                   <div className={`bg-${el.color} size-5 rounded-4`}></div>
-                  <span>{el.label}</span>
+                  <span className="text-sm">{el.label}</span>
                 </div>
               ))}
             </div>
@@ -160,8 +159,8 @@ export const SeatsStep = ({
           <Button
             type="button"
             size="lg"
-            disabled={!tickets.length}
-            onClick={() => onSubmit(tickets)}
+            disabled={!tickets.size}
+            onClick={() => onSubmit(selectedSeats, [...tickets.value.values()])}
             className="w-full"
           >
             Продолжить

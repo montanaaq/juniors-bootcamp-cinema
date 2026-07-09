@@ -5,13 +5,13 @@ import { useState } from 'react'
 
 import type {
   CreateCinemaPaymentDto,
+  CreatePaymentTicketsDto,
   Film,
   FilmScheduleSeance,
-  PaymentResponse
+  PaymentResponse,
+  Seat
 } from '@generated/api'
 import { postApiCinemaPayment } from '@generated/api'
-
-type Ticket = { row: number; column: number }
 
 export const useCheckoutWizard = (
   film: Film,
@@ -19,17 +19,19 @@ export const useCheckoutWizard = (
   selectedSlot: FilmScheduleSeance
 ) => {
   const stepper = useStep(4)
-  const [tickets, setTickets] = useState<Ticket[]>([])
+  const [selectedSeats, setSelectedSeats] = useState<Seat[]>([])
+  const [tickets, setTickets] = useState<CreatePaymentTicketsDto[]>([])
   const [person, setPerson] = useState<PersonFormValues | null>(null)
 
   const paymentMutation = useMutation<CreateCinemaPaymentDto, PaymentResponse>(body =>
     postApiCinemaPayment({ body }).then(response => response.data)
   )
 
-  const totalPrice = tickets.length * 350
+  const totalPrice = selectedSeats.reduce((sum, seat) => sum + seat.price, 0)
 
-  const onSeatsNext = (nextTickets: Ticket[]) => {
+  const onSeatsNext = (nextSeats: Seat[], nextTickets: CreatePaymentTicketsDto[]) => {
     setTickets(nextTickets)
+    setSelectedSeats(nextSeats)
     stepper.next()
   }
 
@@ -51,7 +53,7 @@ export const useCheckoutWizard = (
       },
       debitCard: values,
       seance: { date: selectedDate, time: selectedSlot.time },
-      tickets
+      tickets: tickets.map(({ row, column }) => ({ row, column }))
     })
   }
 
@@ -64,6 +66,7 @@ export const useCheckoutWizard = (
   return {
     stepper,
     tickets,
+    selectedSeats,
     person,
     totalPrice,
     paymentMutation,
