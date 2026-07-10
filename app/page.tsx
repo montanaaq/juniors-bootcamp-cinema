@@ -1,4 +1,5 @@
 import { getTodayFilms } from '@/lib/cinema-api.server'
+import { cn } from '@/lib/utils'
 import { notFound } from 'next/navigation'
 
 import FilmCard from './_components/FilmCard/FilmCard'
@@ -11,7 +12,7 @@ const Home = async () => {
       {todayFilms.map((film, index) => {
         const isFeatured = index < 2 || (index >= 6 && index < 8)
         return (
-          <div key={film.id} className={isFeatured ? 'sm:col-span-2' : undefined}>
+          <div key={film.id} className={cn(isFeatured && 'sm:col-span-2')}>
             <FilmCard film={film} isFeatured={isFeatured} />
           </div>
         )

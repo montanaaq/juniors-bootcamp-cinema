@@ -33,7 +33,7 @@ export const CheckoutWizard = ({ film, selectedDate, selectedSlot }: CheckoutWiz
 
   if (paymentMutation.data?.success) {
     return (
-      <section className="mx-auto flex w-full max-w-3xl flex-col gap-6 rounded-16 bg-secondary p-6">
+      <section className=" flex w-full flex-col gap-6 rounded-16 bg-secondary p-6">
         <h1 className="text-3xl font-extrabold">Билеты оплачены</h1>
         <p className="text-lg text-muted-fg">
           Заказ создан. Детали покупки доступны в истории заказов.
@@ -46,7 +46,7 @@ export const CheckoutWizard = ({ film, selectedDate, selectedSlot }: CheckoutWiz
   }
 
   return (
-    <section className="mx-auto flex w-full max-w-5xl flex-col gap-8">
+    <section className="flex w-full flex-col gap-8">
       <StepperNav stepId={stepper.currentStep} onStepChange={stepper.set} />
 
       {stepper.currentStep === 1 && (

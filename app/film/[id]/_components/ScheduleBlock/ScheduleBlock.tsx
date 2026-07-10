@@ -112,15 +112,15 @@ export const ScheduleBlock: FC<FilmScheduleProps> = ({ filmId, filmSchedule }) =
         )}
       </Tabs>
 
-      {checkoutHref ? (
-        <Button asChild type="button" size="lg" className="h-13 w-82 max-w-full">
-          <Link href={checkoutHref}>Продолжить</Link>
-        </Button>
-      ) : (
-        <Button type="button" size="lg" className="h-13 w-82 max-w-full" disabled>
-          Продолжить
-        </Button>
-      )}
+      <Button
+        asChild={!!checkoutHref}
+        disabled={!checkoutHref}
+        type="button"
+        size="lg"
+        className="h-13 w-82 max-w-full"
+      >
+        {checkoutHref ? <Link href={checkoutHref}>Продолжить</Link> : 'Продолжить'}
+      </Button>
     </section>
   )
 }

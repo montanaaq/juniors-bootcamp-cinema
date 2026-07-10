@@ -10,7 +10,6 @@ const ActorAvatar: FC<ActorAvatarProps> = ({ actor }) => {
   return (
     <li key={actor.id} className="flex min-w-0 flex-col items-center text-center">
       <div className="size-16 overflow-hidden rounded-full bg-muted">
-        {/** biome-ignore lint/performance/noImgElement: remote API image */}
         <img
           src={`https://juniorsbootcamp.ru/api${actor.photo}`}
           alt={actor.fullName}
