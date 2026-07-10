@@ -8,9 +8,7 @@
 - [shadcn/ui](https://ui.shadcn.com) (Radix UI)
 - [@siberiacancode/fetches](https://www.npmjs.com/package/@siberiacancode/fetches)
 - [@siberiacancode/reactuse](https://reactuse.org)
-- [nuqs](https://nuqs.47ng.com)
 - [React Hook Form](https://react-hook-form.com)
-- [kanjou](https://github.com/kanjoujs/kanjou)
 - [Tailwind CSS 4](https://tailwindcss.com)
 - TypeScript
 
