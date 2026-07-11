@@ -1,21 +1,28 @@
 'use client'
 
-import { TextField } from '@/components/ui'
+import type { FC } from 'react'
+
+import { Button, TextField } from '@/components/ui'
 import { valibotResolver } from '@hookform/resolvers/valibot'
 import { useForm } from 'react-hook-form'
 
+import MaskedCardField from '../components/MaskedCardField'
 import { type DebitCardFormValues, debitCardSchema } from '../schemas/schemas'
 
 interface PaymentStepProps {
-  totalPrice: number
+  onBack: () => void
   defaultValues?: Partial<DebitCardFormValues>
   onSubmit: (values: DebitCardFormValues) => void
 }
 
 export const PAYMENT_STEP_FORM_ID = 'payment-step-form'
 
-export const PaymentStep = ({ totalPrice, defaultValues, onSubmit }: PaymentStepProps) => {
+const CARD_PAN_MASK = '9999 9999 9999 9999'
+const CARD_EXPIRE_MASK = '99/99'
+
+export const PaymentStep: FC<PaymentStepProps> = ({ onBack, defaultValues, onSubmit }) => {
   const {
+    control,
     register,
     handleSubmit,
     formState: { errors }
@@ -26,21 +33,43 @@ export const PaymentStep = ({ totalPrice, defaultValues, onSubmit }: PaymentStep
 
   return (
     <form id={PAYMENT_STEP_FORM_ID} onSubmit={handleSubmit(onSubmit)} className="flex gap-8">
-      <div className="flex flex-col gap-4 p-4">
-        <TextField label="Номер карты*" error={errors.pan?.message} {...register('pan')} />
+      <div className="flex flex-col gap-6">
+        <MaskedCardField
+          control={control}
+          name="pan"
+          mask={CARD_PAN_MASK}
+          label="Номер карты*"
+          placeholder="0000 0000 0000 0000"
+          error={errors.pan?.message}
+          defaultValue={defaultValues?.pan}
+        />
         <div className="flex gap-4">
-          <TextField
+          <MaskedCardField
+            control={control}
+            name="expireDate"
+            mask={CARD_EXPIRE_MASK}
             label="Срок действия*"
             placeholder="12/30"
             error={errors.expireDate?.message}
-            {...register('expireDate')}
+            defaultValue={defaultValues?.expireDate}
           />
-          <TextField label="CVV*" error={errors.cvv?.message} {...register('cvv')} />
+          <TextField
+            label="CVV*"
+            inputMode="numeric"
+            placeholder="000"
+            maxLength={3}
+            error={errors.cvv?.message}
+            {...register('cvv')}
+          />
         </div>
-      </div>
-      <div className="rounded-12 bg-secondary p-4">
-        <span className="block text-sm text-muted-fg">К оплате</span>
-        <strong className="text-2xl">{totalPrice} ₽</strong>
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+          <Button variant="secondary" size="lg" className="w-full" onClick={onBack}>
+            Назад
+          </Button>
+          <Button type="submit" form={PAYMENT_STEP_FORM_ID} size="lg" className="w-full">
+            Продолжить
+          </Button>
+        </div>
       </div>
     </form>
   )

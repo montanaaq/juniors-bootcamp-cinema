@@ -74,7 +74,7 @@ export const CheckoutWizard = ({ film, selectedDate, selectedSlot }: CheckoutWiz
       )}
       {stepper.currentStep === 3 && <PersonStep onSubmit={onPersonSubmit} onBack={stepper.back} />}
       {stepper.currentStep === 4 && (
-        <PaymentStep totalPrice={totalPrice} onSubmit={onPaymentSubmit} />
+        <PaymentStep onBack={stepper.back} onSubmit={onPaymentSubmit} />
       )}
       {paymentError && <p className="text-danger">{paymentError}</p>}
     </section>

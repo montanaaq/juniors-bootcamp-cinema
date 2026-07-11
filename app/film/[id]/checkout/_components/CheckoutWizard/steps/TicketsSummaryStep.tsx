@@ -33,7 +33,7 @@ export const TicketsSummaryStep: FC<TicketsSummaryStepProps> = ({
   const intl = useIntl()
 
   return (
-    <div className="flex flex-col gap-4">
+    <div className="w-[60%] flex flex-col gap-4">
       <SummaryField label="Фильм" value={film.name} />
       <SummaryField label="Количество" value={`${tickets.length}`} />
       <SummaryField
