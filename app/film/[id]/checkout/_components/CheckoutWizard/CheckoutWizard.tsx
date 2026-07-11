@@ -33,7 +33,7 @@ export const CheckoutWizard = ({ film, selectedDate, selectedSlot }: CheckoutWiz
 
   if (paymentMutation.data?.success) {
     return (
-      <section className=" flex w-full flex-col gap-6 rounded-16 bg-secondary p-6">
+      <section className="flex w-full flex-col gap-6 rounded-16 bg-secondary p-6">
         <h1 className="text-3xl font-extrabold">Билеты оплачены</h1>
         <p className="text-lg text-muted-fg">
           Заказ создан. Детали покупки доступны в истории заказов.

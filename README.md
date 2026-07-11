@@ -1,5 +1,13 @@
 # juniors-bootcamp-cinema by montanaaq
 
+## Main Page
+
+<img title="Main Page" alt="Juniors Bootcamp Cinema" src="/screenshots/Juniors Bootcamp Cinema.jpeg">
+
+## Select your schedule
+
+<img title="Main Page" alt="Juniors Bootcamp Cinema" src="/screenshots/SelectSchedule.jpeg">
+
 ## Стек
 
 **Runtime**
