@@ -41,7 +41,19 @@
     "nextjs/no-duplicate-head": "error",
     "nextjs/google-font-display": "warn",
     "nextjs/google-font-preconnect": "warn",
-    "nextjs/next-script-for-ga": "warn"
+    "nextjs/next-script-for-ga": "warn",
+
+    "no-restricted-imports": [
+      "error",
+      {
+        "patterns": [
+          {
+            "group": ["**/app/*/_components/**", "!./**"],
+            "message": "Cross-feature import — move shared code to src/ instead"
+          }
+        ]
+      }
+    ]
   },
   "env": {
     "builtin": true

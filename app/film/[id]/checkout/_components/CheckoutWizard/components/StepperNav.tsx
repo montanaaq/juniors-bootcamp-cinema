@@ -12,7 +12,7 @@ import { HomeIcon } from 'lucide-react'
 import Link from 'next/link'
 import { Fragment } from 'react'
 
-import { STEPS } from '../const/steps.const'
+import { STEPS } from '../constants/steps.const'
 
 interface StepperNavProps {
   stepId: number

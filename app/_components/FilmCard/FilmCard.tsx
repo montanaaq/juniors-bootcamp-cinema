@@ -1,12 +1,11 @@
 import type { FC } from 'react'
 
+import { ActorAvatar } from '@/components/shared'
 import { Button } from '@/components/ui'
 import { cn } from '@/lib/utils'
 import Link from 'next/link'
 
 import type { Film } from '@generated/api'
-
-import ActorAvatar from './ActorAvatar/ActorAvatar'
 
 interface FilmCardProps {
   film: Film
@@ -24,7 +23,6 @@ const FilmCard: FC<FilmCardProps> = ({ film, isFeatured }) => {
           isFeatured ? 'aspect-[1.4/1]' : 'aspect-[1.45/1]'
         )}
       >
-        {/** biome-ignore lint/performance/noImgElement: remote API image */}
         <img
           src={`https://juniorsbootcamp.ru/api${film.img}`}
           alt={film.originalName}

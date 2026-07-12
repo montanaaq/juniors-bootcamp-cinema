@@ -2,12 +2,11 @@
 
 import type { FC } from 'react'
 
+import { PhoneField } from '@/components/shared'
 import { Button, TextField } from '@/components/ui'
+import { personSchema, type PersonFormValues } from '@/schemas/schemas'
 import { valibotResolver } from '@hookform/resolvers/valibot'
 import { useForm } from 'react-hook-form'
-
-import PhoneField from '../components/PhoneField'
-import { personSchema, type PersonFormValues } from '../schemas/schemas'
 
 interface PersonStepProps {
   defaultValues?: Partial<PersonFormValues>
@@ -57,6 +56,8 @@ export const PersonStep: FC<PersonStepProps> = ({ defaultValues, onSubmit, onBac
           {...register('firstname')}
         />
         <PhoneField
+          required
+          name="phone"
           control={control}
           defaultValue={defaultValues?.phone}
           error={errors.phone?.message}

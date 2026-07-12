@@ -23,6 +23,7 @@ export const CheckoutWizard = ({ film, selectedDate, selectedSlot }: CheckoutWiz
     stepper,
     tickets,
     selectedSeats,
+    conflictTickets,
     totalPrice,
     paymentMutation,
     paymentError,
@@ -57,6 +58,7 @@ export const CheckoutWizard = ({ film, selectedDate, selectedSlot }: CheckoutWiz
           filmId={film.id}
           hall={selectedSlot.hall}
           initialTickets={tickets}
+          conflictSeats={conflictTickets}
           onSubmit={onSeatsNext}
         />
       )}

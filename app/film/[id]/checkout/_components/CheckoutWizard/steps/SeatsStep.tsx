@@ -12,7 +12,7 @@ import { useIntl } from 'react-intl'
 import type { CreatePaymentTicketsDto, FilmHall, FilmScheduleSeance, Seat } from '@generated/api'
 
 import SummaryField from '../components/SummaryField'
-import { HELP_LABELS } from '../const/help-labels.const'
+import { HELP_LABELS } from '../constants/help-labels.const'
 import { formatDate } from '../utils/format-date'
 
 interface SeatsStepProps {
@@ -22,6 +22,7 @@ interface SeatsStepProps {
   filmId: string
   hall: FilmHall
   initialTickets: CreatePaymentTicketsDto[]
+  conflictSeats: CreatePaymentTicketsDto[]
   onSubmit: (seats: Seat[], tickets: CreatePaymentTicketsDto[]) => void
 }
 
@@ -32,12 +33,15 @@ export const SeatsStep = ({
   filmId,
   hall,
   initialTickets,
+  conflictSeats,
   onSubmit
 }: SeatsStepProps) => {
   const intl = useIntl()
   const tickets = useMap<string, CreatePaymentTicketsDto>(
     initialTickets.map(t => [`${t.row}-${t.column}`, t])
   )
+  const isConflict = (row: number, column: number) =>
+    conflictSeats?.some(seat => seat.row === row && seat.column === column)
 
   const toggleTicket = (ticket: CreatePaymentTicketsDto) => {
     const key = `${ticket.row}-${ticket.column}`
@@ -89,6 +93,7 @@ export const SeatsStep = ({
                   const selected = findTicket(base)
                   const isBlocked = seat.type === 'blocked'
                   const price = seat.price
+                  const conflict = isConflict(base.row, base.column)
 
                   return (
                     <Tooltip key={columnIndex} open={!!selected}>
@@ -103,7 +108,8 @@ export const SeatsStep = ({
                             'size-5 rounded-4 border border-seat-available bg-seat-available transition hover:border-seat-available-hover',
                             !!selected && 'border-seat-selected-border bg-seat-selected',
                             isBlocked &&
-                              'cursor-not-allowed border-transparent bg-seat-blocked hover:border-transparent'
+                              'cursor-not-allowed border-transparent bg-seat-blocked hover:border-transparent',
+                            conflict && 'border-danger bg-danger/20 hover:border-danger'
                           )}
                         >
                           <span className="sr-only">

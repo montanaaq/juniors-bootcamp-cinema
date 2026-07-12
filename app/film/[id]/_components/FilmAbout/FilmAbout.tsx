@@ -1,6 +1,7 @@
 import type { FC } from 'react'
 
-import ActorAvatar from '@app/_components/FilmCard/ActorAvatar/ActorAvatar'
+import { ActorAvatar } from '@/components/shared'
+
 import type { Film } from '@generated/api'
 
 interface FilmAboutProps {

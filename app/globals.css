@@ -299,6 +299,8 @@
   --default-font-family: var(--font-nunito);
   --default-pixelify-font-family: var(--font-pixelify-sans);
   --default-transition-duration: 300ms;
+
+  --header-height: 4rem;
 }
 
 :root.dark {

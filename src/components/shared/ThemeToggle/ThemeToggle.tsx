@@ -3,9 +3,8 @@
 import type { MouseEvent } from 'react'
 
 import { IconButton } from '@/components/ui'
+import { useTheme } from '@/contexts/theme'
 import { MoonIcon, SunIcon } from 'lucide-react'
-
-import { useTheme } from '@app/_contexts/theme'
 
 export const ThemeToggle = () => {
   const { animate, value } = useTheme()

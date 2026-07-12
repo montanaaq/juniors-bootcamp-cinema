@@ -1,4 +1,4 @@
-import type { DebitCardFormValues } from '../schemas/schemas'
+import type { DebitCardFormValues } from '@/schemas/schemas'
 
 import { TextField } from '@/components/ui'
 import { useMask } from '@siberiacancode/reactuse'

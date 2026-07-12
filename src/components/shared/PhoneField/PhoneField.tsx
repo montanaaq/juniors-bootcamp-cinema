@@ -1,23 +1,31 @@
-import type { PersonFormValues } from '../schemas/schemas'
+'use client'
 
 import { TextField } from '@/components/ui'
 import { useMask } from '@siberiacancode/reactuse'
-import { useEffect, type FC } from 'react'
-import { useController, type Control } from 'react-hook-form'
+import { useEffect } from 'react'
+import { useController, type Control, type FieldPath, type FieldValues } from 'react-hook-form'
 
-interface PhoneFieldProps {
-  control: Control<PersonFormValues>
+interface PhoneFieldProps<TFieldValues extends FieldValues> {
+  control: Control<TFieldValues>
+  name: FieldPath<TFieldValues>
   defaultValue?: string
+  required?: boolean
   error?: string
 }
 
 const RU_PHONE_MASK = '+7 (999) 999-99-99'
 
-const PhoneField: FC<PhoneFieldProps> = ({ control, defaultValue, error }) => {
+export const PhoneField = <TFieldValues extends FieldValues>({
+  control,
+  name,
+  required,
+  defaultValue,
+  error
+}: PhoneFieldProps<TFieldValues>) => {
   const { field } = useController({
-    name: 'phone',
+    name,
     control,
-    defaultValue: defaultValue ?? '+7 '
+    defaultValue: (defaultValue ?? '+7 ') as never
   })
 
   const phoneMask = useMask(RU_PHONE_MASK, {
@@ -32,14 +40,16 @@ const PhoneField: FC<PhoneFieldProps> = ({ control, defaultValue, error }) => {
   const phone = phoneMask.watch()
 
   useEffect(() => {
-    if (phone.value !== field.value) {
-      field.onChange(phone.value)
+    const digits = `8${phone.value.replace(/\D/g, '').slice(-10)}`
+
+    if (digits !== field.value) {
+      field.onChange(digits)
     }
   }, [phone.value])
 
   return (
     <TextField
-      label="Телефон*"
+      label={required ? 'Телефон*' : 'Телефон'}
       inputMode="tel"
       placeholder="+7 (___) ___-__-__"
       error={error}
@@ -51,5 +61,3 @@ const PhoneField: FC<PhoneFieldProps> = ({ control, defaultValue, error }) => {
     />
   )
 }
-
-export default PhoneField

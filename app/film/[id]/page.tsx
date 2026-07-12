@@ -1,3 +1,5 @@
+import type { FC } from 'react'
+
 import { getFilmByIdOrNotFound, getFilmScheduleById } from '@/lib/cinema-api.server'
 
 import FilmAbout from './_components/FilmAbout/FilmAbout'
@@ -7,7 +9,7 @@ interface FilmPageProps {
   params: Promise<{ id: string }>
 }
 
-const FilmPage = async ({ params }: FilmPageProps) => {
+const FilmPage: FC<FilmPageProps> = async ({ params }) => {
   const { id } = await params
   const film = await getFilmByIdOrNotFound(id)
   const filmSchedule = await getFilmScheduleById(film.id)

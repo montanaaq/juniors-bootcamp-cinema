@@ -6,7 +6,7 @@ interface ActorAvatarProps {
   actor: FilmStaff
 }
 
-const ActorAvatar: FC<ActorAvatarProps> = ({ actor }) => {
+export const ActorAvatar: FC<ActorAvatarProps> = ({ actor }) => {
   return (
     <li key={actor.id} className="flex min-w-0 flex-col items-center text-center">
       <div className="size-16 overflow-hidden rounded-full bg-muted">
@@ -22,5 +22,3 @@ const ActorAvatar: FC<ActorAvatarProps> = ({ actor }) => {
     </li>
   )
 }
-
-export default ActorAvatar

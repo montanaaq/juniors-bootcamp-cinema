@@ -3,13 +3,17 @@ import type { Metadata } from 'next'
 import './globals.css'
 import type { ReactNode } from 'react'
 
+import { AUTHORIZATION_TOKEN } from '@/constants'
+import { Providers } from '@/contexts/Providers'
 import i18n from '@/i18n/messages.json'
 import { cn } from '@/lib/utils'
 import { Nunito, Pixelify_Sans } from 'next/font/google'
+import { cookies } from 'next/headers'
+
+import { getApiUsersSession } from '@generated/api'
 
 import { Footer } from './_components/layout/Footer/Footer'
 import Header from './_components/layout/Header/Header'
-import { Providers } from './_contexts/Providers'
 
 const locale = i18n.defaultLocale as keyof typeof i18n.messages
 
@@ -28,11 +32,20 @@ export const metadata: Metadata = {
   description: 'Online cinema for juniorsbootcamp.ru'
 }
 
-export default function RootLayout({
+export default async function RootLayout({
   children
 }: Readonly<{
   children: ReactNode
 }>) {
+  const cookieStore = await cookies()
+  const token = cookieStore.get(AUTHORIZATION_TOKEN)?.value
+
+  const user = token
+    ? await getApiUsersSession({ headers: { authorization: `Bearer ${token}` } })
+        .then(response => (response.data.success ? response.data.user : null))
+        .catch(() => null)
+    : null
+
   return (
     <html
       lang="ru"
@@ -43,7 +56,12 @@ export default function RootLayout({
         <meta content="noindex, nofollow" name="robots" />
       </head>
       <body className="flex flex-1 flex-col px-4 py-8 sm:px-8 lg:px-16 lg:py-12 xl:px-30 xl:py-16">
-        <Providers defaultLocale={locale} locale={locale} messages={i18n.messages[locale]}>
+        <Providers
+          user={user}
+          defaultLocale={locale}
+          locale={locale}
+          messages={i18n.messages[locale]}
+        >
           <Header />
           {children}
           <Footer />

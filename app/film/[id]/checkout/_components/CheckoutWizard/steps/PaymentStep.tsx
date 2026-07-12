@@ -3,11 +3,11 @@
 import type { FC } from 'react'
 
 import { Button, TextField } from '@/components/ui'
+import { type DebitCardFormValues, debitCardSchema } from '@/schemas/schemas'
 import { valibotResolver } from '@hookform/resolvers/valibot'
 import { useForm } from 'react-hook-form'
 
 import MaskedCardField from '../components/MaskedCardField'
-import { type DebitCardFormValues, debitCardSchema } from '../schemas/schemas'
 
 interface PaymentStepProps {
   onBack: () => void
