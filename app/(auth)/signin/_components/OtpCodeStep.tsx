@@ -3,7 +3,7 @@
 import { Button, TextField } from '@/components/ui'
 import { useOtpCredential, useTimer } from '@siberiacancode/reactuse'
 import { ChevronLeftIcon } from 'lucide-react'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 
 import type { OtpResponse, SignInResponse } from '@generated/api'
 
@@ -27,10 +27,6 @@ export const OtpCodeStep = ({
 
   const retryDelaySeconds = Math.round(retryDelay / 1000)
   const timer = useTimer(retryDelaySeconds)
-
-  useEffect(() => {
-    timer.restart(retryDelaySeconds)
-  }, [retryDelay])
 
   const submitCode = async (value: string) => {
     setError(null)
