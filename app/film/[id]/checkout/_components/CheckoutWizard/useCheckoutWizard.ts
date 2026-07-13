@@ -1,5 +1,8 @@
 import type { DebitCardFormValues, PersonFormValues } from '@/src/schemas'
 
+import { useMutation, useStep } from '@siberiacancode/reactuse'
+import { useState } from 'react'
+
 import type {
   CreateCinemaPaymentDto,
   CreatePaymentTicketsDto,
@@ -9,9 +12,6 @@ import type {
   Seat
 } from '@generated/api'
 import { postApiCinemaPayment } from '@generated/api'
-
-import { useMutation, useStep } from '@siberiacancode/reactuse'
-import { useState } from 'react'
 
 export const useCheckoutWizard = (
   film: Film,

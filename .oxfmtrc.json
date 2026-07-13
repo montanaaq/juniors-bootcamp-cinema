@@ -22,9 +22,9 @@
     ],
     "groups": [
       "type-import",
+      ["value-builtin", "value-external"],
       "generated",
       "value-internal",
-      ["value-builtin", "value-external"],
       ["value-parent", "value-sibling", "value-index"],
       "unknown"
     ]
