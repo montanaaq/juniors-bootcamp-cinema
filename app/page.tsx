@@ -1,4 +1,4 @@
-import { getTodayFilms } from '@/src/lib/cinema-api.server'
+import { getTodayFilms } from '@/src/lib'
 import { cn } from '@/src/lib/utils'
 import { notFound } from 'next/navigation'
 

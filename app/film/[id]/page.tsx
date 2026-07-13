@@ -1,6 +1,6 @@
 import type { FC } from 'react'
 
-import { getFilmByIdOrNotFound, getFilmScheduleById } from '@/src/lib/cinema-api.server'
+import { getFilmByIdOrNotFound, getFilmScheduleById } from '@/src/lib'
 
 import FilmAbout from './_components/FilmAbout/FilmAbout'
 import { ScheduleBlock } from './_components/ScheduleBlock/ScheduleBlock'

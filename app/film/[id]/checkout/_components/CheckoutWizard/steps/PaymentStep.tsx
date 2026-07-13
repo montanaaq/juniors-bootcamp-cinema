@@ -3,7 +3,7 @@
 import type { FC } from 'react'
 
 import { Button, TextField } from '@/src/components/ui'
-import { type DebitCardFormValues, debitCardSchema } from '@/src/schemas/schemas'
+import { type DebitCardFormValues, debitCardSchema } from '@/src/schemas'
 import { valibotResolver } from '@hookform/resolvers/valibot'
 import { useForm } from 'react-hook-form'
 
