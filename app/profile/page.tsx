@@ -2,14 +2,14 @@
 
 import { signOutAction } from '@/contexts/user/actions'
 import { useUser } from '@/contexts/user/useUser'
+import { useIsomorphicLayoutEffect } from '@siberiacancode/reactuse'
 import { useRouter } from 'next/navigation'
-import { useEffect } from 'react'
 
 const ProfilePage = () => {
   const { user, setUser } = useUser()
   const router = useRouter()
 
-  useEffect(() => {
+  useIsomorphicLayoutEffect(() => {
     if (!user) router.replace('/signin')
   }, [user])
 
