@@ -1,6 +1,6 @@
 'use client'
 
-import { Button } from '@/components/ui'
+import { Button } from '@/src/components/ui'
 import Link from 'next/link'
 
 import type { Film, FilmScheduleSeance } from '@generated/api'

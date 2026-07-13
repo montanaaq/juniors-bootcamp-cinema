@@ -1,6 +1,6 @@
 'use client'
 
-import { useOtpAuth } from '@/contexts/user/useOthAuth'
+import { useOtpAuth } from '@/src/contexts/user/useOthAuth'
 import { useRouter } from 'next/navigation'
 
 import { OtpCodeStep } from './_components/OtpCodeStep'

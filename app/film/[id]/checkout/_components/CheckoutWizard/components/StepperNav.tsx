@@ -7,7 +7,7 @@ import {
   BreadcrumbList,
   BreadcrumbPage,
   BreadcrumbSeparator
-} from '@/components/ui'
+} from '@/src/components/ui'
 import { HomeIcon } from 'lucide-react'
 import Link from 'next/link'
 import { Fragment } from 'react'

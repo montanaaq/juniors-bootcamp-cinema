@@ -1,8 +1,8 @@
 import type { FC } from 'react'
 
-import { ActorAvatar } from '@/components/shared'
-import { Button } from '@/components/ui'
-import { cn } from '@/lib/utils'
+import { ActorAvatar } from '@/src/components/shared'
+import { Button } from '@/src/components/ui'
+import { cn } from '@/src/lib/utils'
 import Link from 'next/link'
 
 import type { Film } from '@generated/api'

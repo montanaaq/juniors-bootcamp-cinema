@@ -2,9 +2,9 @@
 
 import type { FC } from 'react'
 
-import { PhoneField } from '@/components/shared'
-import { Button, TextField } from '@/components/ui'
-import { personSchema, type PersonFormValues } from '@/schemas/schemas'
+import { PhoneField } from '@/src/components/shared'
+import { Button, TextField } from '@/src/components/ui'
+import { personSchema, type PersonFormValues } from '@/src/schemas/schemas'
 import { valibotResolver } from '@hookform/resolvers/valibot'
 import { useForm } from 'react-hook-form'
 

@@ -1,4 +1,4 @@
-import { AUTHORIZATION_TOKEN } from '@/constants'
+import { AUTHORIZATION_TOKEN } from '@/src/constants'
 import { cookies } from 'next/headers'
 import { NextRequest } from 'next/server'
 

@@ -1,7 +1,7 @@
 'use client'
 
-import { PhoneField } from '@/components/shared'
-import { Button } from '@/components/ui'
+import { PhoneField } from '@/src/components/shared'
+import { Button } from '@/src/components/ui'
 import { useForm } from 'react-hook-form'
 
 import type { OtpResponse } from '@generated/api'

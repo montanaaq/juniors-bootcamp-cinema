@@ -13,11 +13,11 @@
   "sortImports": {
     "newlinesBetween": true,
     "ignoreCase": true,
-    "internalPattern": ["@/**", "@generated/**", "@app/**"],
+    "internalPattern": ["@/**", "@generated/**"],
     "customGroups": [
       {
         "groupName": "generated",
-        "elementNamePattern": ["@generated/**", "@app/**"]
+        "elementNamePattern": ["@generated/**"]
       }
     ],
     "groups": [

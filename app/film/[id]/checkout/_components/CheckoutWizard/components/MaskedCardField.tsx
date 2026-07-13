@@ -1,6 +1,6 @@
-import type { DebitCardFormValues } from '@/schemas/schemas'
+import type { DebitCardFormValues } from '@/src/schemas/schemas'
 
-import { TextField } from '@/components/ui'
+import { TextField } from '@/src/components/ui'
 import { useMask } from '@siberiacancode/reactuse'
 import { useEffect, type FC } from 'react'
 import { useController, type Control } from 'react-hook-form'

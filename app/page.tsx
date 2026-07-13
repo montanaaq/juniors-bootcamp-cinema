@@ -1,5 +1,5 @@
-import { getTodayFilms } from '@/lib/cinema-api.server'
-import { cn } from '@/lib/utils'
+import { getTodayFilms } from '@/src/lib/cinema-api.server'
+import { cn } from '@/src/lib/utils'
 import { notFound } from 'next/navigation'
 
 import FilmCard from './_components/FilmCard/FilmCard'

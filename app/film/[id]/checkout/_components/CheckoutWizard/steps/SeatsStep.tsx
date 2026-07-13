@@ -1,8 +1,8 @@
 'use client'
 
-import { Button } from '@/components/ui'
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui'
-import { cn } from '@/lib/utils'
+import { Button } from '@/src/components/ui'
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/src/components/ui'
+import { cn } from '@/src/lib/utils'
 import { useMap } from '@siberiacancode/reactuse'
 import { TicketIcon, XIcon } from 'lucide-react'
 import Link from 'next/link'

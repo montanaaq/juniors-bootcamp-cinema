@@ -2,8 +2,8 @@
 
 import type { MouseEvent } from 'react'
 
-import { IconButton } from '@/components/ui'
-import { useTheme } from '@/contexts/theme'
+import { IconButton } from '@/src/components/ui'
+import { useTheme } from '@/src/contexts/theme'
 import { MoonIcon, SunIcon } from 'lucide-react'
 
 export const ThemeToggle = () => {

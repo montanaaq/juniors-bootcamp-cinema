@@ -1,4 +1,4 @@
-import { getFilmByIdOrNotFound, getFilmScheduleById } from '@/lib/cinema-api.server'
+import { getFilmByIdOrNotFound, getFilmScheduleById } from '@/src/lib/cinema-api.server'
 import { notFound } from 'next/navigation'
 
 import { CheckoutWizard } from './_components/CheckoutWizard/CheckoutWizard'

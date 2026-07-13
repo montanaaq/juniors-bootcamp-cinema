@@ -1,7 +1,7 @@
 'use client'
 
-import { signOutAction } from '@/contexts/user/actions'
-import { useUser } from '@/contexts/user/useUser'
+import { signOutAction } from '@/src/contexts/user/actions'
+import { useUser } from '@/src/contexts/user/useUser'
 import { useIsomorphicLayoutEffect } from '@siberiacancode/reactuse'
 import { useRouter } from 'next/navigation'
 
