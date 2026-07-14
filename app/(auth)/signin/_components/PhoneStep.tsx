@@ -32,7 +32,7 @@ export const PhoneStep = ({ onSubmit, isLoading }: PhoneStepProps) => {
   })
 
   return (
-    <form onSubmit={submit} className="w-full h-full flex flex-col gap-4  justify-center">
+    <form onSubmit={submit} className="w-full flex flex-col gap-4 justify-center">
       <h1 className="self-center font-bold text-2xl">Авторизация</h1>
       <p className="font-medium text-lg">Введите номер телефона для входа в свой профиль</p>
       <PhoneField control={control} name="phone" error={errors.phone?.message} />

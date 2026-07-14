@@ -1,6 +1,7 @@
 'use client'
 
-import { useOtpAuth } from '@/src/contexts/user/useOthAuth'
+import { Logo } from '@/src/components/shared'
+import { useOtpAuth } from '@/src/contexts/user/useOtpAuth'
 import { useRouter } from 'next/navigation'
 
 import { OtpCodeStep } from './_components/OtpCodeStep'
@@ -18,7 +19,8 @@ const LoginPage = () => {
   }
 
   return (
-    <section className="mx-auto max-w-sm h-[calc(100vh-var(--header-height)-8rem)]">
+    <section className="mx-auto flex flex-col items-center justify-center max-w-xs h-[calc(100vh-var(--header-height)-8rem)] gap-12">
+      <Logo />
       {step === 1 ? (
         <PhoneStep onSubmit={requestOtp} isLoading={otpMutation.isLoading} />
       ) : (

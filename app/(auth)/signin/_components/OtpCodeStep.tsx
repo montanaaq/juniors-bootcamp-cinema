@@ -56,8 +56,8 @@ export const OtpCodeStep = ({
   }
 
   return (
-    <div className="w-full h-full flex flex-col gap-4 justify-center">
-      <div className="flex items-center gap-2">
+    <div className="w-full flex flex-col gap-4 justify-center">
+      <div className="flex items-center gap-6">
         <button type="button" onClick={onBack} aria-label="Изменить номер">
           <ChevronLeftIcon size={28} />
         </button>

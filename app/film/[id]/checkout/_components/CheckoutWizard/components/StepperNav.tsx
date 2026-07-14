@@ -59,7 +59,7 @@ export const StepperNav = ({ stepId, onStepChange }: StepperNavProps) => {
       <div className="flex flex-col gap-6 mt-6">
         <h1 className="text-3xl font-extrabold">{currentStepTitle}</h1>
         <div>
-          <p className="text-base font-semibold text-muted-fg">
+          <p className="text-base font-semibold">
             Шаг {stepId} из {STEPS.length}
           </p>
           <progress value={stepId} max={STEPS.length} className="stepper-progress-bar"></progress>
