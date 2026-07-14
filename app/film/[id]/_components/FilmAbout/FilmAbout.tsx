@@ -1,6 +1,6 @@
 import type { FC } from 'react'
 
-import { ActorAvatar } from '@/src/components/shared'
+import { ActorAvatar } from '@/components/shared'
 
 import type { Film } from '@generated/api'
 

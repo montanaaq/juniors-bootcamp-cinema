@@ -1,7 +1,7 @@
 'use client'
 
-import { Logo } from '@/src/components/shared'
-import { useOtpAuth } from '@/src/contexts/user/useOtpAuth'
+import { Logo } from '@/components/shared'
+import { useOtpAuth } from '@/contexts/user/useOtpAuth'
 import { useRouter } from 'next/navigation'
 
 import { OtpCodeStep } from './_components/OtpCodeStep'

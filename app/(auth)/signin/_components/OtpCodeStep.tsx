@@ -1,6 +1,6 @@
 'use client'
 
-import { Button, TextField } from '@/src/components/ui'
+import { Button, TextField } from '@/components/ui'
 import { useOtpCredential, useTimer } from '@siberiacancode/reactuse'
 import { ChevronLeftIcon } from 'lucide-react'
 import { useState } from 'react'

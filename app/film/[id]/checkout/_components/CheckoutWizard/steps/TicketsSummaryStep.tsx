@@ -2,7 +2,7 @@
 
 import type { FC } from 'react'
 
-import { Button } from '@/src/components/ui'
+import { Button } from '@/components/ui'
 import { useIntl } from 'react-intl'
 
 import type { CreatePaymentTicketsDto, Film, FilmScheduleSeance, Seat } from '@generated/api'

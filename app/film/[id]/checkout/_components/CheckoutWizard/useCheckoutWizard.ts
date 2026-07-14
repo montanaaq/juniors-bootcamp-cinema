@@ -1,4 +1,4 @@
-import type { DebitCardFormValues, PersonFormValues } from '@/src/schemas'
+import type { DebitCardFormValues, PersonFormValues } from '@/schemas'
 
 import { useMutation, useStep } from '@siberiacancode/reactuse'
 import { useState } from 'react'

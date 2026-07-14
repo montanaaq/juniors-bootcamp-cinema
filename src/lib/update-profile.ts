@@ -1,6 +1,6 @@
 import type { ProfileUpdateValues } from '../schemas'
 
-import { patchApiUsersProfile, type User } from '@/generated/api'
+import { patchApiUsersProfile, type User } from '@generated/api'
 
 export const updateProfile = async (phone: User['phone'], values: ProfileUpdateValues) => {
   const { ...profile } = values

@@ -1,6 +1,6 @@
 'use client'
 
-import { cn } from '@/src/lib/utils'
+import { cn } from '@/lib/utils'
 
 interface TextFieldProps extends React.ComponentProps<'input'> {
   label: string

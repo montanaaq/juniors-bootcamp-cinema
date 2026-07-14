@@ -1,5 +1,5 @@
 'use server'
-import { AUTHORIZATION_TOKEN } from '@/src/constants'
+import { AUTHORIZATION_TOKEN } from '@/constants'
 import { cookies } from 'next/headers'
 
 import { postApiUsersSignin } from '@generated/api'

@@ -1,4 +1,4 @@
-import { getFilmByIdOrNotFound, getFilmScheduleById } from '@/src/lib'
+import { getFilmByIdOrNotFound, getFilmScheduleById } from '@/lib'
 import { notFound } from 'next/navigation'
 
 import { CheckoutWizard } from './_components/CheckoutWizard/CheckoutWizard'

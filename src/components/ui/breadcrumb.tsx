@@ -1,4 +1,4 @@
-import { cn } from '@/src/lib/utils'
+import { cn } from '@/lib/utils'
 import { ChevronRight, MoreHorizontal } from 'lucide-react'
 import { Slot } from 'radix-ui'
 import * as React from 'react'

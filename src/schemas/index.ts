@@ -1,6 +1,6 @@
-import type { User } from '@/generated/api'
-
 import * as v from 'valibot'
+
+import type { User } from '@generated/api'
 
 // when buy tickets person schemas
 export const personSchema = v.object({

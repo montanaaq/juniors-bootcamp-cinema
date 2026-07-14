@@ -3,7 +3,7 @@
 import type { Theme } from './ThemeContext'
 import type { ReactNode } from 'react'
 
-import { THEME_STORAGE_KEY } from '@/src/constants'
+import { THEME_STORAGE_KEY } from '@/constants'
 import { getCookie, setCookie, usePreferredColorScheme } from '@siberiacancode/reactuse'
 import { useLayoutEffect, useMemo, useState } from 'react'
 

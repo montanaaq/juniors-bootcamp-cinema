@@ -3,17 +3,17 @@ import type { Metadata } from 'next'
 import './globals.css'
 import type { ReactNode } from 'react'
 
-import { AUTHORIZATION_TOKEN, THEME_STORAGE_KEY } from '@/src/constants'
-import { Providers } from '@/src/contexts/Providers'
-import { parseThemeCookie, resolveTheme } from '@/src/contexts/theme/utils'
-import i18n from '@/src/i18n/messages.json'
-import { cn } from '@/src/lib/utils'
+import { AUTHORIZATION_TOKEN, THEME_STORAGE_KEY } from '@/constants'
+import { Providers } from '@/contexts/Providers'
+import { parseThemeCookie, resolveTheme } from '@/contexts/theme/utils'
+import i18n from '@/i18n/messages.json'
+import { cn } from '@/lib/utils'
 import { Nunito, Pixelify_Sans } from 'next/font/google'
 import { cookies } from 'next/headers'
 
 import { getApiUsersSession } from '@generated/api'
 
-import { Footer } from './_components/layout/Footer/Footer'
+import Footer from './_components/layout/Footer/Footer'
 import Header from './_components/layout/Header/Header'
 
 const locale = i18n.defaultLocale as keyof typeof i18n.messages

@@ -2,9 +2,9 @@
 
 import type { FC } from 'react'
 
-import { Logo } from '@/src/components/shared'
-import { ThemeToggle } from '@/src/components/shared'
-import { Button, IconButton } from '@/src/components/ui'
+import { Logo } from '@/components/shared'
+import { ThemeToggle } from '@/components/shared'
+import { Button, IconButton } from '@/components/ui'
 import { LogOutIcon, TicketIcon, UserIcon } from 'lucide-react'
 import Link from 'next/link'
 
