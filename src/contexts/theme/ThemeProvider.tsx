@@ -3,12 +3,11 @@
 import type { Theme } from './ThemeContext'
 import type { ReactNode } from 'react'
 
-import { useLocalStorage, usePreferredColorScheme } from '@siberiacancode/reactuse'
+import { THEME_STORAGE_KEY } from '@/src/constants'
+import { getCookie, setCookie, usePreferredColorScheme } from '@siberiacancode/reactuse'
 import { useLayoutEffect, useMemo, useState } from 'react'
 
 import { ThemeContext } from './ThemeContext'
-
-const THEME_STORAGE_KEY = 'theme'
 
 const getSystemTheme = () => {
   if (typeof window === 'undefined') return 'light'
@@ -25,27 +24,27 @@ export interface ThemeProviderProps {
 }
 
 export const ThemeProvider = ({ children }: ThemeProviderProps) => {
-  const [mounted, setMounted] = useState(false)
   const colorScheme = usePreferredColorScheme()
-  const themeStorage = useLocalStorage<Theme>(THEME_STORAGE_KEY, 'system')
-  const theme = themeStorage.value ?? 'system'
-  const activeTheme = mounted ? getTheme(theme) : 'light'
-  const setTheme = (theme: Theme) => {
-    themeStorage.set(theme)
-  }
+
+  const [theme, setTheme] = useState<Theme>('system')
+  const [activeTheme, setActiveTheme] = useState<'dark' | 'light'>('light')
 
   useLayoutEffect(() => {
-    setMounted(true)
+    const storedTheme = (getCookie(THEME_STORAGE_KEY) as Theme | undefined) ?? 'system'
+    setTheme(storedTheme)
+    setActiveTheme(getTheme(storedTheme))
   }, [])
 
   useLayoutEffect(() => {
-    if (!mounted) return
-
     const root = document.documentElement
+    const nextActiveTheme = getTheme(theme)
+
+    setActiveTheme(nextActiveTheme)
+    setCookie(THEME_STORAGE_KEY, theme, { path: '/' })
 
     root.classList.remove('light', 'dark')
-    root.classList.add(activeTheme)
-  }, [mounted, activeTheme, colorScheme])
+    root.classList.add(nextActiveTheme)
+  }, [theme, colorScheme])
 
   const animate = async (x: number, y: number, theme: Theme) => {
     if (!document.startViewTransition) {

@@ -3,8 +3,9 @@ import type { Metadata } from 'next'
 import './globals.css'
 import type { ReactNode } from 'react'
 
-import { AUTHORIZATION_TOKEN } from '@/src/constants'
+import { AUTHORIZATION_TOKEN, THEME_STORAGE_KEY } from '@/src/constants'
 import { Providers } from '@/src/contexts/Providers'
+import { parseThemeCookie, resolveTheme } from '@/src/contexts/theme/utils'
 import i18n from '@/src/i18n/messages.json'
 import { cn } from '@/src/lib/utils'
 import { Nunito, Pixelify_Sans } from 'next/font/google'
@@ -39,6 +40,7 @@ export default async function RootLayout({
 }>) {
   const cookieStore = await cookies()
   const token = cookieStore.get(AUTHORIZATION_TOKEN)?.value
+  const initialTheme = parseThemeCookie(cookieStore.get(THEME_STORAGE_KEY)?.value)
 
   const user = token
     ? await getApiUsersSession({ headers: { authorization: `Bearer ${token}` } })
@@ -49,7 +51,14 @@ export default async function RootLayout({
   return (
     <html
       lang="ru"
-      className={cn('h-full', 'antialiased', nunito.variable, pixelifySans.variable, 'font-sans')}
+      className={cn(
+        'h-full',
+        'antialiased',
+        nunito.variable,
+        pixelifySans.variable,
+        'font-sans',
+        resolveTheme(initialTheme)
+      )}
     >
       <head>
         <link href="/favicon.ico" rel="icon" sizes="any" />
