@@ -1,3 +1,9 @@
+import type { Metadata } from 'next'
+
+export const metadata: Metadata = {
+  title: 'Страница не найдена'
+}
+
 const NotFound = () => {
   return (
     <div className="py-10">

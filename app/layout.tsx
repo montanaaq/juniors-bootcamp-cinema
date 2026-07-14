@@ -29,8 +29,15 @@ const pixelifySans = Pixelify_Sans({
 })
 
 export const metadata: Metadata = {
-  title: 'Juniors Bootcamp Cinema',
-  description: 'Online cinema for juniorsbootcamp.ru'
+  title: {
+    default: 'Juniors Bootcamp Cinema',
+    template: '%s — Juniors Bootcamp Cinema'
+  },
+  description: 'Онлайн-кинотеатр для juniorsbootcamp.ru',
+  robots: {
+    index: false,
+    follow: false
+  }
 }
 
 export default async function RootLayout({

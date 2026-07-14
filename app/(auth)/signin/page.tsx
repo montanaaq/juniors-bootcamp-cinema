@@ -1,5 +1,7 @@
 'use client'
 
+import type { Metadata } from 'next'
+
 import { Logo } from '@/components/shared'
 import { useOtpAuth } from '@/contexts/user/useOtpAuth'
 import { useRouter } from 'next/navigation'
@@ -7,7 +9,11 @@ import { useRouter } from 'next/navigation'
 import { OtpCodeStep } from './_components/OtpCodeStep'
 import { PhoneStep } from './_components/PhoneStep'
 
-const LoginPage = () => {
+export const metadata: Metadata = {
+  title: 'Вход в аккаунт'
+}
+
+const SignInPage = () => {
   const router = useRouter()
   const { step, retryDelay, requestOtp, resendOtp, verifyCode, backToPhone, otpMutation } =
     useOtpAuth()
@@ -36,4 +42,4 @@ const LoginPage = () => {
   )
 }
 
-export default LoginPage
+export default SignInPage

@@ -1,3 +1,5 @@
+import type { Metadata } from 'next'
+
 import { getFilmByIdOrNotFound, getFilmScheduleById } from '@/lib'
 import { notFound } from 'next/navigation'
 
@@ -10,6 +12,13 @@ interface CheckoutPageProps {
     time?: string
     hall?: string
   }>
+}
+
+export async function generateMetadata({ params }: CheckoutPageProps): Promise<Metadata> {
+  const { id } = await params
+  const film = await getFilmByIdOrNotFound(id)
+
+  return { title: `Оформление билетов — ${film.name}` }
 }
 
 const CheckoutPage = async ({ params, searchParams }: CheckoutPageProps) => {

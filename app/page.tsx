@@ -1,8 +1,15 @@
+import type { Metadata } from 'next'
+
 import { getTodayFilms } from '@/lib'
 import { cn } from '@/lib/utils'
 import { notFound } from 'next/navigation'
 
 import FilmCard from './_components/FilmCard/FilmCard'
+
+export const metadata: Metadata = {
+  title: 'Афиша фильмов',
+  description: 'Расписание сеансов и билеты в кино на сегодня'
+}
 
 const Home = async () => {
   const todayFilms = (await getTodayFilms()) ?? notFound()

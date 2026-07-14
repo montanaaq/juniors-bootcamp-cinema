@@ -1,3 +1,4 @@
+import type { Metadata } from 'next'
 import type { FC } from 'react'
 
 import { CheckIcon } from 'lucide-react'
@@ -7,6 +8,11 @@ import { getApiCinemaOrders } from '@generated/api'
 
 interface OrderPageProps {
   params: Promise<{ id: string }>
+}
+
+export const metadata: Metadata = {
+  title: 'Заказ оплачен',
+  robots: { index: false, follow: false }
 }
 
 const OrderPage: FC<OrderPageProps> = async ({ params }) => {
