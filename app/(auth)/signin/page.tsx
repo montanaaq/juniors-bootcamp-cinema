@@ -4,6 +4,7 @@ import type { Metadata } from 'next'
 
 import { Logo } from '@/components/shared'
 import { useOtpAuth } from '@/contexts/user/useOtpAuth'
+import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 
 import { OtpCodeStep } from './_components/OtpCodeStep'
@@ -26,7 +27,9 @@ const SignInPage = () => {
 
   return (
     <section className="mx-auto flex flex-col items-center justify-center max-w-xs h-[calc(100vh-var(--header-height)-8rem)] gap-12">
-      <Logo />
+      <Link href="/">
+        <Logo />
+      </Link>
       {step === 1 ? (
         <PhoneStep onSubmit={requestOtp} isLoading={otpMutation.isLoading} />
       ) : (

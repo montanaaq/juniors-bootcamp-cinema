@@ -1,7 +1,5 @@
 'use client'
 
-import type { Metadata } from 'next'
-
 import { Button, TextField } from '@/components/ui'
 import { signOutAction } from '@/contexts/user/actions'
 import { useUser } from '@/contexts/user/useUser'
@@ -14,9 +12,6 @@ import { useForm } from 'react-hook-form'
 
 import { formatPhone } from './_components/utils'
 
-export const metadata: Metadata = {
-  title: 'Личный кабинет'
-}
 const ProfilePage = () => {
   const { user, setUser } = useUser()
   const router = useRouter()

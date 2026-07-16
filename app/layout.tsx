@@ -7,14 +7,10 @@ import { AUTHORIZATION_TOKEN, THEME_STORAGE_KEY } from '@/constants'
 import { Providers } from '@/contexts/Providers'
 import { parseThemeCookie, resolveTheme } from '@/contexts/theme/utils'
 import i18n from '@/i18n/messages.json'
+import { getSessionUser } from '@/lib'
 import { cn } from '@/lib/utils'
 import { Nunito, Pixelify_Sans } from 'next/font/google'
 import { cookies } from 'next/headers'
-
-import { getApiUsersSession } from '@generated/api'
-
-import Footer from './_components/layout/Footer/Footer'
-import Header from './_components/layout/Header/Header'
 
 const locale = i18n.defaultLocale as keyof typeof i18n.messages
 
@@ -49,11 +45,7 @@ export default async function RootLayout({
   const token = cookieStore.get(AUTHORIZATION_TOKEN)?.value
   const initialTheme = parseThemeCookie(cookieStore.get(THEME_STORAGE_KEY)?.value)
 
-  const user = token
-    ? await getApiUsersSession({ headers: { authorization: `Bearer ${token}` } })
-        .then(response => (response.data.success ? response.data.user : null))
-        .catch(() => null)
-    : null
+  const user = token ? await getSessionUser(token) : null
 
   return (
     <html
@@ -78,9 +70,7 @@ export default async function RootLayout({
           locale={locale}
           messages={i18n.messages[locale]}
         >
-          <Header />
           {children}
-          <Footer />
         </Providers>
       </body>
     </html>

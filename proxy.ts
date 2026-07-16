@@ -5,7 +5,9 @@ import { getApiUsersSession } from '@generated/api'
 
 const isAuthenticated = async (token: string) => {
   try {
-    const { data } = await getApiUsersSession({ headers: { authorization: `Bearer ${token}` } })
+    const { data } = await getApiUsersSession({
+      headers: { authorization: `Bearer ${token}` }
+    })
     return data.success
   } catch {
     return false
