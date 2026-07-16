@@ -26,3 +26,17 @@ pre-commit:
     lint:
       glob: '*.{js,jsx,ts,tsx}'
       run: pnpm lint
+
+pre-push:
+  parallel: true
+  commands:
+    types:
+      glob: '*.{ts,tsx}'
+      run: pnpm types
+    format:
+      glob: '*.{js,jsx,ts,tsx,json,css,scss,md}'
+      run: pnpm format
+      stage_fixed: true
+    lint:
+      glob: '*.{js,jsx,ts,tsx}'
+      run: pnpm lint
