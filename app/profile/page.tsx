@@ -8,7 +8,6 @@ import { useUser } from '@/contexts/user/useUser'
 import { updateProfile } from '@/lib'
 import { profileUpdateSchema, toPersonFormValues, type ProfileUpdateValues } from '@/schemas'
 import { valibotResolver } from '@hookform/resolvers/valibot'
-import { useIsomorphicLayoutEffect } from '@siberiacancode/reactuse'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
@@ -18,15 +17,10 @@ import { formatPhone } from './_components/utils'
 export const metadata: Metadata = {
   title: 'Личный кабинет'
 }
-
 const ProfilePage = () => {
   const { user, setUser } = useUser()
   const router = useRouter()
   const [isSubmitting, setIsSubmitting] = useState(false)
-
-  useIsomorphicLayoutEffect(() => {
-    if (!user) router.replace('/signin')
-  }, [user])
 
   const {
     register,
@@ -37,19 +31,19 @@ const ProfilePage = () => {
     values: user ? toPersonFormValues(user) : undefined
   })
 
-  if (!user) return null
-
   const onSignOut = async () => {
     await signOutAction()
     setUser(null)
     router.push('/signin')
   }
+
   const onSubmit = async (values: ProfileUpdateValues) => {
     setIsSubmitting(true)
-    const data = await updateProfile(user?.phone, values)
-    if (data) setUser({ ...user, ...data })
+    const data = await updateProfile(user!.phone, values)
+    if (data) setUser({ ...user!, ...data })
     setIsSubmitting(false)
   }
+
   return (
     <section className="w-[60%] py-16 flex flex-col gap-6">
       <h1 className="font-bold text-2xl">Профиль</h1>
@@ -65,7 +59,7 @@ const ProfilePage = () => {
           {...register('lastname')}
         />
 
-        <TextField label="Телефон" readOnly disabled value={formatPhone(user.phone)} />
+        <TextField label="Телефон" readOnly disabled value={formatPhone(user!.phone)} />
 
         <TextField
           label="Имя"
