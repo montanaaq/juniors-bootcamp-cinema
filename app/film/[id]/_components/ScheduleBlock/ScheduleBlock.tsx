@@ -30,12 +30,12 @@ export const ScheduleBlock: FC<FilmScheduleProps> = ({ filmId, filmSchedule }) =
 
   const hallGroups = groupSeancesByHall(selectedSchedule)
 
-  const handleDateChange = (date: string) => {
+  const onDateChange = (date: string) => {
     setSelectedDate(date)
     setSelectedSlot(null)
   }
 
-  const handleSlotClick = (slot: SelectedSlot) => {
+  const onSlotClick = (slot: SelectedSlot) => {
     setSelectedSlot(currentSlot => (currentSlot?.id === slot.id ? null : slot))
   }
 
@@ -54,7 +54,7 @@ export const ScheduleBlock: FC<FilmScheduleProps> = ({ filmId, filmSchedule }) =
 
   return (
     <section className="flex min-w-0 flex-col gap-8 rounded-16 bg-background flex-1 lg:flex-none lg:w-1/2">
-      <Tabs value={selectedDate} onValueChange={handleDateChange}>
+      <Tabs value={selectedDate} onValueChange={onDateChange}>
         <TabsList className="flex max-w-full justify-start overflow-x-auto">
           {filmSchedule.map(schedule => {
             const formattedDate = formatScheduleDate(schedule.date)
@@ -94,7 +94,7 @@ export const ScheduleBlock: FC<FilmScheduleProps> = ({ filmId, filmSchedule }) =
                         variant={isSelected ? 'primary' : 'secondary'}
                         className="h-13 w-28 gap-2 font-extrabold"
                         aria-pressed={isSelected}
-                        onClick={() => handleSlotClick(seance)}
+                        onClick={() => onSlotClick(seance)}
                       >
                         <span>{seance.time}</span>
                         {isSelected && (

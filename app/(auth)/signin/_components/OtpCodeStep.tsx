@@ -9,16 +9,16 @@ import type { OtpResponse, SignInResponse } from '@generated/api'
 
 interface OtpCodeStepProps {
   retryDelay: number
-  onSubmit: (code: number) => Promise<SignInResponse>
-  onResend: () => Promise<OtpResponse>
+  onVerify: (code: number) => Promise<SignInResponse>
+  resendOtp: () => Promise<OtpResponse>
   onBack: () => void
   isLoading: boolean
 }
 
 export const OtpCodeStep = ({
   retryDelay,
-  onSubmit,
-  onResend,
+  onVerify,
+  resendOtp,
   onBack,
   isLoading
 }: OtpCodeStepProps) => {
@@ -30,7 +30,7 @@ export const OtpCodeStep = ({
 
   const submitCode = async (value: string) => {
     setError(null)
-    const result = await onSubmit(+value)
+    const result = await onVerify(+value)
     if (!result.success) setError(result.reason ?? 'Неверный код')
   }
 
@@ -42,16 +42,16 @@ export const OtpCodeStep = ({
     }
   })
 
-  const handleChange = (value: string) => {
+  const onChange = (value: string) => {
     const digits = value.replace(/\D/g, '').slice(0, 6)
     setCode(digits)
 
     if (digits.length === 6) submitCode(digits)
   }
 
-  const handleResend = async () => {
+  const onResend = async () => {
     setError(null)
-    const result = await onResend()
+    const result = await resendOtp()
     if (!result.success) setError(result.reason ?? 'Не удалось отправить код повторно')
   }
 
@@ -70,13 +70,13 @@ export const OtpCodeStep = ({
         maxLength={6}
         autoComplete="one-time-code"
         value={code}
-        onChange={event => handleChange(event.target.value)}
+        onChange={event => onChange(event.target.value)}
         error={error ?? undefined}
       />
       <Button onClick={() => submitCode(code)} disabled={isLoading || code.length < 6} size="lg">
         Войти
       </Button>
-      <Button variant="secondary" onClick={handleResend} disabled={timer.active} size="lg">
+      <Button variant="secondary" onClick={onResend} disabled={timer.active} size="lg">
         {timer.active
           ? `Повторить через ${timer.minutes}:${String(timer.seconds).padStart(2, '0')}`
           : 'Отправить код повторно'}

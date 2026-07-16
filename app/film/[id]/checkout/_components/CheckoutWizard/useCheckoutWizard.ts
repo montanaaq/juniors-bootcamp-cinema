@@ -41,6 +41,22 @@ export const useCheckoutWizard = (
     stepper.next()
   }
 
+  const onConflict = (result: PaymentResponse) => {
+    const paidSeats = result.order.tickets?.filter(ticket => ticket.status === 'paid') ?? []
+
+    if (paidSeats.length) {
+      const isTaken = (row: number, column: number) =>
+        paidSeats.some(seat => seat.row === row && seat.column === column)
+
+      setSelectedSeats(current =>
+        current.filter((_, index) => !isTaken(tickets[index].row, tickets[index].column))
+      )
+      setTickets(current => current.filter(ticket => !isTaken(ticket.row, ticket.column)))
+      setConflictTickets(paidSeats)
+      stepper.set(1)
+    }
+  }
+
   const onPaymentSubmit = async (values: DebitCardFormValues) => {
     if (!person) return
 
@@ -59,32 +75,17 @@ export const useCheckoutWizard = (
       })
 
       if (result.success === false) {
-        handleConflict(result)
+        onConflict(result)
       }
     } catch (error) {
       const response = (error as { response?: { data?: PaymentResponse } })?.response?.data
 
       if (response?.success === false) {
-        handleConflict(response)
+        onConflict(response)
       }
     }
   }
 
-  const handleConflict = (result: PaymentResponse) => {
-    const paidSeats = result.order.tickets?.filter(ticket => ticket.status === 'paid') ?? []
-
-    if (paidSeats.length) {
-      const isTaken = (row: number, column: number) =>
-        paidSeats.some(seat => seat.row === row && seat.column === column)
-
-      setSelectedSeats(current =>
-        current.filter((_, index) => !isTaken(tickets[index].row, tickets[index].column))
-      )
-      setTickets(current => current.filter(ticket => !isTaken(ticket.row, ticket.column)))
-      setConflictTickets(paidSeats)
-      stepper.set(1)
-    }
-  }
   const paymentError =
     paymentMutation.error?.message ||
     (paymentMutation.data?.success === false && !conflictTickets.length

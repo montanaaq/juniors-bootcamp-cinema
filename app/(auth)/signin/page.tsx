@@ -18,7 +18,7 @@ const SignInPage = () => {
   const { step, retryDelay, requestOtp, resendOtp, verifyCode, backToPhone, otpMutation } =
     useOtpAuth()
 
-  const handleVerify = async (code: number) => {
+  const onVerify = async (code: number) => {
     const result = await verifyCode(code)
     if (result.success) router.push('/profile')
     return result
@@ -32,8 +32,8 @@ const SignInPage = () => {
       ) : (
         <OtpCodeStep
           retryDelay={retryDelay}
-          onSubmit={handleVerify}
-          onResend={resendOtp}
+          onVerify={onVerify}
+          resendOtp={resendOtp}
           onBack={backToPhone}
           isLoading={false}
         />

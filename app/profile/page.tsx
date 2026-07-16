@@ -39,7 +39,7 @@ const ProfilePage = () => {
 
   if (!user) return null
 
-  const handleSignOut = async () => {
+  const onSignOut = async () => {
     await signOutAction()
     setUser(null)
     router.push('/signin')
@@ -104,7 +104,7 @@ const ProfilePage = () => {
         type="button"
         variant="primary"
         size="lg"
-        onClick={handleSignOut}
+        onClick={onSignOut}
         className="md:w-[calc(50%-1rem)]"
       >
         Выйти

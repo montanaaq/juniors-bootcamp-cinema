@@ -16,6 +16,9 @@ commit-msg:
 pre-commit:
   parallel: true
   commands:
+    types:
+      glob: '*.{ts,tsx}'
+      run: pnpm types
     format:
       glob: '*.{js,jsx,ts,tsx,json,css,scss,md}'
       run: pnpm format
