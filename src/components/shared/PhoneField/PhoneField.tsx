@@ -1,8 +1,7 @@
 'use client'
 
 import { TextField } from '@/components/ui'
-import { useMask } from '@siberiacancode/reactuse'
-import { useEffect } from 'react'
+import { useDidUpdate, useMask } from '@siberiacancode/reactuse'
 import { useController, type Control, type FieldPath, type FieldValues } from 'react-hook-form'
 
 interface PhoneFieldProps<TFieldValues extends FieldValues> {
@@ -39,14 +38,15 @@ export const PhoneField = <TFieldValues extends FieldValues>({
 
   const phone = phoneMask.watch()
 
-  useEffect(() => {
-    const digits = `8${phone.value.replace(/\D/g, '').slice(-10)}`
+  useDidUpdate(() => {
+    const rawDigits = phone.value.replace(/\D/g, '')
+    const localDigits = rawDigits.startsWith('7') ? rawDigits.slice(1) : rawDigits
+    const digits = localDigits.length > 0 ? `8${localDigits.slice(0, 10)}` : ''
 
     if (digits !== field.value) {
       field.onChange(digits)
     }
   }, [phone.value])
-
   return (
     <TextField
       label={required ? 'Телефон*' : 'Телефон'}

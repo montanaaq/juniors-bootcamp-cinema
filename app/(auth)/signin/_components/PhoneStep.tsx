@@ -2,13 +2,17 @@
 
 import { PhoneField } from '@/components/shared'
 import { Button } from '@/components/ui'
+import { valibotResolver } from '@hookform/resolvers/valibot'
 import { useForm } from 'react-hook-form'
+import * as v from 'valibot'
 
 import type { OtpResponse } from '@generated/api'
 
-interface PhoneFormValues {
-  phone: string
-}
+export const phoneFormSchema = v.object({
+  phone: v.pipe(v.string(), v.trim(), v.regex(/^8\d{10}$/, 'Введите корректный номер телефона'))
+})
+
+export type PhoneFormValues = v.InferOutput<typeof phoneFormSchema>
 
 interface PhoneStepProps {
   onSubmit: (phone: string) => Promise<OtpResponse>
@@ -21,7 +25,10 @@ export const PhoneStep = ({ onSubmit, isLoading }: PhoneStepProps) => {
     handleSubmit,
     setError,
     formState: { errors }
-  } = useForm<PhoneFormValues>({ defaultValues: { phone: '' } })
+  } = useForm<PhoneFormValues>({
+    resolver: valibotResolver(phoneFormSchema),
+    defaultValues: { phone: '' }
+  })
 
   const submit = handleSubmit(async values => {
     const result = await onSubmit(values.phone)

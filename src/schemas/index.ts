@@ -7,7 +7,7 @@ export const personSchema = v.object({
   firstname: v.pipe(v.string(), v.trim(), v.minLength(1, 'Укажите имя')),
   lastname: v.pipe(v.string(), v.trim(), v.minLength(1, 'Укажите фамилию')),
   middlename: v.pipe(v.string(), v.trim(), v.minLength(1, 'Укажите отчество')),
-  phone: v.pipe(v.string(), v.trim(), v.minLength(1, 'Укажите телефон')),
+  phone: v.pipe(v.string(), v.trim(), v.regex(/^8\d{10}$/, 'Введите корректный номер телефона')),
   city: v.pipe(v.string(), v.trim(), v.minLength(1, 'Укажите город')),
   email: v.pipe(v.string(), v.trim(), v.email('Некорректная почта'))
 })
