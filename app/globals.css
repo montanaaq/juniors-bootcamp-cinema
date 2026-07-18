@@ -452,8 +452,13 @@ html {
   scrollbar-gutter: stable;
 }
 
+body[data-scroll-locked] {
+  scrollbar-gutter: stable !important;
+}
+
 body {
   font-family: var(--font-nunito), var(--font-pixelify-sans), sans-serif;
+  scrollbar-gutter: stable;
 }
 
 ::view-transition-old(root),

@@ -1,13 +1,22 @@
 'use client'
 
-import { Button, TextField } from '@/components/ui'
+import {
+  Button,
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogFooter,
+  DialogTitle,
+  TextField
+} from '@/components/ui'
 import { signOutAction } from '@/contexts/user/actions'
 import { useUser } from '@/contexts/user/useUser'
 import { updateProfile } from '@/lib'
 import { profileUpdateSchema, toPersonFormValues, type ProfileUpdateValues } from '@/schemas'
 import { valibotResolver } from '@hookform/resolvers/valibot'
+import { CircleHelpIcon } from 'lucide-react'
 import { useRouter } from 'next/navigation'
-import { useState } from 'react'
+import { startTransition, useState } from 'react'
 import { useForm } from 'react-hook-form'
 
 import { formatPhone } from './_components/utils'
@@ -16,6 +25,7 @@ const ProfilePage = () => {
   const { user, setUser } = useUser()
   const router = useRouter()
   const [isSubmitting, setIsSubmitting] = useState(false)
+  const [isSignOutOpen, setIsSignOutOpen] = useState(false)
 
   const {
     register,
@@ -28,8 +38,10 @@ const ProfilePage = () => {
 
   const onSignOut = async () => {
     await signOutAction()
-    setUser(null)
-    router.push('/signin')
+    startTransition(() => {
+      setUser(null)
+      router.push('/')
+    })
   }
 
   const onSubmit = async (values: ProfileUpdateValues) => {
@@ -93,11 +105,35 @@ const ProfilePage = () => {
         type="button"
         variant="primary"
         size="lg"
-        onClick={onSignOut}
         className="md:w-[calc(50%-1rem)]"
+        onClick={() => setIsSignOutOpen(true)}
       >
         Выйти
       </Button>
+
+      <Dialog open={isSignOutOpen} onOpenChange={setIsSignOutOpen}>
+        <DialogContent>
+          <div className="flex flex-col items-center gap-4">
+            <div className="flex size-16 items-center justify-center rounded-full bg-primary text-primary-fg">
+              <CircleHelpIcon size={28} />
+            </div>
+            <DialogTitle className="text-center">
+              Вы уверены, что хотите выйти из профиля?
+            </DialogTitle>
+          </div>
+
+          <DialogFooter>
+            <DialogClose asChild>
+              <Button type="button" variant="secondary" size="lg" className="w-full">
+                Отменить
+              </Button>
+            </DialogClose>
+            <Button type="button" size="lg" className="w-full" onClick={onSignOut}>
+              Выйти
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </section>
   )
 }

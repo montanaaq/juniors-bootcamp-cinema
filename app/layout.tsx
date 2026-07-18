@@ -63,15 +63,17 @@ export default async function RootLayout({
         <link href="/favicon.ico" rel="icon" sizes="any" />
         <meta content="noindex, nofollow" name="robots" />
       </head>
-      <body className="flex flex-1 flex-col px-4 py-8 sm:px-8 lg:px-16 lg:py-12 xl:px-30 xl:py-16">
-        <Providers
-          user={user}
-          defaultLocale={locale}
-          locale={locale}
-          messages={i18n.messages[locale]}
-        >
-          {children}
-        </Providers>
+      <body className="flex flex-1 flex-col">
+        <div className="flex flex-1 flex-col px-4 py-8 sm:px-8 lg:px-16 lg:py-12 xl:px-30 xl:py-16">
+          <Providers
+            user={user}
+            defaultLocale={locale}
+            locale={locale}
+            messages={i18n.messages[locale]}
+          >
+            {children}
+          </Providers>
+        </div>
       </body>
     </html>
   )
