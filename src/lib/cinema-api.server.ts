@@ -23,10 +23,21 @@ const isApiNotFoundError = (error: unknown) =>
 const isApiUnavailableError = (error: unknown) =>
   hasResponseStatus(error) && error.response.status >= 500
 
-export const getTodayFilms = async (): Promise<Film[] | null> => {
-  const response = await getApiCinemaFilms()
+interface FetchApiOptions {
+  notFoundOn404?: boolean
+}
+
+const fetchApi = async <T>(
+  promise: Promise<{ data: T }>,
+  { notFoundOn404 = false }: FetchApiOptions = {}
+): Promise<T | null> =>
+  promise
     .then(response => response.data)
     .catch(error => {
+      if (notFoundOn404 && isApiNotFoundError(error)) {
+        notFound()
+      }
+
       if (isApiUnavailableError(error)) {
         return null
       }
@@ -34,11 +45,10 @@ export const getTodayFilms = async (): Promise<Film[] | null> => {
       throw error
     })
 
-  if (!response?.success) {
-    return null
-  }
+export const getTodayFilms = async (): Promise<Film[] | null> => {
+  const response = await fetchApi(getApiCinemaFilms())
 
-  return response.films
+  return response?.success ? response.films : null
 }
 
 export const getFilmByIdOrNotFound = async (id: string): Promise<Film> => {
@@ -48,21 +58,11 @@ export const getFilmByIdOrNotFound = async (id: string): Promise<Film> => {
     notFound()
   }
 
-  const response = await getApiCinemaFilmByFilmId({
-    path: {
-      filmId
-    }
+  const response = await fetchApi(getApiCinemaFilmByFilmId({ path: { filmId } }), {
+    notFoundOn404: true
   })
-    .then(response => response.data)
-    .catch(error => {
-      if (isApiNotFoundError(error)) {
-        notFound()
-      }
 
-      throw error
-    })
-
-  if (!response.success || !response.film) {
+  if (!response?.success || !response.film) {
     notFound()
   }
 
@@ -70,10 +70,19 @@ export const getFilmByIdOrNotFound = async (id: string): Promise<Film> => {
 }
 
 export const getFilmScheduleById = async (filmId: string): Promise<FilmSchedule[]> => {
-  const response = await getApiCinemaFilmByFilmIdSchedule({
-    path: { filmId }
+  const response = await fetchApi(getApiCinemaFilmByFilmIdSchedule({ path: { filmId } }), {
+    notFoundOn404: true
   })
-  const schedules = response.data.schedules as unknown
 
-  return Array.isArray(schedules) ? (schedules as FilmSchedule[]) : [schedules as FilmSchedule]
+  if (!response?.success) {
+    return []
+  }
+
+  const schedules = response.schedules as unknown
+
+  return Array.isArray(schedules)
+    ? (schedules as FilmSchedule[])
+    : schedules
+      ? [schedules as FilmSchedule]
+      : []
 }
