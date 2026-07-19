@@ -74,7 +74,7 @@ export const getFilmScheduleById = async (filmId: string): Promise<FilmSchedule[
     notFoundOn404: true
   })
 
-  if (!response?.success) {
+  if (!response) {
     return []
   }
 
