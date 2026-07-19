@@ -8,11 +8,11 @@ import * as v from 'valibot'
 
 import type { OtpResponse } from '@generated/api'
 
-export const phoneFormSchema = v.object({
+const phoneFormSchema = v.object({
   phone: v.pipe(v.string(), v.trim(), v.regex(/^8\d{10}$/, 'Введите корректный номер телефона'))
 })
 
-export type PhoneFormValues = v.InferOutput<typeof phoneFormSchema>
+type PhoneFormValues = v.InferOutput<typeof phoneFormSchema>
 
 interface PhoneStepProps {
   onSubmit: (phone: string) => Promise<OtpResponse>

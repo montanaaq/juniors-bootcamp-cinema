@@ -1,9 +1,7 @@
 'use client'
 
-import { Button } from '@/components/ui'
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui'
+import { Button, Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui'
 import { cn } from '@/lib/utils'
-import { useMap } from '@siberiacancode/reactuse'
 import { TicketIcon, XIcon } from 'lucide-react'
 import Link from 'next/link'
 import { type CSSProperties } from 'react'
@@ -11,9 +9,10 @@ import { useIntl } from 'react-intl'
 
 import type { CreatePaymentTicketsDto, FilmHall, FilmScheduleSeance, Seat } from '@generated/api'
 
-import SummaryField from '../components/SummaryField'
-import { HELP_LABELS } from '../constants/help-labels.const'
-import { formatDate } from '../utils/format-date'
+import SummaryField from '../../components/SummaryField'
+import { HELP_LABELS } from '../../constants/help-labels.const'
+import { formatDate } from '../../utils'
+import { useSeatsStep } from './useSeatsStep'
 
 interface SeatsStepProps {
   filmName: string
@@ -37,42 +36,26 @@ export const SeatsStep = ({
   onSubmit
 }: SeatsStepProps) => {
   const intl = useIntl()
-  const tickets = useMap<string, CreatePaymentTicketsDto>(
-    initialTickets.map(t => [`${t.row}-${t.column}`, t])
-  )
-  const isConflict = (row: number, column: number) =>
-    conflictSeats?.some(seat => seat.row === row && seat.column === column)
-
-  const toggleTicket = (ticket: CreatePaymentTicketsDto) => {
-    const key = `${ticket.row}-${ticket.column}`
-    if (tickets.has(key)) {
-      tickets.remove(key)
-    } else {
-      tickets.set(key, ticket)
-    }
-  }
-
-  const findTicket = (ticket: Pick<CreatePaymentTicketsDto, 'row' | 'column'>) =>
-    tickets.value.get(`${ticket.row}-${ticket.column}`)
-
-  const selectedSeats = [...tickets.value.values()]
-    .map(ticket => hall.places[ticket.row - 1]?.[ticket.column - 1] as Seat | undefined)
-    .filter((seat): seat is Seat => !!seat)
-
-  const totalPrice = selectedSeats.reduce((sum, seat) => sum + seat.price, 0)
-
-  const selectedSeatsLabel = [...tickets.value.values()]
-    .map(ticket => `${ticket.row} ряд ${ticket.column} место`)
-    .join(', ')
+  const {
+    tickets,
+    ticketsCount,
+    isConflict,
+    toggleTicket,
+    findTicket,
+    selectedSeats,
+    selectedSeatsLabel,
+    totalPrice
+  } = useSeatsStep({ hall, initialTickets, conflictSeats })
 
   const summaryItems = [
-    { label: 'Количество билетов', value: String(tickets.size) },
+    { label: 'Количество билетов', value: String(ticketsCount) },
     { label: 'Фильм', value: filmName },
     { label: 'Дата и время', value: `${formatDate(selectedDate)}, ${selectedSlot.time}` },
     { label: 'Зал', value: intl.formatMessage({ id: `hall.name.${hall.name}` }) },
     { label: 'Места', value: selectedSeatsLabel || 'Места не выбраны' },
     { label: 'Итого', value: `${totalPrice} ₽` }
   ]
+
   return (
     <div className="flex justify-between gap-4">
       <div className="w-[55%] flex gap-6 flex-col py-6">
@@ -92,7 +75,6 @@ export const SeatsStep = ({
                   const base = { row: rowIndex + 1, column: columnIndex + 1 }
                   const selected = findTicket(base)
                   const isBlocked = seat.type === 'blocked'
-                  const price = seat.price
                   const conflict = isConflict(base.row, base.column)
 
                   return (
@@ -102,7 +84,7 @@ export const SeatsStep = ({
                           type="button"
                           disabled={isBlocked}
                           aria-pressed={!!selected}
-                          aria-label={`${base.row} ряд, ${base.column} место, ${price} рублей`}
+                          aria-label={`${base.row} ряд, ${base.column} место, ${seat.price} рублей`}
                           onClick={() => toggleTicket(base)}
                           className={cn(
                             'size-5 rounded-4 border border-seat-available bg-seat-available transition hover:border-seat-available-hover',
@@ -120,7 +102,7 @@ export const SeatsStep = ({
                       <TooltipContent className="flex items-center gap-2 px-3 py-2 rounded-12">
                         <div className="flex flex-col gap-0.5">
                           <div className="flex justify-between items-center h-full">
-                            <span className="text-base">{price} ₽</span>
+                            <span className="text-base">{seat.price} ₽</span>
                             <button
                               type="button"
                               aria-label="Убрать место"
@@ -165,8 +147,8 @@ export const SeatsStep = ({
           <Button
             type="button"
             size="lg"
-            disabled={!tickets.size}
-            onClick={() => onSubmit(selectedSeats, [...tickets.value.values()])}
+            disabled={!ticketsCount}
+            onClick={() => onSubmit(selectedSeats, tickets)}
             className="w-full"
           >
             Продолжить

@@ -8,7 +8,7 @@ import type { Film, FilmScheduleSeance } from '@generated/api'
 import { StepperNav } from './components/StepperNav'
 import { PaymentStep } from './steps/PaymentStep'
 import { PersonStep } from './steps/PersonStep'
-import { SeatsStep } from './steps/SeatsStep'
+import { SeatsStep } from './steps/SeatsStep/SeatsStep'
 import { TicketsSummaryStep } from './steps/TicketsSummaryStep'
 import { useCheckoutWizard } from './useCheckoutWizard'
 
