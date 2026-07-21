@@ -1,14 +1,14 @@
 'use client'
 
-import type { FC } from 'react'
-
-import { Logo } from '@/components/shared'
-import { ThemeToggle } from '@/components/shared'
+import { Logo, SignoutDialog, ThemeToggle } from '@/components/shared'
 import { Button, IconButton } from '@/components/ui'
+import { useUser } from '@/contexts/user/useUser'
 import { LogOutIcon, TicketIcon, UserIcon } from 'lucide-react'
 import Link from 'next/link'
 
-const Header: FC = () => {
+const Header = () => {
+  const { user } = useUser()
+
   return (
     <header className="flex h-(--header-height) w-full items-center justify-between rounded-full border border-border-hard p-4 dark:border-border-soft">
       <Link href="/">
@@ -24,10 +24,14 @@ const Header: FC = () => {
             <UserIcon size={16} />
           </Link>
         </IconButton>
-        <Button variant="primary" className="ml-2 font-bold!">
-          Выйти
-          <LogOutIcon size={16} />
-        </Button>
+        {user && (
+          <SignoutDialog>
+            <Button variant="primary" className="ml-2 font-bold!">
+              Выйти
+              <LogOutIcon size={16} />
+            </Button>
+          </SignoutDialog>
+        )}
       </div>
     </header>
   )
