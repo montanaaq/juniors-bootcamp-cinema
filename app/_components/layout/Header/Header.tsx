@@ -26,7 +26,7 @@ const Header = () => {
         </IconButton>
         {user && (
           <SignoutDialog>
-            <Button variant="primary" className="ml-2 font-bold!">
+            <Button variant="primary" className="ml-2">
               Выйти
               <LogOutIcon size={16} />
             </Button>

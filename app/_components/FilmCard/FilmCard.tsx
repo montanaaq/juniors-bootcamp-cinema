@@ -45,7 +45,7 @@ const FilmCard: FC<FilmCardProps> = ({ film, isFeatured }) => {
         <p
           className={cn(
             'mt-1 truncate text-muted-fg capitalize',
-            isFeatured ? 'text-lg leading-6' : 'text-sm leading-6'
+            isFeatured ? 'text-lg leading-6' : 'text-base leading-6'
           )}
         >
           {film.genres.join(', ')}
