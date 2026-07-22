@@ -12,7 +12,7 @@ export const metadata: Metadata = {
 const OrdersPage = async () => {
   const orders = await getOrdersOrEmpty()
   const tickets = orders.flatMap(order =>
-    order.tickets.map(ticket => ({ ...ticket, filmName: order.film.name }))
+    order.tickets.map(ticket => ({ ...ticket, filmName: order.film.name, orderId: order._id }))
   )
 
   return (

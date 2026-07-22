@@ -30,7 +30,12 @@ const TicketsList = ({ tickets }: TicketsListProps) => {
       <TabsContent value={tab} className="flex flex-wrap gap-6">
         {visibleTickets.length ? (
           visibleTickets.map((ticket, index) => (
-            <TicketCard key={ticket._id} ticket={ticket} number={index + 1} />
+            <TicketCard
+              key={ticket._id}
+              ticket={ticket}
+              number={index + 1}
+              orderId={ticket.orderId}
+            />
           ))
         ) : (
           <p className="text-muted-fg">Билетов пока нет</p>

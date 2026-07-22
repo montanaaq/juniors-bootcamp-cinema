@@ -1,18 +1,43 @@
-import { formatDate } from '@/app/(main)/film/[id]/checkout/_components/CheckoutWizard/utils'
-import { Button } from '@/components/ui'
-import { CircleCheckIcon, TicketIcon } from 'lucide-react'
+'use client'
 
-import type { CinemaTicket } from '@generated/api'
+import { formatDate } from '@/app/(main)/film/[id]/checkout/_components/CheckoutWizard/utils'
+import {
+  Button,
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogFooter,
+  DialogTitle
+} from '@/components/ui'
+import { useMutation } from '@siberiacancode/reactuse'
+import { CircleCheckIcon, CircleHelpIcon, TicketIcon } from 'lucide-react'
+import { useState } from 'react'
+
+import { putApiCinemaOrdersCancel, type CinemaTicket } from '@generated/api'
 
 import { STATUS_LABEL } from './constants/status-label.const'
 
 interface TicketCardProps {
   ticket: CinemaTicket
+  orderId: string
   number: number
 }
 
-export const TicketCard = ({ ticket, number }: TicketCardProps) => {
-  const isPaid = ticket.status === 'paid'
+export const TicketCard = ({ ticket, orderId, number }: TicketCardProps) => {
+  const [isRefunded, setIsRefunded] = useState(false)
+  const [isRefundOpen, setIsRefundOpen] = useState(false)
+
+  const isPaid = ticket.status === 'paid' && !isRefunded
+
+  const cancelMutation = useMutation((orderId: string) =>
+    putApiCinemaOrdersCancel({ body: { orderId } }).then(response => response.data)
+  )
+
+  const onRefund = async () => {
+    await cancelMutation.mutateAsync(orderId)
+    setIsRefunded(true)
+    setIsRefundOpen(false)
+  }
 
   return (
     <div className="flex w-82 flex-col gap-2 rounded-16 border border-border-hard p-6 dark:border-border-soft">
@@ -44,10 +69,55 @@ export const TicketCard = ({ ticket, number }: TicketCardProps) => {
       </div>
 
       {isPaid && (
-        <Button variant="secondary" size="lg" className="w-full font-medium">
+        <Button
+          variant="secondary"
+          size="lg"
+          className="w-full font-medium"
+          onClick={() => setIsRefundOpen(true)}
+        >
           Вернуть билет
         </Button>
       )}
+
+      <Dialog open={isRefundOpen} onOpenChange={setIsRefundOpen}>
+        <DialogContent className="px-4 py-6">
+          <div className="flex flex-col items-center gap-4">
+            <div className="flex size-16 items-center justify-center rounded-full bg-primary text-primary-fg">
+              <CircleHelpIcon size={28} />
+            </div>
+            <DialogTitle className="text-center">Вы уверены, что хотите вернуть билет?</DialogTitle>
+          </div>
+
+          {cancelMutation.error && (
+            <p className="text-center text-danger">
+              {cancelMutation.error.message || 'Не удалось вернуть билет'}
+            </p>
+          )}
+
+          <DialogFooter className="flex flex-col gap-4">
+            <Button
+              type="button"
+              variant="secondary"
+              size="lg"
+              className="w-full"
+              disabled={cancelMutation.isLoading}
+              onClick={onRefund}
+            >
+              {cancelMutation.isLoading ? 'Возврат...' : 'Вернуть'}
+            </Button>
+            <DialogClose asChild>
+              <Button
+                type="button"
+                size="lg"
+                className="w-full"
+                disabled={cancelMutation.isLoading}
+              >
+                Отменить
+              </Button>
+            </DialogClose>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </div>
   )
 }

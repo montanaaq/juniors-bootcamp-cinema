@@ -8,7 +8,8 @@ import {
   getApiCinemaFilmByFilmId,
   getApiCinemaFilmByFilmIdSchedule,
   getApiCinemaFilms,
-  getApiCinemaOrders
+  getApiCinemaOrders,
+  putApiCinemaOrdersCancel
 } from '@generated/api'
 
 const hasResponseStatus = (error: unknown): error is { response: { status: number } } =>
@@ -94,9 +95,7 @@ export const getOrderByIdOrNotFound = async (id: string) => {
   const cookieStore = await cookies()
   const token = cookieStore.get(AUTHORIZATION_TOKEN)?.value
 
-  if (!token) {
-    notFound()
-  }
+  if (!token) notFound()
 
   const response = await fetchApi(
     getApiCinemaOrders({ headers: { authorization: `Bearer ${token}` } }),
@@ -104,9 +103,7 @@ export const getOrderByIdOrNotFound = async (id: string) => {
   )
   const order = response?.orders.find(order => order._id === id)
 
-  if (!order) {
-    notFound()
-  }
+  if (!order) notFound()
 
   return order
 }
@@ -115,9 +112,7 @@ export const getOrdersOrEmpty = async () => {
   const cookieStore = await cookies()
   const token = cookieStore.get(AUTHORIZATION_TOKEN)?.value
 
-  if (!token) {
-    notFound()
-  }
+  if (!token) notFound()
 
   const response = await fetchApi(
     getApiCinemaOrders({ headers: { authorization: `Bearer ${token}` } }),
@@ -127,4 +122,19 @@ export const getOrdersOrEmpty = async () => {
   if (!response?.success) return []
 
   return response?.orders
+}
+
+export const putOrderCancel = async (orderId: string) => {
+  const cookieStore = await cookies()
+  const token = cookieStore.get(AUTHORIZATION_TOKEN)?.value
+
+  if (!token) notFound()
+
+  const response = await putApiCinemaOrdersCancel({
+    body: {
+      orderId: orderId
+    }
+  })
+
+  return response
 }
