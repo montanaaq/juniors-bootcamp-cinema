@@ -97,6 +97,8 @@
 
   /* Status */
   --color-danger: var(--color-danger);
+  --color-success: var(--color-success);
+  --color-success-fg: var(--color-success-fg);
 
   --radius-2: 0.125rem;
   --radius-4: 0.25rem;
@@ -276,7 +278,7 @@
   --color-accent-tertiary-fg: var(--color-neutral-50);
 
   --color-accent-quaternary-light: var(--color-pink-200);
-  --color-accent-quaternary: var(--color-pink-600);
+  --color-accent-quaternary: var(--color-pink-500);
   --color-accent-quaternary-hover: var(--color-pink-700);
   --color-accent-quaternary-fg: var(--color-neutral-50);
 
@@ -295,6 +297,8 @@
 
   /* Status */
   --color-danger: var(--color-red-500);
+  --color-success: var(--color-green-200);
+  --color-success-fg: var(--color-green-800);
 
   --default-font-family: var(--font-nunito);
   --default-pixelify-font-family: var(--font-pixelify-sans);
@@ -424,6 +428,8 @@
 
     /* Status - ярче для видимости */
     --color-danger: var(--color-red-400);
+    --color-success: var(--color-green-800);
+    --color-success-fg: var(--color-green-200);
   }
 }
 

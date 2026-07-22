@@ -1,18 +1,12 @@
 import type { Metadata } from 'next'
 
-import { Logo } from '@/components/shared'
-import Link from 'next/link'
-
 export const metadata: Metadata = {
   title: 'Страница не найдена'
 }
 
 const NotFound = () => {
   return (
-    <div className="flex flex-col items-center justify-center gap-6">
-      <Link href="/">
-        <Logo />
-      </Link>
+    <div className="py-10">
       <h1 className="font-bold text-2xl">Страница не найдена</h1>
     </div>
   )

@@ -1,6 +1,7 @@
 import type { DebitCardFormValues, PersonFormValues } from '@/schemas'
 
 import { useMutation, useStep } from '@siberiacancode/reactuse'
+import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 
 import type {
@@ -19,6 +20,7 @@ export const useCheckoutWizard = (
   selectedSlot: FilmScheduleSeance
 ) => {
   const stepper = useStep(4)
+  const router = useRouter()
   const [selectedSeats, setSelectedSeats] = useState<Seat[]>([])
   const [tickets, setTickets] = useState<CreatePaymentTicketsDto[]>([])
   const [person, setPerson] = useState<PersonFormValues | null>(null)
@@ -74,9 +76,12 @@ export const useCheckoutWizard = (
         tickets: tickets.map(({ row, column }) => ({ row, column }))
       })
 
-      if (result.success === false) {
+      if (!result.success) {
         onConflict(result)
+        return
       }
+
+      router.push(`/order/${result.order._id}`)
     } catch (error) {
       const response = (error as { response?: { data?: PaymentResponse } })?.response?.data
 

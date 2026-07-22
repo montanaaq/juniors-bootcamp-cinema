@@ -1,3 +1,5 @@
+import { AUTHORIZATION_TOKEN } from '@/constants'
+import { cookies } from 'next/headers'
 import { notFound } from 'next/navigation'
 
 import {
@@ -5,7 +7,8 @@ import {
   type FilmSchedule,
   getApiCinemaFilmByFilmId,
   getApiCinemaFilmByFilmIdSchedule,
-  getApiCinemaFilms
+  getApiCinemaFilms,
+  getApiCinemaOrders
 } from '@generated/api'
 
 const hasResponseStatus = (error: unknown): error is { response: { status: number } } =>
@@ -85,4 +88,43 @@ export const getFilmScheduleById = async (filmId: string): Promise<FilmSchedule[
     : schedules
       ? [schedules as FilmSchedule]
       : []
+}
+
+export const getOrderByIdOrNotFound = async (id: string) => {
+  const cookieStore = await cookies()
+  const token = cookieStore.get(AUTHORIZATION_TOKEN)?.value
+
+  if (!token) {
+    notFound()
+  }
+
+  const response = await fetchApi(
+    getApiCinemaOrders({ headers: { authorization: `Bearer ${token}` } }),
+    { notFoundOn404: true }
+  )
+  const order = response?.orders.find(order => order._id === id)
+
+  if (!order) {
+    notFound()
+  }
+
+  return order
+}
+
+export const getOrdersOrEmpty = async () => {
+  const cookieStore = await cookies()
+  const token = cookieStore.get(AUTHORIZATION_TOKEN)?.value
+
+  if (!token) {
+    notFound()
+  }
+
+  const response = await fetchApi(
+    getApiCinemaOrders({ headers: { authorization: `Bearer ${token}` } }),
+    { notFoundOn404: true }
+  )
+
+  if (!response?.success) return []
+
+  return response?.orders
 }

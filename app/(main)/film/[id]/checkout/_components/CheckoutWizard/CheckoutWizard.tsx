@@ -1,8 +1,5 @@
 'use client'
 
-import { Button } from '@/components/ui'
-import Link from 'next/link'
-
 import type { Film, FilmScheduleSeance } from '@generated/api'
 
 import { StepperNav } from './components/StepperNav'
@@ -25,26 +22,11 @@ export const CheckoutWizard = ({ film, selectedDate, selectedSlot }: CheckoutWiz
     selectedSeats,
     conflictTickets,
     totalPrice,
-    paymentMutation,
     paymentError,
     onSeatsNext,
     onPersonSubmit,
     onPaymentSubmit
   } = useCheckoutWizard(film, selectedDate, selectedSlot)
-
-  if (paymentMutation.data?.success) {
-    return (
-      <section className="flex w-full flex-col gap-6 rounded-16 bg-secondary p-6">
-        <h1 className="text-3xl font-extrabold">Билеты оплачены</h1>
-        <p className="text-lg text-muted-fg">
-          Заказ создан. Детали покупки доступны в истории заказов.
-        </p>
-        <Button asChild size="lg" className="w-fit">
-          <Link href={`/film/${film.id}`}>Вернуться к фильму</Link>
-        </Button>
-      </section>
-    )
-  }
 
   return (
     <section className="flex w-full flex-col gap-8">

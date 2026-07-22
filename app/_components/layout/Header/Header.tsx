@@ -14,23 +14,35 @@ const Header = () => {
       <Link href="/">
         <Logo />
       </Link>
+
       <div className="flex items-center justify-center gap-4">
         <ThemeToggle />
-        <IconButton rounded variant="secondary">
-          <TicketIcon size={16} />
-        </IconButton>
+
+        {user && (
+          <IconButton rounded variant="secondary" asChild>
+            <Link href="/orders" aria-label="Мои заказы">
+              <TicketIcon size={16} />
+            </Link>
+          </IconButton>
+        )}
+
         <IconButton rounded variant="secondary" asChild>
-          <Link href="/profile">
+          <Link href="/profile" aria-label="Профиль">
             <UserIcon size={16} />
           </Link>
         </IconButton>
-        {user && (
+
+        {user ? (
           <SignoutDialog>
             <Button variant="primary" className="ml-2">
               Выйти
               <LogOutIcon size={16} />
             </Button>
           </SignoutDialog>
+        ) : (
+          <Button asChild variant="primary" className="ml-2">
+            <Link href="/signin">Войти</Link>
+          </Button>
         )}
       </div>
     </header>
