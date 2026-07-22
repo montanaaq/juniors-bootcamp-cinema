@@ -17,9 +17,8 @@ const TicketsList = ({ tickets }: TicketsListProps) => {
   const [tab, setTab] = useState<TicketsTab>('active')
 
   const activeTickets = tickets.filter(ticket => ticket.status === 'paid')
-  const historyTickets = tickets.filter(ticket => ticket.status !== 'paid')
 
-  const visibleTickets = tab === 'active' ? activeTickets : historyTickets
+  const visibleTickets = tab === 'active' ? activeTickets : tickets
 
   return (
     <Tabs value={tab} onValueChange={value => setTab(value as TicketsTab)}>
