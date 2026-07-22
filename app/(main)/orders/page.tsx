@@ -16,7 +16,7 @@ const OrdersPage = async () => {
   )
 
   return (
-    <section className="flex flex-col gap-8 py-10">
+    <section className="flex flex-col gap-6 py-10">
       <h1 className="font-extrabold text-3xl leading-8">История покупки билетов</h1>
       <TicketsList tickets={tickets} />
     </section>

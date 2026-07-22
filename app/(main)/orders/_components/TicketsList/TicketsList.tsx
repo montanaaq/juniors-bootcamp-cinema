@@ -28,12 +28,14 @@ const TicketsList = ({ tickets }: TicketsListProps) => {
         <TabsTrigger value="history">История</TabsTrigger>
       </TabsList>
 
-      <TabsContent value={tab} className="mt-6 flex flex-wrap gap-6">
-        {!visibleTickets.length && <p className="text-muted-fg">Билетов пока нет</p>}
-
-        {visibleTickets.map((ticket, index) => (
-          <TicketCard key={ticket._id} ticket={ticket} number={index + 1} />
-        ))}
+      <TabsContent value={tab} className="flex flex-wrap gap-6">
+        {visibleTickets.length ? (
+          visibleTickets.map((ticket, index) => (
+            <TicketCard key={ticket._id} ticket={ticket} number={index + 1} />
+          ))
+        ) : (
+          <p className="text-muted-fg">Билетов пока нет</p>
+        )}
       </TabsContent>
     </Tabs>
   )
