@@ -3,13 +3,11 @@
 import { SignoutDialog } from '@/components/shared'
 import { Button, TextField } from '@/components/ui'
 import { useUser } from '@/contexts/user/useUser'
-import { updateProfile } from '@/lib'
+import { formatPhone, updateProfile } from '@/lib'
 import { profileUpdateSchema, toPersonFormValues, type ProfileUpdateValues } from '@/schemas'
 import { valibotResolver } from '@hookform/resolvers/valibot'
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
-
-import { formatPhone } from './_components/utils'
 
 const ProfilePage = () => {
   const { user, setUser } = useUser()

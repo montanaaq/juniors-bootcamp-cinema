@@ -4,19 +4,24 @@ import type { FC } from 'react'
 
 import { PhoneField } from '@/components/shared'
 import { Button, TextField } from '@/components/ui'
+import { useUser } from '@/contexts/user/useUser'
+import { toRuPhoneDigits } from '@/lib'
 import { personSchema, type PersonFormValues } from '@/schemas'
 import { valibotResolver } from '@hookform/resolvers/valibot'
 import { useForm } from 'react-hook-form'
 
 interface PersonStepProps {
-  defaultValues?: Partial<PersonFormValues>
   onSubmit: (values: PersonFormValues) => void
   onBack: () => void
 }
 
 export const PERSON_STEP_FORM_ID = 'person-step-form'
 
-export const PersonStep: FC<PersonStepProps> = ({ defaultValues, onSubmit, onBack }) => {
+export const PersonStep: FC<PersonStepProps> = ({ onSubmit, onBack }) => {
+  const { user } = useUser()
+
+  const phoneDefault = user ? toRuPhoneDigits(user.phone) : ''
+
   const {
     register,
     control,
@@ -25,8 +30,12 @@ export const PersonStep: FC<PersonStepProps> = ({ defaultValues, onSubmit, onBac
   } = useForm<PersonFormValues>({
     resolver: valibotResolver(personSchema),
     defaultValues: {
-      phone: '',
-      ...defaultValues
+      firstname: user?.firstname ?? '',
+      lastname: user?.lastname ?? '',
+      middlename: user?.middlename ?? '',
+      email: user?.email ?? '',
+      city: user?.city ?? '',
+      phone: phoneDefault
     }
   })
 
@@ -59,7 +68,7 @@ export const PersonStep: FC<PersonStepProps> = ({ defaultValues, onSubmit, onBac
           required
           name="phone"
           control={control}
-          defaultValue={defaultValues?.phone}
+          defaultValue={phoneDefault}
           error={errors.phone?.message}
         />
         <TextField

@@ -15,8 +15,15 @@ type TicketsTab = 'active' | 'history'
 
 const TicketsList = ({ tickets }: TicketsListProps) => {
   const [tab, setTab] = useState<TicketsTab>('active')
+  const [refundedIds, setRefundedIds] = useState<Set<string>>(new Set())
 
-  const activeTickets = tickets.filter(ticket => ticket.status === 'paid')
+  const onRefund = (ticketId: string) => {
+    setRefundedIds(current => new Set(current).add(ticketId))
+  }
+
+  const activeTickets = tickets.filter(
+    ticket => ticket.status === 'paid' && !refundedIds.has(ticket._id)
+  )
 
   const visibleTickets = tab === 'active' ? activeTickets : tickets
 
@@ -35,6 +42,8 @@ const TicketsList = ({ tickets }: TicketsListProps) => {
               ticket={ticket}
               number={index + 1}
               orderId={ticket.orderId}
+              isRefunded={refundedIds.has(ticket._id)}
+              onRefund={onRefund}
             />
           ))
         ) : (

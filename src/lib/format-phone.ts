@@ -4,3 +4,5 @@ export const formatPhone = (phone: string) => {
 
   return `+7 (${digits.slice(0, 3)}) ${digits.slice(3, 6)}-${digits.slice(6, 8)}-${digits.slice(8, 10)}`
 }
+
+export const toRuPhoneDigits = (phone: string) => phone.replace(/\D/g, '').slice(-10)

@@ -9,7 +9,7 @@ import {
   DialogFooter,
   DialogTitle
 } from '@/components/ui'
-import { cn } from '@/lib'
+import { cn } from '@/lib/utils'
 import { useMutation } from '@siberiacancode/reactuse'
 import { BanIcon, CircleCheckIcon, CircleHelpIcon, TicketIcon } from 'lucide-react'
 import { useState } from 'react'
@@ -22,10 +22,11 @@ interface TicketCardProps {
   ticket: CinemaTicket
   orderId: string
   number: number
+  isRefunded: boolean
+  onRefund: (ticketId: string) => void
 }
 
-export const TicketCard = ({ ticket, orderId, number }: TicketCardProps) => {
-  const [isRefunded, setIsRefunded] = useState(false)
+export const TicketCard = ({ ticket, orderId, number, isRefunded, onRefund }: TicketCardProps) => {
   const [isRefundOpen, setIsRefundOpen] = useState(false)
 
   const isPaid = ticket.status === 'paid' && !isRefunded
@@ -34,9 +35,9 @@ export const TicketCard = ({ ticket, orderId, number }: TicketCardProps) => {
     putApiCinemaOrdersCancel({ body: { orderId } }).then(response => response.data)
   )
 
-  const onRefund = async () => {
+  const onRefundConfirm = async () => {
     await cancelMutation.mutateAsync(orderId)
-    setIsRefunded(true)
+    onRefund(ticket._id)
     setIsRefundOpen(false)
   }
 
@@ -54,7 +55,7 @@ export const TicketCard = ({ ticket, orderId, number }: TicketCardProps) => {
 
       <span
         className={cn(
-          'inline-flex w-fit items-center gap-2 rounded-full px-4 py-2 font-bold',
+          'inline-flex w-fit items-center gap-4 rounded-full px-4 py-2 font-bold',
           isPaid ? 'bg-success' : 'bg-danger/20'
         )}
       >
@@ -109,7 +110,7 @@ export const TicketCard = ({ ticket, orderId, number }: TicketCardProps) => {
               size="lg"
               className="w-full"
               disabled={cancelMutation.isLoading}
-              onClick={onRefund}
+              onClick={onRefundConfirm}
             >
               {cancelMutation.isLoading ? 'Возврат...' : 'Вернуть'}
             </Button>
