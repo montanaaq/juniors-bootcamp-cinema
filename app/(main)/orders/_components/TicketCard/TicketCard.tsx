@@ -9,8 +9,9 @@ import {
   DialogFooter,
   DialogTitle
 } from '@/components/ui'
+import { cn } from '@/lib'
 import { useMutation } from '@siberiacancode/reactuse'
-import { CircleCheckIcon, CircleHelpIcon, TicketIcon } from 'lucide-react'
+import { BanIcon, CircleCheckIcon, CircleHelpIcon, TicketIcon } from 'lucide-react'
 import { useState } from 'react'
 
 import { putApiCinemaOrdersCancel, type CinemaTicket } from '@generated/api'
@@ -51,12 +52,19 @@ export const TicketCard = ({ ticket, orderId, number }: TicketCardProps) => {
         </div>
       </div>
 
-      {isPaid && (
-        <span className="inline-flex w-fit items-center gap-4 rounded-full bg-success px-4 py-2 font-bold">
-          {STATUS_LABEL[ticket.status]}
-          <CircleCheckIcon size={16} strokeWidth={2.5} />
-        </span>
-      )}
+      <span
+        className={cn(
+          'inline-flex w-fit items-center gap-2 rounded-full px-4 py-2 font-bold',
+          isPaid ? 'bg-success' : 'bg-danger/20'
+        )}
+      >
+        {isPaid ? STATUS_LABEL.paid : STATUS_LABEL.cancelled}
+        {isPaid ? (
+          <CircleCheckIcon size={18} strokeWidth={2.5} />
+        ) : (
+          <BanIcon size={18} strokeWidth={2.5} />
+        )}
+      </span>
 
       <div className="flex flex-col font-medium text-lg">
         <span className="text-muted-fg">Дата и время</span>
