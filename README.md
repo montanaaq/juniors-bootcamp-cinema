@@ -6,7 +6,15 @@
 
 ## Select your schedule
 
-<img title="Main Page" alt="Juniors Bootcamp Cinema" src="/screenshots/SelectSchedule.jpeg">
+<img title="Select schedule" alt="Select schedule" src="/screenshots/SelectSchedule.jpeg">
+
+## Profile page
+
+<img title="Profile page" alt="Juniors Bootcamp Cinema" src="/screenshots/profile.jpeg">
+
+## Tickets selection
+
+<img title="Tickets" alt="Tickets selection" src="/screenshots/tickets.jpeg">
 
 ## Стек
 
