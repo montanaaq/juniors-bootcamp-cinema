@@ -57,8 +57,6 @@ export default async function RootLayout({
       )}
     >
       <head>
-        <link href="/favicon.ico" rel="icon" sizes="any" />
-        <meta content="noindex, nofollow" name="robots" />
         <ThemeScript />
       </head>
       <body className="flex flex-1 flex-col">

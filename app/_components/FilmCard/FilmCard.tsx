@@ -3,6 +3,7 @@ import type { FC } from 'react'
 import { ActorAvatar } from '@/components/shared'
 import { Button } from '@/components/ui'
 import { cn } from '@/lib/utils'
+import Image from 'next/image'
 import Link from 'next/link'
 
 import type { Film } from '@generated/api'
@@ -23,10 +24,17 @@ const FilmCard: FC<FilmCardProps> = ({ film, isFeatured }) => {
           isFeatured ? 'aspect-[1.4/1]' : 'aspect-[1.45/1]'
         )}
       >
-        <img
+        <Image
           src={`https://juniorsbootcamp.ru/api${film.img}`}
           alt={film.originalName}
-          className="h-full w-full object-contain"
+          className="object-contain"
+          loading="eager"
+          fill
+          sizes={
+            isFeatured
+              ? '(min-width: 1024px) 50vw, 100vw'
+              : '(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw'
+          }
         />
         <span className="absolute top-4 left-4 rounded-full bg-accent-primary px-3 py-1.5 font-bold text-accent-primary-fg text-lg shadow-sm sm:top-4 sm:left-4">
           {film.userRatings.kinopoisk}
