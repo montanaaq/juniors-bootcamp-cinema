@@ -9,7 +9,7 @@ import { parseThemeCookie, resolveTheme } from '@/contexts/theme/utils'
 import i18n from '@/i18n/messages.json'
 import { getSessionUser } from '@/lib'
 import { cn } from '@/lib/utils'
-import { Nunito, Pixelify_Sans } from 'next/font/google'
+import { Nunito } from 'next/font/google'
 import { cookies } from 'next/headers'
 
 import ThemeScript from './_scripts/ThemeScript/ThemeScript'
@@ -18,11 +18,6 @@ const locale = i18n.defaultLocale as keyof typeof i18n.messages
 
 const nunito = Nunito({
   variable: '--font-nunito',
-  subsets: ['latin', 'cyrillic']
-})
-
-const pixelifySans = Pixelify_Sans({
-  variable: '--font-pixelify-sans',
   subsets: ['latin', 'cyrillic']
 })
 
@@ -56,7 +51,6 @@ export default async function RootLayout({
         'h-full',
         'antialiased',
         nunito.variable,
-        pixelifySans.variable,
         'font-sans',
         resolveTheme(initialTheme)
       )}

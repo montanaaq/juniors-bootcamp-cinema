@@ -114,7 +114,6 @@
 
   --font-nunito: var(--font-nunito);
   --font-parisienne: var(--font-parisienne);
-  --font-pixelify-sans: var(--font-pixelify-sans);
   --font-overpass-mono: var(--font-overpass-mono);
 }
 
@@ -301,7 +300,6 @@
   --color-success-fg: var(--color-green-800);
 
   --default-font-family: var(--font-nunito);
-  --default-pixelify-font-family: var(--font-pixelify-sans);
   --default-transition-duration: 300ms;
 
   --header-height: 4rem;
@@ -463,7 +461,7 @@ body[data-scroll-locked] {
 }
 
 body {
-  font-family: var(--font-nunito), var(--font-pixelify-sans), sans-serif;
+  font-family: var(--font-nunito), sans-serif;
   scrollbar-gutter: stable;
 }
 
