@@ -13,7 +13,7 @@ export const postApiUsersSignin = ({
 }: PostApiUsersSigninRequestParams): Promise<
   ApicraftFetchesResponse<UsersControllerSigninResponse>
 > =>
-  instance.call('POST', '/api/users/signin', {
+  instance.call('POST', '/api/v1/users/signin', {
     body,
     ...config
   })

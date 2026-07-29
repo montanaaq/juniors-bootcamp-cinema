@@ -14,7 +14,7 @@ export const getApiUsersSession = ({
 }: GetApiUsersSessionRequestParams = {}): Promise<
   ApicraftFetchesResponse<UsersControllerSessionResponse>
 > =>
-  instance.call('GET', '/api/users/session', {
+  instance.call('GET', '/api/v1/users/session', {
     headers,
     ...config
   })

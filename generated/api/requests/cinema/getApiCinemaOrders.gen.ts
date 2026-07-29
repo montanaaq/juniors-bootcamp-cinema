@@ -17,7 +17,7 @@ export const getApiCinemaOrders = ({
 }: GetApiCinemaOrdersRequestParams = {}): Promise<
   ApicraftFetchesResponse<CinemaControllerGetCinemaOrdersResponse>
 > =>
-  instance.call('GET', '/api/cinema/orders', {
+  instance.call('GET', '/api/v1/cinema/orders', {
     headers,
     ...config
   })

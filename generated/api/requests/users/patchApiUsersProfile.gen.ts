@@ -18,7 +18,7 @@ export const patchApiUsersProfile = ({
 }: PatchApiUsersProfileRequestParams): Promise<
   ApicraftFetchesResponse<UsersControllerUpdateProfileResponse>
 > =>
-  instance.call('PATCH', '/api/users/profile', {
+  instance.call('PATCH', '/api/v1/users/profile', {
     body,
     headers,
     ...config

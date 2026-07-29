@@ -14,6 +14,6 @@ export const getApiCinemaFilmByFilmId = ({
 }: GetApiCinemaFilmByFilmIdRequestParams): Promise<
   ApicraftFetchesResponse<CinemaControllerGetFilmResponse>
 > =>
-  instance.call('GET', `/api/cinema/film/${path.filmId}`, {
+  instance.call('GET', `/api/v1/cinema/film/${path.filmId}`, {
     ...config
   })

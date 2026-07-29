@@ -556,7 +556,7 @@ export type OtpsControllerCreateOtpData = {
   body: CreateOtpDto
   path?: never
   query?: never
-  url: '/api/auth/otp'
+  url: '/api/v1/auth/otp'
 }
 
 export type OtpsControllerCreateOtpResponses = {
@@ -573,7 +573,7 @@ export type UsersControllerSigninData = {
   body: SignInDto
   path?: never
   query?: never
-  url: '/api/users/signin'
+  url: '/api/v1/users/signin'
 }
 
 export type UsersControllerSigninResponses = {
@@ -593,7 +593,7 @@ export type UsersControllerUpdateProfileData = {
   }
   path?: never
   query?: never
-  url: '/api/users/profile'
+  url: '/api/v1/users/profile'
 }
 
 export type UsersControllerUpdateProfileResponses = {
@@ -613,7 +613,7 @@ export type UsersControllerSessionData = {
   }
   path?: never
   query?: never
-  url: '/api/users/session'
+  url: '/api/v1/users/session'
 }
 
 export type UsersControllerSessionResponses = {
@@ -630,7 +630,7 @@ export type CinemaControllerGetCinemaTodayData = {
   body?: never
   path?: never
   query?: never
-  url: '/api/cinema/films'
+  url: '/api/v1/cinema/films'
 }
 
 export type CinemaControllerGetCinemaTodayResponses = {
@@ -652,7 +652,7 @@ export type CinemaControllerGetFilmData = {
     filmId: string
   }
   query?: never
-  url: '/api/cinema/film/{filmId}'
+  url: '/api/v1/cinema/film/{filmId}'
 }
 
 export type CinemaControllerGetFilmResponses = {
@@ -674,7 +674,7 @@ export type CinemaControllerGetFilmScheduleData = {
     filmId: string
   }
   query?: never
-  url: '/api/cinema/film/{filmId}/schedule'
+  url: '/api/v1/cinema/film/{filmId}/schedule'
 }
 
 export type CinemaControllerGetFilmScheduleResponses = {
@@ -691,7 +691,7 @@ export type CinemaControllerCreateCinemaPaymentData = {
   body: CreateCinemaPaymentDto
   path?: never
   query?: never
-  url: '/api/cinema/payment'
+  url: '/api/v1/cinema/payment'
 }
 
 export type CinemaControllerCreateCinemaPaymentResponses = {
@@ -711,7 +711,7 @@ export type CinemaControllerGetCinemaOrdersData = {
   }
   path?: never
   query?: never
-  url: '/api/cinema/orders'
+  url: '/api/v1/cinema/orders'
 }
 
 export type CinemaControllerGetCinemaOrdersResponses = {
@@ -731,7 +731,7 @@ export type CinemaControllerCancelCinemaOrderData = {
   }
   path?: never
   query?: never
-  url: '/api/cinema/orders/cancel'
+  url: '/api/v1/cinema/orders/cancel'
 }
 
 export type CinemaControllerCancelCinemaOrderResponses = {

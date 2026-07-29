@@ -17,7 +17,7 @@ export const postApiCinemaPayment = ({
 }: PostApiCinemaPaymentRequestParams): Promise<
   ApicraftFetchesResponse<CinemaControllerCreateCinemaPaymentResponse>
 > =>
-  instance.call('POST', '/api/cinema/payment', {
+  instance.call('POST', '/api/v1/cinema/payment', {
     body,
     ...config
   })

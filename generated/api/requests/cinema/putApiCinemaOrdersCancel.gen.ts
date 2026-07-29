@@ -18,7 +18,7 @@ export const putApiCinemaOrdersCancel = ({
 }: PutApiCinemaOrdersCancelRequestParams): Promise<
   ApicraftFetchesResponse<CinemaControllerCancelCinemaOrderResponse>
 > =>
-  instance.call('PUT', '/api/cinema/orders/cancel', {
+  instance.call('PUT', '/api/v1/cinema/orders/cancel', {
     body,
     headers,
     ...config

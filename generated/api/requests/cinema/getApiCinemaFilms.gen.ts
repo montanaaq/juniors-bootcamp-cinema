@@ -14,6 +14,6 @@ export type GetApiCinemaFilmsRequestParams =
 export const getApiCinemaFilms = ({ config }: GetApiCinemaFilmsRequestParams = {}): Promise<
   ApicraftFetchesResponse<CinemaControllerGetCinemaTodayResponse>
 > =>
-  instance.call('GET', '/api/cinema/films', {
+  instance.call('GET', '/api/v1/cinema/films', {
     ...config
   })

@@ -13,7 +13,7 @@ export const postApiAuthOtp = ({
 }: PostApiAuthOtpRequestParams): Promise<
   ApicraftFetchesResponse<OtpsControllerCreateOtpResponse>
 > =>
-  instance.call('POST', '/api/auth/otp', {
+  instance.call('POST', '/api/v1/auth/otp', {
     body,
     ...config
   })
