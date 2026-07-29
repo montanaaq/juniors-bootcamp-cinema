@@ -1,6 +1,7 @@
 import type { FC } from 'react'
 
 import { ActorAvatar } from '@/components/shared'
+import Image from 'next/image'
 
 import type { Film } from '@generated/api'
 
@@ -12,10 +13,12 @@ const FilmAbout: FC<FilmAboutProps> = ({ film }) => {
   return (
     <section className="flex flex-col flex-1 min-w-0 lg:flex-none lg:w-1/2">
       <div className="relative overflow-hidden rounded-16 bg-secondary aspect-[1.45/1]">
-        <img
+        <Image
           src={`https://juniorsbootcamp.ru/api${film.img}`}
           alt={film.originalName}
-          className="h-full w-full object-contain self-center"
+          className="object-contain"
+          fill
+          sizes="(min-width: 1024px) 50vw, 100vw"
         />
         <span className="absolute top-4 left-4 rounded-full bg-accent-primary px-3 py-1.5 font-bold text-accent-primary-fg text-lg shadow-sm sm:top-4 sm:left-4">
           {film.userRatings.kinopoisk}
