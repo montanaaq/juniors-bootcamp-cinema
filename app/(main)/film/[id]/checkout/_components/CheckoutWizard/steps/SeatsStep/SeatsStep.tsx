@@ -7,35 +7,27 @@ import Link from 'next/link'
 import { type CSSProperties } from 'react'
 import { useIntl } from 'react-intl'
 
-import type { CreatePaymentTicketsDto, FilmHall, FilmScheduleSeance, Seat } from '@generated/api'
+import type { Seat } from '@generated/api'
 
+import { useCheckout } from '../../../../_contexts'
 import SummaryField from '../../components/SummaryField'
 import { HELP_LABELS } from '../../constants/help-labels.const'
 import { formatDate } from '../../utils'
 import { useSeatsStep } from './useSeatsStep'
 
-interface SeatsStepProps {
-  filmName: string
-  selectedDate: string
-  selectedSlot: FilmScheduleSeance
-  filmId: string
-  hall: FilmHall
-  initialTickets: CreatePaymentTicketsDto[]
-  conflictSeats: CreatePaymentTicketsDto[]
-  onSubmit: (seats: Seat[], tickets: CreatePaymentTicketsDto[]) => void
-}
-
-export const SeatsStep = ({
-  filmName,
-  selectedDate,
-  selectedSlot,
-  filmId,
-  hall,
-  initialTickets,
-  conflictSeats,
-  onSubmit
-}: SeatsStepProps) => {
+export const SeatsStep = () => {
+  const {
+    film,
+    selectedDate,
+    selectedSlot,
+    tickets: initialTickets,
+    conflictTickets,
+    stepper,
+    onSeatsChange,
+    onSeatsNext
+  } = useCheckout()
   const intl = useIntl()
+  const hall = selectedSlot.hall
   const {
     tickets,
     ticketsCount,
@@ -45,16 +37,23 @@ export const SeatsStep = ({
     selectedSeats,
     selectedSeatsLabel,
     totalPrice
-  } = useSeatsStep({ hall, initialTickets, conflictSeats })
+  } = useSeatsStep({
+    hall,
+    initialTickets,
+    conflictSeats: conflictTickets,
+    onChange: onSeatsChange
+  })
 
   const summaryItems = [
     { label: 'Количество билетов', value: String(ticketsCount) },
-    { label: 'Фильм', value: filmName },
+    { label: 'Фильм', value: film.name },
     { label: 'Дата и время', value: `${formatDate(selectedDate)}, ${selectedSlot.time}` },
     { label: 'Зал', value: intl.formatMessage({ id: `hall.name.${hall.name}` }) },
     { label: 'Места', value: selectedSeatsLabel || 'Места не выбраны' },
     { label: 'Итого', value: `${totalPrice} ₽` }
   ]
+
+  if (stepper.currentStep !== 1) return null
 
   return (
     <div className="flex justify-between gap-4">
@@ -140,7 +139,7 @@ export const SeatsStep = ({
         </TooltipProvider>
         <div className="grid grid-cols-2 gap-4">
           <Button variant="secondary" size="lg" asChild className="w-full">
-            <Link href={`/film/${filmId}`} prefetch="auto">
+            <Link href={`/film/${film.id}`} prefetch="auto">
               Назад
             </Link>
           </Button>
@@ -148,7 +147,7 @@ export const SeatsStep = ({
             type="button"
             size="lg"
             disabled={!ticketsCount}
-            onClick={() => onSubmit(selectedSeats, tickets)}
+            onClick={() => onSeatsNext(selectedSeats, tickets)}
             className="w-full"
           >
             Продолжить

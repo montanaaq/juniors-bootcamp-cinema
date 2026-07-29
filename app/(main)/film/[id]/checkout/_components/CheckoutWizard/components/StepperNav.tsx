@@ -12,14 +12,12 @@ import { HomeIcon } from 'lucide-react'
 import Link from 'next/link'
 import { Fragment } from 'react'
 
+import { useCheckout } from '../../../_contexts'
 import { STEPS } from '../constants/steps.const'
 
-interface StepperNavProps {
-  stepId: number
-  onStepChange: (step: number) => void
-}
-
-export const StepperNav = ({ stepId, onStepChange }: StepperNavProps) => {
+export const StepperNav = () => {
+  const { stepper } = useCheckout()
+  const stepId = stepper.currentStep
   const currentStepTitle = STEPS.find(step => step.id === stepId)?.label
   const visibleSTEPS = STEPS.filter(step => step.id <= stepId)
 
@@ -43,7 +41,7 @@ export const StepperNav = ({ stepId, onStepChange }: StepperNavProps) => {
                     <button
                       type="button"
                       className="bg-transparent p-0"
-                      onClick={() => onStepChange(step.id)}
+                      onClick={() => stepper.set(step.id)}
                     >
                       {step.label}
                     </button>

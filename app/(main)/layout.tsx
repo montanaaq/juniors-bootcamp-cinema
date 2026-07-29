@@ -1,6 +1,5 @@
 import type { ReactNode } from 'react'
 
-import Footer from '../_components/layout/Footer/Footer'
 import Header from '../_components/layout/Header/Header'
 
 interface MainLayoutProps {
@@ -12,7 +11,6 @@ const MainLayout = ({ children }: MainLayoutProps) => {
     <>
       <Header />
       {children}
-      <Footer />
     </>
   )
 }

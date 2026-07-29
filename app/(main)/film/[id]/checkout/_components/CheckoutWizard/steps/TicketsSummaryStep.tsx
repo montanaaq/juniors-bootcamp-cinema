@@ -5,32 +5,15 @@ import type { FC } from 'react'
 import { Button } from '@/components/ui'
 import { useIntl } from 'react-intl'
 
-import type { CreatePaymentTicketsDto, Film, FilmScheduleSeance, Seat } from '@generated/api'
-
+import { useCheckout } from '../../../_contexts'
 import SummaryField from '../components/SummaryField'
 import { formatSelectedSeatsLabel, formatDate } from '../utils'
 
-interface TicketsSummaryStepProps {
-  film: Film
-  selectedDate: string
-  selectedSlot: FilmScheduleSeance
-  tickets: CreatePaymentTicketsDto[]
-  seats: Seat[]
-  totalPrice: number
-  onNext: () => void
-  onBack: () => void
-}
-
-export const TicketsSummaryStep: FC<TicketsSummaryStepProps> = ({
-  film,
-  selectedDate,
-  selectedSlot,
-  tickets,
-  totalPrice,
-  onNext,
-  onBack
-}) => {
+export const TicketsSummaryStep: FC = () => {
+  const { film, selectedDate, selectedSlot, tickets, totalPrice, stepper } = useCheckout()
   const intl = useIntl()
+
+  if (stepper.currentStep !== 2) return null
 
   return (
     <div className="w-[60%] flex flex-col gap-4">
@@ -49,10 +32,16 @@ export const TicketsSummaryStep: FC<TicketsSummaryStepProps> = ({
       <SummaryField label="Места" value={formatSelectedSeatsLabel(tickets)} />
       <p className="text-3xl font-bold">Сумма: {totalPrice} ₽</p>
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-        <Button variant="secondary" size="lg" className="w-full" onClick={onBack}>
+        <Button
+          type="button"
+          variant="secondary"
+          size="lg"
+          className="w-full"
+          onClick={stepper.back}
+        >
           Назад
         </Button>
-        <Button type="button" size="lg" onClick={onNext} className="w-full">
+        <Button type="button" size="lg" onClick={stepper.next} className="w-full">
           Купить билеты
         </Button>
       </div>

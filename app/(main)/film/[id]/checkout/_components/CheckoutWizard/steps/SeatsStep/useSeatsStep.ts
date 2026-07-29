@@ -10,9 +10,15 @@ interface UseSeatsStepParams {
   hall: FilmHall
   initialTickets: CreatePaymentTicketsDto[]
   conflictSeats: CreatePaymentTicketsDto[]
+  onChange: (seats: Seat[], tickets: CreatePaymentTicketsDto[]) => void
 }
 
-export const useSeatsStep = ({ hall, initialTickets, conflictSeats }: UseSeatsStepParams) => {
+export const useSeatsStep = ({
+  hall,
+  initialTickets,
+  conflictSeats,
+  onChange
+}: UseSeatsStepParams) => {
   const ticketsMap = useMap<string, CreatePaymentTicketsDto>(
     initialTickets.map(ticket => [`${ticket.row}-${ticket.column}`, ticket])
   )
@@ -24,12 +30,21 @@ export const useSeatsStep = ({ hall, initialTickets, conflictSeats }: UseSeatsSt
 
   const toggleTicket = (ticket: CreatePaymentTicketsDto) => {
     const key = `${ticket.row}-${ticket.column}`
+    const nextTickets = ticketsMap.has(key)
+      ? tickets.filter(current => current.row !== ticket.row || current.column !== ticket.column)
+      : [...tickets, ticket]
 
     if (ticketsMap.has(key)) {
       ticketsMap.remove(key)
     } else {
       ticketsMap.set(key, ticket)
     }
+
+    const nextSeats = nextTickets
+      .map(current => hall.places[current.row - 1]?.[current.column - 1] as Seat | undefined)
+      .filter((seat): seat is Seat => !!seat)
+
+    onChange(nextSeats, nextTickets)
   }
 
   const findTicket = (ticket: Pick<CreatePaymentTicketsDto, 'row' | 'column'>) =>
