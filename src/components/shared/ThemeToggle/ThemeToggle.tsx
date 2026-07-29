@@ -8,9 +8,10 @@ import { MoonIcon, SunIcon } from 'lucide-react'
 
 export const ThemeToggle = () => {
   const { animate, value } = useTheme()
-  const nextTheme = value === 'dark' ? 'light' : 'dark'
-  const label = value === 'dark' ? 'Включить светлую тему' : 'Включить темную тему'
-  const Icon = value === 'dark' ? SunIcon : MoonIcon
+  const isDark = value === 'dark'
+  const nextTheme = isDark ? 'light' : 'dark'
+  const label = isDark ? 'Включить светлую тему' : 'Включить темную тему'
+  const Icon = isDark ? SunIcon : MoonIcon
 
   const toggleTheme = (event: MouseEvent<HTMLButtonElement>) => {
     animate(event.clientX, event.clientY, nextTheme)

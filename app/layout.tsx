@@ -12,6 +12,8 @@ import { cn } from '@/lib/utils'
 import { Nunito, Pixelify_Sans } from 'next/font/google'
 import { cookies } from 'next/headers'
 
+import ThemeScript from './_scripts/ThemeScript/ThemeScript'
+
 const locale = i18n.defaultLocale as keyof typeof i18n.messages
 
 const nunito = Nunito({
@@ -62,6 +64,7 @@ export default async function RootLayout({
       <head>
         <link href="/favicon.ico" rel="icon" sizes="any" />
         <meta content="noindex, nofollow" name="robots" />
+        <ThemeScript />
       </head>
       <body className="flex flex-1 flex-col">
         <div className="flex flex-1 flex-col px-4 py-8 sm:px-8 lg:px-16 lg:py-12 xl:px-30 xl:py-16">
