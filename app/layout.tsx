@@ -47,6 +47,7 @@ export default async function RootLayout({
   return (
     <html
       lang="ru"
+      suppressHydrationWarning
       className={cn(
         'h-full',
         'antialiased',
