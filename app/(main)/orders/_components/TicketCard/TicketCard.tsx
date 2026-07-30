@@ -20,13 +20,13 @@ import { STATUS_LABEL } from './constants/status-label.const'
 
 interface TicketCardProps {
   ticket: CinemaTicket
-  orderId: string
   number: number
   isRefunded: boolean
-  onRefund: (ticketId: string) => void
+  onRefund: (orderId: string) => void
 }
 
-export const TicketCard = ({ ticket, orderId, number, isRefunded, onRefund }: TicketCardProps) => {
+export const TicketCard = ({ ticket, number, isRefunded, onRefund }: TicketCardProps) => {
+  // возврат делаю именно ticket.orderId так как в дизайне можно возвращать билеты по одному, а на бэкенде нельзя возвращать конкретный билет, только заказ целиком
   const [isRefundOpen, setIsRefundOpen] = useState(false)
 
   const isPaid = ticket.status === 'paid' && !isRefunded
@@ -36,8 +36,9 @@ export const TicketCard = ({ ticket, orderId, number, isRefunded, onRefund }: Ti
   )
 
   const onRefundConfirm = async () => {
-    await cancelMutation.mutateAsync(orderId)
-    onRefund(ticket._id)
+    await cancelMutation.mutateAsync(ticket.orderId)
+
+    onRefund(ticket.orderId)
     setIsRefundOpen(false)
   }
 
@@ -84,7 +85,7 @@ export const TicketCard = ({ ticket, orderId, number, isRefunded, onRefund }: Ti
           className="w-full font-medium"
           onClick={() => setIsRefundOpen(true)}
         >
-          Вернуть билет
+          Вернуть заказ
         </Button>
       )}
 
@@ -94,7 +95,9 @@ export const TicketCard = ({ ticket, orderId, number, isRefunded, onRefund }: Ti
             <div className="flex size-16 items-center justify-center rounded-full bg-primary text-primary-fg">
               <CircleHelpIcon size={28} />
             </div>
-            <DialogTitle className="text-center">Вы уверены, что хотите вернуть билет?</DialogTitle>
+            <DialogTitle className="text-center">
+              Вернуть заказ и все входящие в него билеты?
+            </DialogTitle>
           </div>
 
           {cancelMutation.error && (
