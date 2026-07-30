@@ -32,7 +32,7 @@ const MaskedCardField: FC<MaskedCardFieldProps> = ({
 
   const masked = useMask(mask, {
     showMask: 'never',
-    initialValue: defaultValue,
+    initialValue: field.value,
     onChangeRaw: (_, maskedValue) => field.onChange(maskedValue)
   })
 

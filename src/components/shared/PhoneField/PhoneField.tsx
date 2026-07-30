@@ -1,6 +1,7 @@
 'use client'
 
 import { TextField } from '@/components/ui'
+import { toRuPhoneValue } from '@/lib/format-phone'
 import { useMask } from '@siberiacancode/reactuse'
 import { useController, type Control, type FieldPath, type FieldValues } from 'react-hook-form'
 
@@ -25,12 +26,12 @@ export const PhoneField = <TFieldValues extends FieldValues>({
   const { field } = useController({
     name,
     control,
-    defaultValue: (defaultValue ?? '') as never
+    defaultValue: toRuPhoneValue(defaultValue ?? '') as never
   })
 
   const phoneMask = useMask(RU_PHONE_MASK, {
     showMask: 'never',
-    initialValue: defaultValue,
+    initialValue: String(field.value ?? ''),
     tokens: RU_PHONE_TOKENS,
     onChangeRaw: rawValue => field.onChange(rawValue ? `8${rawValue}` : '')
   })

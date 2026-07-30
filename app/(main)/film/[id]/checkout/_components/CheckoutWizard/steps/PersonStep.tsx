@@ -5,7 +5,7 @@ import type { FC } from 'react'
 import { PhoneField } from '@/components/shared'
 import { Button, TextField } from '@/components/ui'
 import { useUser } from '@/contexts/user/useUser'
-import { toRuPhoneDigits } from '@/lib/format-phone'
+import { toRuPhoneValue } from '@/lib/format-phone'
 import { personSchema, type PersonFormValues } from '@/schemas'
 import { valibotResolver } from '@hookform/resolvers/valibot'
 import { useForm } from 'react-hook-form'
@@ -18,7 +18,7 @@ export const PersonStep: FC = () => {
   const { user } = useUser()
   const { person, stepper, onPersonChange, onPersonSubmit } = useCheckout()
 
-  const phoneDefault = person?.phone ?? (user ? toRuPhoneDigits(user.phone) : '')
+  const phoneDefault = toRuPhoneValue(person?.phone ?? user?.phone ?? '')
 
   const {
     register,

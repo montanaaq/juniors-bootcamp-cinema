@@ -6,3 +6,9 @@ export const formatPhone = (phone: string) => {
 }
 
 export const toRuPhoneDigits = (phone: string) => phone.replace(/\D/g, '').slice(-10)
+
+export const toRuPhoneValue = (phone: string) => {
+  const localDigits = toRuPhoneDigits(phone)
+
+  return localDigits ? `8${localDigits}` : ''
+}
