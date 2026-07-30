@@ -19,9 +19,9 @@ export const metadata: Metadata = {
   robots: { index: false, follow: false }
 }
 
-const OrderPage: FC<OrderPageProps> = async ({ params }) => {
-  const { id } = await params
-  const order = await getOrderByIdOrNotFound(id)
+const OrderPage: FC<OrderPageProps> = async props => {
+  const params = await props.params
+  const order = await getOrderByIdOrNotFound(params.id)
 
   const tickets = order.tickets
   const seance = tickets[0]?.seance

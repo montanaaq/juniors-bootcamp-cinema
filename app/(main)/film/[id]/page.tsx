@@ -10,9 +10,9 @@ interface FilmPageProps {
   params: Promise<{ id: string }>
 }
 
-export async function generateMetadata({ params }: FilmPageProps): Promise<Metadata> {
-  const { id } = await params
-  const film = await getFilmByIdOrNotFound(id)
+export async function generateMetadata(props: FilmPageProps): Promise<Metadata> {
+  const params = await props.params
+  const film = await getFilmByIdOrNotFound(params.id)
 
   return {
     title: film.name,
@@ -25,9 +25,9 @@ export async function generateMetadata({ params }: FilmPageProps): Promise<Metad
   }
 }
 
-const FilmPage: FC<FilmPageProps> = async ({ params }) => {
-  const { id } = await params
-  const film = await getFilmByIdOrNotFound(id)
+const FilmPage: FC<FilmPageProps> = async props => {
+  const params = await props.params
+  const film = await getFilmByIdOrNotFound(params.id)
   const filmSchedule = await getFilmScheduleById(film.id)
 
   return (

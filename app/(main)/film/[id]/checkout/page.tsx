@@ -14,26 +14,26 @@ interface CheckoutPageProps {
   }>
 }
 
-export async function generateMetadata({ params }: CheckoutPageProps): Promise<Metadata> {
-  const { id } = await params
-  const film = await getFilmByIdOrNotFound(id)
+export async function generateMetadata(props: CheckoutPageProps): Promise<Metadata> {
+  const params = await props.params
+  const film = await getFilmByIdOrNotFound(params.id)
 
   return { title: `Оформление билетов — ${film.name}` }
 }
 
-const CheckoutPage = async ({ params, searchParams }: CheckoutPageProps) => {
-  const { id } = await params
-  const { date, time, hall } = await searchParams
+const CheckoutPage = async (props: CheckoutPageProps) => {
+  const params = await props.params
+  const searchParams = await props.searchParams
 
-  if (!date || !time || !hall) {
+  if (!searchParams.date || !searchParams.time || !searchParams.hall) {
     notFound()
   }
 
-  const film = await getFilmByIdOrNotFound(id)
+  const film = await getFilmByIdOrNotFound(params.id)
   const filmSchedule = await getFilmScheduleById(film.id)
-  const selectedSchedule = filmSchedule.find(schedule => schedule.date === date)
+  const selectedSchedule = filmSchedule.find(schedule => schedule.date === searchParams.date)
   const selectedSlot = selectedSchedule?.seances.find(
-    seance => seance.time === time && seance.hall.name === hall
+    seance => seance.time === searchParams.time && seance.hall.name === searchParams.hall
   )
 
   if (!selectedSlot) {
@@ -42,7 +42,7 @@ const CheckoutPage = async ({ params, searchParams }: CheckoutPageProps) => {
 
   return (
     <main className="flex flex-col gap-8 pt-10">
-      <CheckoutWizard film={film} selectedDate={date} selectedSlot={selectedSlot} />
+      <CheckoutWizard film={film} selectedDate={searchParams.date} selectedSlot={selectedSlot} />
     </main>
   )
 }
