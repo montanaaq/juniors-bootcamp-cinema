@@ -1,8 +1,8 @@
 import type { DebitCardFormValues } from '@/schemas'
+import type { FC } from 'react'
 
 import { TextField } from '@/components/ui'
 import { useMask } from '@siberiacancode/reactuse'
-import { useEffect, type FC } from 'react'
 import { useController, type Control } from 'react-hook-form'
 
 interface MaskedCardFieldProps {
@@ -33,19 +33,12 @@ const MaskedCardField: FC<MaskedCardFieldProps> = ({
   const masked = useMask(mask, {
     showMask: 'never',
     initialValue: defaultValue,
-    beforeMaskedChange: ({ nextState }) => ({
-      ...nextState,
-      selection: { start: nextState.value.length, end: nextState.value.length }
-    })
+    onChangeRaw: (_, maskedValue) => field.onChange(maskedValue)
   })
 
-  const value = masked.watch()
-
-  useEffect(() => {
-    if (value.value !== field.value) {
-      field.onChange(value.value)
-    }
-  }, [value.value])
+  const { ref: maskRef, ...maskedField } = masked.register({
+    onBlur: field.onBlur
+  })
 
   return (
     <TextField
@@ -53,10 +46,10 @@ const MaskedCardField: FC<MaskedCardFieldProps> = ({
       placeholder={placeholder}
       error={error}
       inputMode="numeric"
-      {...masked.register()}
-      onBlur={event => {
-        masked.register().onBlur?.(event)
-        field.onBlur()
+      {...maskedField}
+      ref={element => {
+        maskRef(element)
+        field.ref(element)
       }}
     />
   )
