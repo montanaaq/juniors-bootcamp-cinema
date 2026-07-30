@@ -7,27 +7,23 @@ import { formatPhone } from '@/lib/format-phone'
 import { updateProfile } from '@/lib/update-profile'
 import { profileUpdateSchema, toPersonFormValues, type ProfileUpdateValues } from '@/schemas'
 import { valibotResolver } from '@hookform/resolvers/valibot'
-import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 
 const ProfilePage = () => {
   const { user, setUser } = useUser()
-  const [isSubmitting, setIsSubmitting] = useState(false)
 
   const {
     register,
     handleSubmit,
-    formState: { errors }
+    formState: { errors, isSubmitting }
   } = useForm<ProfileUpdateValues>({
     resolver: valibotResolver(profileUpdateSchema),
     values: user ? toPersonFormValues(user) : undefined
   })
 
   const onSubmit = async (values: ProfileUpdateValues) => {
-    setIsSubmitting(true)
     const data = await updateProfile(user!.phone, values)
     if (data) setUser({ ...user!, ...data })
-    setIsSubmitting(false)
   }
 
   return (
