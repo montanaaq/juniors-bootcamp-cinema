@@ -168,7 +168,7 @@ export const useCheckoutWizard = (
       }
 
       checkoutStorage.remove()
-      router.push(`/order/${result.order._id}`)
+      router.replace(`/orders/${result.order._id}`)
     } catch (error) {
       const response = (error as { response?: { data?: PaymentResponse } })?.response?.data
 

@@ -27,11 +27,18 @@ async function proxy(request: NextRequest) {
 
   try {
     const response = await fetch(targetUrl, fetchOptions)
+    const responseHeaders = new Headers(response.headers)
+
+    // fetch() decodes compressed upstream responses, so these headers no longer
+    // describe the body forwarded to the browser.
+    responseHeaders.delete('content-encoding')
+    responseHeaders.delete('content-length')
+    responseHeaders.delete('transfer-encoding')
 
     return new Response(response.body, {
       status: response.status,
       statusText: response.statusText,
-      headers: new Headers(response.headers)
+      headers: responseHeaders
     })
   } catch {
     return new Response(JSON.stringify({ error: 'Bad Gateway' }), {
