@@ -11,6 +11,7 @@ import { valibotResolver } from '@hookform/resolvers/valibot'
 import { useForm } from 'react-hook-form'
 
 import { useCheckout } from '../../../_contexts/useCheckout'
+import { STEPS } from '../constants'
 
 const PERSON_STEP_FORM_ID = 'person-step-form'
 
@@ -38,7 +39,7 @@ const PersonStep: FC = () => {
     }
   })
 
-  if (stepper.currentStep !== 3) return null
+  if (stepper.currentStep !== STEPS.PERSON_STEP) return null
 
   return (
     <form

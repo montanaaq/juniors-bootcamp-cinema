@@ -9,6 +9,7 @@ import { useForm } from 'react-hook-form'
 
 import { useCheckout } from '../../../_contexts/useCheckout'
 import MaskedCardField from '../components/MaskedCardField'
+import { STEPS } from '../constants'
 
 const PAYMENT_STEP_FORM_ID = 'payment-step-form'
 
@@ -26,7 +27,7 @@ const PaymentStep: FC = () => {
     resolver: valibotResolver(debitCardSchema)
   })
 
-  if (stepper.currentStep !== 4) return null
+  if (stepper.currentStep !== STEPS.PAYMENT_STEP) return null
 
   return (
     <form id={PAYMENT_STEP_FORM_ID} onSubmit={handleSubmit(onPaymentSubmit)} className="flex gap-8">

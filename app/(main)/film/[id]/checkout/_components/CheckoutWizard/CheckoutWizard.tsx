@@ -5,6 +5,7 @@ import type { Film, FilmScheduleSeance } from '@generated/api'
 import CheckoutProvider from '../../_contexts/CheckoutProvider'
 import { useCheckout } from '../../_contexts/useCheckout'
 import StepperNav from './components/StepperNav'
+import { STEPS } from './constants'
 import PaymentStep from './steps/PaymentStep'
 import PersonStep from './steps/PersonStep'
 import SeatsStep from './steps/SeatsStep/SeatsStep'
@@ -30,10 +31,10 @@ const CheckoutSteps = () => {
   return (
     <section className="flex w-full flex-col gap-8">
       <StepperNav />
-      {stepper.currentStep === 1 && <SeatsStep />}
-      {stepper.currentStep === 2 && <TicketsSummaryStep />}
-      {stepper.currentStep === 3 && <PersonStep />}
-      {stepper.currentStep === 4 && <PaymentStep />}
+      {stepper.currentStep === STEPS.SEATS_STEP && <SeatsStep />}
+      {stepper.currentStep === STEPS.TICKETS_STEP && <TicketsSummaryStep />}
+      {stepper.currentStep === STEPS.PERSON_STEP && <PersonStep />}
+      {stepper.currentStep === STEPS.PAYMENT_STEP && <PaymentStep />}
     </section>
   )
 }

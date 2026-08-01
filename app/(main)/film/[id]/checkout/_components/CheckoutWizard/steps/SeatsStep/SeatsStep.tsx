@@ -12,7 +12,7 @@ import type { Seat } from '@generated/api'
 
 import { useCheckout } from '../../../../_contexts/useCheckout'
 import SummaryField from '../../components/SummaryField'
-import { HELP_LABELS } from '../../constants'
+import { HELP_LABELS, STEPS } from '../../constants'
 import { useSeatsStep } from './useSeatsStep'
 
 const SeatsStep = () => {
@@ -53,7 +53,7 @@ const SeatsStep = () => {
     { label: 'Итого', value: `${totalPrice} ₽` }
   ]
 
-  if (stepper.currentStep !== 1) return null
+  if (stepper.currentStep !== STEPS.SEATS_STEP) return null
 
   return (
     <div className="flex justify-between gap-4">

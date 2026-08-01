@@ -9,12 +9,13 @@ import { useIntl } from 'react-intl'
 
 import { useCheckout } from '../../../_contexts/useCheckout'
 import SummaryField from '../components/SummaryField'
+import { STEPS } from '../constants'
 
 const TicketsSummaryStep: FC = () => {
   const { film, selectedDate, selectedSlot, tickets, totalPrice, stepper } = useCheckout()
   const intl = useIntl()
 
-  if (stepper.currentStep !== 2) return null
+  if (stepper.currentStep !== STEPS.TICKETS_STEP) return null
 
   return (
     <div className="w-[60%] flex flex-col gap-4">
@@ -26,6 +27,7 @@ const TicketsSummaryStep: FC = () => {
       />
       <SummaryField
         label="Зал"
+        // TODO: поправить i18n format
         value={`${intl.formatMessage({
           id: `hall.name.${selectedSlot.hall.name}`
         })}`}

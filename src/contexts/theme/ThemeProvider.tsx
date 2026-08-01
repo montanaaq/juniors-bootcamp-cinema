@@ -1,6 +1,6 @@
 'use client'
 
-import type { Theme } from './ThemeContext'
+import type { ActiveTheme, Theme } from './ThemeContext'
 import type { ReactNode } from 'react'
 
 import { THEME_STORAGE_KEY } from '@/constants'
@@ -8,11 +8,7 @@ import { getCookie, setCookie, usePreferredColorScheme } from '@siberiacancode/r
 import { useLayoutEffect, useMemo, useState } from 'react'
 
 import { ThemeContext } from './ThemeContext'
-
-const getSystemTheme = () => {
-  if (typeof window === 'undefined') return 'light'
-  return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
-}
+import { getSystemTheme } from './utils'
 
 const getTheme = (theme: Theme): 'dark' | 'light' => {
   if (theme === 'system') return getSystemTheme()
@@ -27,7 +23,7 @@ export const ThemeProvider = ({ children }: ThemeProviderProps) => {
   const colorScheme = usePreferredColorScheme()
 
   const [theme, setTheme] = useState<Theme>('system')
-  const [activeTheme, setActiveTheme] = useState<'dark' | 'light'>('light')
+  const [activeTheme, setActiveTheme] = useState<ActiveTheme>('light')
 
   useLayoutEffect(() => {
     const storedTheme = (getCookie(THEME_STORAGE_KEY) as Theme | undefined) ?? 'system'

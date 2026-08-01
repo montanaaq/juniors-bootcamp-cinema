@@ -13,13 +13,13 @@ import Link from 'next/link'
 import { Fragment } from 'react'
 
 import { useCheckout } from '../../../_contexts/useCheckout'
-import { STEPS } from '../constants'
+import { STEPS_LABELS } from '../constants'
 
 const StepperNav = () => {
   const { stepper } = useCheckout()
   const stepId = stepper.currentStep
-  const currentStepTitle = STEPS.find(step => step.id === stepId)?.label
-  const visibleSTEPS = STEPS.filter(step => step.id <= stepId)
+  const currentStepTitle = STEPS_LABELS.find(step => step.id === stepId)?.label
+  const visibleSteps = STEPS_LABELS.filter(step => step.id <= stepId)
 
   return (
     <div className="flex flex-col">
@@ -31,7 +31,7 @@ const StepperNav = () => {
             </Link>
           </BreadcrumbItem>
           <BreadcrumbSeparator />
-          {visibleSTEPS.map((step, index) => (
+          {visibleSteps.map((step, index) => (
             <Fragment key={step.id}>
               <BreadcrumbItem className="text-base">
                 {step.id === stepId ? (
@@ -48,7 +48,7 @@ const StepperNav = () => {
                   </BreadcrumbLink>
                 )}
               </BreadcrumbItem>
-              {index < visibleSTEPS.length - 1 && <BreadcrumbSeparator />}
+              {index < visibleSteps.length - 1 && <BreadcrumbSeparator />}
             </Fragment>
           ))}
         </BreadcrumbList>
@@ -58,9 +58,13 @@ const StepperNav = () => {
         <h1 className="text-3xl font-extrabold">{currentStepTitle}</h1>
         <div>
           <p className="text-base font-semibold">
-            Шаг {stepId} из {STEPS.length}
+            Шаг {stepId} из {STEPS_LABELS.length}
           </p>
-          <progress value={stepId} max={STEPS.length} className="stepper-progress-bar"></progress>
+          <progress
+            value={stepId}
+            max={STEPS_LABELS.length}
+            className="stepper-progress-bar"
+          ></progress>
         </div>
       </div>
     </div>

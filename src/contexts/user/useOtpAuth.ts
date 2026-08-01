@@ -9,8 +9,10 @@ import { postApiAuthOtp } from '@generated/api'
 import { signInAction } from './actions'
 import { useUser } from './useUser'
 
-const PHONE_STEP = 1
-const CODE_STEP = 2
+const STEPS = {
+  PHONE_STEP: 1,
+  CODE_STEP: 2
+}
 
 const OTP_STORAGE_KEY = 'otp_auth_state'
 
@@ -41,7 +43,7 @@ export const useOtpAuth = () => {
 
     setPhone(stored.phone)
     setRetryDelay(remainingDelay)
-    stepper.set(CODE_STEP)
+    stepper.set(STEPS.CODE_STEP)
   })
 
   const requestOtp = async (nextPhone: string): Promise<OtpResponse> => {
@@ -50,7 +52,7 @@ export const useOtpAuth = () => {
     if (result.success) {
       setPhone(nextPhone)
       setRetryDelay(result.retryDelay)
-      stepper.set(CODE_STEP)
+      stepper.set(STEPS.CODE_STEP)
 
       otpStorage.set({
         phone: nextPhone,
@@ -77,7 +79,7 @@ export const useOtpAuth = () => {
 
   const backToPhone = () => {
     otpStorage.remove()
-    stepper.set(PHONE_STEP)
+    stepper.set(STEPS.PHONE_STEP)
   }
 
   return {

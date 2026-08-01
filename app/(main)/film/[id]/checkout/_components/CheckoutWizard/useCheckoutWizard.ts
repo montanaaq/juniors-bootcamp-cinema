@@ -14,8 +14,7 @@ import type {
 } from '@generated/api'
 import { postApiCinemaPayment } from '@generated/api'
 
-const CHECKOUT_STEPS_COUNT = 4
-const FIRST_CHECKOUT_STEP = 1
+import { STEPS } from './constants'
 
 interface CheckoutState {
   step: number
@@ -26,7 +25,7 @@ interface CheckoutState {
 }
 
 const INITIAL_CHECKOUT_STATE: CheckoutState = {
-  step: FIRST_CHECKOUT_STEP,
+  step: STEPS.SEATS_STEP,
   tickets: [],
   selectedSeats: [],
   person: null,
@@ -38,7 +37,7 @@ export const useCheckoutWizard = (
   selectedDate: string,
   selectedSlot: FilmScheduleSeance
 ) => {
-  const stepper = useStep(CHECKOUT_STEPS_COUNT)
+  const stepper = useStep(4)
   const router = useRouter()
   const storageKey = [
     'checkout',
@@ -77,7 +76,7 @@ export const useCheckoutWizard = (
 
   const nextStep = () => setStep(stepper.currentStep + 1)
   const previousStep = () => setStep(stepper.currentStep - 1)
-  const resetSteps = () => setStep(FIRST_CHECKOUT_STEP)
+  const resetSteps = () => setStep(STEPS.SEATS_STEP)
 
   const persistedStepper = {
     ...stepper,
@@ -99,7 +98,7 @@ export const useCheckoutWizard = (
     stepper.next()
     persistCheckout({
       ...checkoutState,
-      step: Math.min(stepper.currentStep + 1, CHECKOUT_STEPS_COUNT),
+      step: Math.min(stepper.currentStep + 1, 4),
       tickets: nextTickets,
       selectedSeats: nextSeats
     })
@@ -113,7 +112,7 @@ export const useCheckoutWizard = (
     stepper.next()
     persistCheckout({
       ...checkoutState,
-      step: Math.min(stepper.currentStep + 1, CHECKOUT_STEPS_COUNT),
+      step: Math.min(stepper.currentStep + 1, 4),
       person: values
     })
   }
@@ -137,7 +136,7 @@ export const useCheckoutWizard = (
       stepper.set(1)
       persistCheckout({
         ...checkoutState,
-        step: FIRST_CHECKOUT_STEP,
+        step: STEPS.SEATS_STEP,
         tickets: availableTickets,
         selectedSeats: availableSeats,
         conflictTickets: paidSeats
