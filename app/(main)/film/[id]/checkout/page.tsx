@@ -3,7 +3,7 @@ import type { Metadata } from 'next'
 import { getFilmByIdOrNotFound, getFilmScheduleById } from '@/lib'
 import { notFound } from 'next/navigation'
 
-import { CheckoutWizard } from './_components/CheckoutWizard/CheckoutWizard'
+import CheckoutWizard from './_components/CheckoutWizard/CheckoutWizard'
 
 interface CheckoutPageProps {
   params: Promise<{ id: string }>

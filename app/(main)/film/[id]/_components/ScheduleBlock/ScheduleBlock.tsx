@@ -10,7 +10,7 @@ import { useIntl } from 'react-intl'
 
 import type { FilmSchedule, SelectedSlot } from '@generated/api'
 
-import { ScheduleNotFound } from './NotFound'
+import ScheduleNotFound from './NotFound'
 import { formatScheduleDate, groupSeancesByHall } from './utils'
 
 interface FilmScheduleProps {
@@ -18,12 +18,17 @@ interface FilmScheduleProps {
   filmSchedule: FilmSchedule[]
 }
 
-export const ScheduleBlock: FC<FilmScheduleProps> = ({ filmId, filmSchedule }) => {
+const ScheduleBlock: FC<FilmScheduleProps> = ({ filmId, filmSchedule }) => {
   filmSchedule = filmSchedule.slice(0, 4)
 
   const intl = useIntl()
-  const [selectedDate, setSelectedDate] = useState(filmSchedule[0]?.date)
+  const [selectedDateOverride, setSelectedDateOverride] = useState<string | null>(null)
   const [selectedSlot, setSelectedSlot] = useState<SelectedSlot | null>(null)
+  const selectedDate =
+    selectedDateOverride !== null &&
+    filmSchedule.some(schedule => schedule.date === selectedDateOverride)
+      ? selectedDateOverride
+      : filmSchedule[0]?.date
 
   const selectedSchedule =
     filmSchedule.find(schedule => schedule.date === selectedDate) ?? filmSchedule[0]
@@ -31,7 +36,7 @@ export const ScheduleBlock: FC<FilmScheduleProps> = ({ filmId, filmSchedule }) =
   const hallGroups = groupSeancesByHall(selectedSchedule)
 
   const onDateChange = (date: string) => {
-    setSelectedDate(date)
+    setSelectedDateOverride(date)
     setSelectedSlot(null)
   }
 
@@ -124,3 +129,5 @@ export const ScheduleBlock: FC<FilmScheduleProps> = ({ filmId, filmSchedule }) =
     </section>
   )
 }
+
+export default ScheduleBlock

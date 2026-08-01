@@ -1,10 +1,9 @@
 'use client'
 
+import { formatSelectedSeatsLabel } from '@/lib/format-selected-seats-label'
 import { useMap } from '@siberiacancode/reactuse'
 
 import type { CreatePaymentTicketsDto, FilmHall, Seat } from '@generated/api'
-
-import { formatSelectedSeatsLabel } from '../../utils'
 
 interface UseSeatsStepParams {
   hall: FilmHall

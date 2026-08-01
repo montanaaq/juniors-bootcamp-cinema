@@ -1,6 +1,5 @@
 'use client'
 
-import { formatDate } from '@/app/(main)/film/[id]/checkout/_components/CheckoutWizard/utils'
 import {
   Button,
   Dialog,
@@ -9,6 +8,7 @@ import {
   DialogFooter,
   DialogTitle
 } from '@/components/ui'
+import { formatDate } from '@/lib/format-date'
 import { cn } from '@/lib/utils'
 import { useMutation } from '@siberiacancode/reactuse'
 import { BanIcon, CircleCheckIcon, CircleHelpIcon, TicketIcon } from 'lucide-react'

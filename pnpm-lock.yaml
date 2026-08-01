@@ -54,12 +54,6 @@ importers:
         specifier: ^1.4.2
         version: 1.4.2(typescript@5.9.3)
     devDependencies:
-      '@montanaaq/oxfmt':
-        specifier: ^0.1.1
-        version: 0.1.1(oxfmt@0.58.0)
-      '@montanaaq/oxlint':
-        specifier: ^0.1.1
-        version: 0.1.1(oxlint@1.73.0)
       '@siberiacancode/apicraft':
         specifier: ^1.12.0
         version: 1.12.0(@faker-js/faker@10.5.0)(@siberiacancode/fetches@1.14.3)(@tanstack/react-query@5.101.1(react@19.2.7))(axios@1.18.1(debug@4.4.3))(ofetch@1.5.1)
@@ -490,16 +484,6 @@ packages:
     peerDependenciesMeta:
       '@cfworker/json-schema':
         optional: true
-
-  '@montanaaq/oxfmt@0.1.1':
-    resolution: {integrity: sha512-lYJKBHCv8y3/vJ4reQcTUoonjExXdMKpjiRKLdOuLIvGBf2YcRDpCYU60dLGeQQMHVShfte/2EQujHBR7BkSSw==}
-    peerDependencies:
-      oxfmt: '*'
-
-  '@montanaaq/oxlint@0.1.1':
-    resolution: {integrity: sha512-6a/G+ZdH5S0/fydLp7kaMWWxlxjUQwehUfSq0Qwg3MOUD4W4hW8DW+NEMQBYcdBvWrZsYwbX6+zx9dUlHJzP5Q==}
-    peerDependencies:
-      oxlint: '*'
 
   '@next/env@16.2.10':
     resolution: {integrity: sha512-zLPxg9M0MEHmygpj5OuxjQ+vHMiy/K7cSp74G8ecYolmgUWw0RwN02tF56npup/+qaI8JB97hQgS/r2Hb6QwVA==}
@@ -3804,14 +3788,6 @@ snapshots:
       zod-to-json-schema: 3.25.2(zod@3.25.76)
     transitivePeerDependencies:
       - supports-color
-
-  '@montanaaq/oxfmt@0.1.1(oxfmt@0.58.0)':
-    dependencies:
-      oxfmt: 0.58.0
-
-  '@montanaaq/oxlint@0.1.1(oxlint@1.73.0)':
-    dependencies:
-      oxlint: 1.73.0
 
   '@next/env@16.2.10': {}
 

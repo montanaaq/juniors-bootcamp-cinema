@@ -3,13 +3,14 @@
 import type { FC } from 'react'
 
 import { Button } from '@/components/ui'
+import { formatDate } from '@/lib/format-date'
+import { formatSelectedSeatsLabel } from '@/lib/format-selected-seats-label'
 import { useIntl } from 'react-intl'
 
-import { useCheckout } from '../../../_contexts'
+import { useCheckout } from '../../../_contexts/useCheckout'
 import SummaryField from '../components/SummaryField'
-import { formatSelectedSeatsLabel, formatDate } from '../utils'
 
-export const TicketsSummaryStep: FC = () => {
+const TicketsSummaryStep: FC = () => {
   const { film, selectedDate, selectedSlot, tickets, totalPrice, stepper } = useCheckout()
   const intl = useIntl()
 
@@ -48,3 +49,5 @@ export const TicketsSummaryStep: FC = () => {
     </div>
   )
 }
+
+export default TicketsSummaryStep

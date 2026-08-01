@@ -4,7 +4,7 @@ import type { FC } from 'react'
 import { getFilmByIdOrNotFound, getFilmScheduleById } from '@/lib'
 
 import FilmAbout from './_components/FilmAbout/FilmAbout'
-import { ScheduleBlock } from './_components/ScheduleBlock/ScheduleBlock'
+import ScheduleBlock from './_components/ScheduleBlock/ScheduleBlock'
 
 interface FilmPageProps {
   params: Promise<{ id: string }>

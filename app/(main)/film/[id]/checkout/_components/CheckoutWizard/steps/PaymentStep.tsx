@@ -7,15 +7,15 @@ import { type DebitCardFormValues, debitCardSchema } from '@/schemas'
 import { valibotResolver } from '@hookform/resolvers/valibot'
 import { useForm } from 'react-hook-form'
 
-import { useCheckout } from '../../../_contexts'
+import { useCheckout } from '../../../_contexts/useCheckout'
 import MaskedCardField from '../components/MaskedCardField'
 
-export const PAYMENT_STEP_FORM_ID = 'payment-step-form'
+const PAYMENT_STEP_FORM_ID = 'payment-step-form'
 
 const CARD_PAN_MASK = '9999 9999 9999 9999'
 const CARD_EXPIRE_MASK = '99/99'
 
-export const PaymentStep: FC = () => {
+const PaymentStep: FC = () => {
   const { stepper, paymentMutation, paymentError, onPaymentSubmit } = useCheckout()
   const {
     control,
@@ -82,3 +82,5 @@ export const PaymentStep: FC = () => {
     </form>
   )
 }
+
+export default PaymentStep

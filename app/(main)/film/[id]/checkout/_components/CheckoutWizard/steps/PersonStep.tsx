@@ -10,11 +10,11 @@ import { personSchema, type PersonFormValues } from '@/schemas'
 import { valibotResolver } from '@hookform/resolvers/valibot'
 import { useForm } from 'react-hook-form'
 
-import { useCheckout } from '../../../_contexts'
+import { useCheckout } from '../../../_contexts/useCheckout'
 
-export const PERSON_STEP_FORM_ID = 'person-step-form'
+const PERSON_STEP_FORM_ID = 'person-step-form'
 
-export const PersonStep: FC = () => {
+const PersonStep: FC = () => {
   const { user } = useUser()
   const { person, stepper, onPersonChange, onPersonSubmit } = useCheckout()
 
@@ -104,3 +104,5 @@ export const PersonStep: FC = () => {
     </form>
   )
 }
+
+export default PersonStep

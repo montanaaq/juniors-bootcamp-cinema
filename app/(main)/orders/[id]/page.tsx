@@ -3,12 +3,12 @@ import type { FC } from 'react'
 
 import { Button } from '@/components/ui'
 import { getOrderByIdOrNotFound } from '@/lib'
+import { formatDate } from '@/lib/format-date'
+import { formatSelectedSeatsLabel } from '@/lib/format-selected-seats-label'
 import { CheckIcon } from 'lucide-react'
 import Link from 'next/link'
 
 import SummaryField from '../../film/[id]/checkout/_components/CheckoutWizard/components/SummaryField'
-import { formatSelectedSeatsLabel } from '../../film/[id]/checkout/_components/CheckoutWizard/utils'
-import { formatDate } from '../../film/[id]/checkout/_components/CheckoutWizard/utils/format-date'
 
 interface OrderPageProps {
   params: Promise<{ id: string }>

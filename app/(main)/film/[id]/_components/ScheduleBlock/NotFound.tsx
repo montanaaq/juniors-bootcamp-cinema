@@ -1,4 +1,4 @@
-export const ScheduleNotFound = () => {
+const ScheduleNotFound = () => {
   return (
     <section className="rounded-16 border border-border-hard bg-background p-6 dark:border-border-soft">
       <h2 className="font-extrabold text-3xl leading-8">Расписание</h2>

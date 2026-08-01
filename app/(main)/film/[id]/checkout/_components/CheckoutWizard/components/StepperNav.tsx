@@ -12,10 +12,10 @@ import { HomeIcon } from 'lucide-react'
 import Link from 'next/link'
 import { Fragment } from 'react'
 
-import { useCheckout } from '../../../_contexts'
-import { STEPS } from '../constants/steps.const'
+import { useCheckout } from '../../../_contexts/useCheckout'
+import { STEPS } from '../constants'
 
-export const StepperNav = () => {
+const StepperNav = () => {
   const { stepper } = useCheckout()
   const stepId = stepper.currentStep
   const currentStepTitle = STEPS.find(step => step.id === stepId)?.label
@@ -66,3 +66,5 @@ export const StepperNav = () => {
     </div>
   )
 }
+
+export default StepperNav

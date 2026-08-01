@@ -2,12 +2,13 @@
 
 import type { Film, FilmScheduleSeance } from '@generated/api'
 
-import { CheckoutProvider, useCheckout } from '../../_contexts'
-import { StepperNav } from './components/StepperNav'
-import { PaymentStep } from './steps/PaymentStep'
-import { PersonStep } from './steps/PersonStep'
-import { SeatsStep } from './steps/SeatsStep/SeatsStep'
-import { TicketsSummaryStep } from './steps/TicketsSummaryStep'
+import CheckoutProvider from '../../_contexts/CheckoutProvider'
+import { useCheckout } from '../../_contexts/useCheckout'
+import StepperNav from './components/StepperNav'
+import PaymentStep from './steps/PaymentStep'
+import PersonStep from './steps/PersonStep'
+import SeatsStep from './steps/SeatsStep/SeatsStep'
+import TicketsSummaryStep from './steps/TicketsSummaryStep'
 
 interface CheckoutWizardProps {
   film: Film
@@ -15,7 +16,7 @@ interface CheckoutWizardProps {
   selectedSlot: FilmScheduleSeance
 }
 
-export const CheckoutWizard = ({ film, selectedDate, selectedSlot }: CheckoutWizardProps) => {
+const CheckoutWizard = ({ film, selectedDate, selectedSlot }: CheckoutWizardProps) => {
   return (
     <CheckoutProvider film={film} selectedDate={selectedDate} selectedSlot={selectedSlot}>
       <CheckoutSteps />
@@ -36,3 +37,5 @@ const CheckoutSteps = () => {
     </section>
   )
 }
+
+export default CheckoutWizard

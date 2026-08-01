@@ -14,7 +14,7 @@ interface CheckoutProviderProps {
   selectedSlot: FilmScheduleSeance
 }
 
-export const CheckoutProvider = ({
+const CheckoutProvider = ({
   children,
   film,
   selectedDate,
@@ -24,3 +24,5 @@ export const CheckoutProvider = ({
 
   return <CheckoutContext value={checkout}>{children}</CheckoutContext>
 }
+
+export default CheckoutProvider

@@ -1,6 +1,7 @@
 'use client'
 
 import { Button, Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui'
+import { formatDate } from '@/lib/format-date'
 import { cn } from '@/lib/utils'
 import { TicketIcon, XIcon } from 'lucide-react'
 import Link from 'next/link'
@@ -9,13 +10,12 @@ import { useIntl } from 'react-intl'
 
 import type { Seat } from '@generated/api'
 
-import { useCheckout } from '../../../../_contexts'
+import { useCheckout } from '../../../../_contexts/useCheckout'
 import SummaryField from '../../components/SummaryField'
-import { HELP_LABELS } from '../../constants/help-labels.const'
-import { formatDate } from '../../utils'
+import { HELP_LABELS } from '../../constants'
 import { useSeatsStep } from './useSeatsStep'
 
-export const SeatsStep = () => {
+const SeatsStep = () => {
   const {
     film,
     selectedDate,
@@ -168,3 +168,5 @@ export const SeatsStep = () => {
     </div>
   )
 }
+
+export default SeatsStep

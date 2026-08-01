@@ -4,7 +4,8 @@ import { NextRequest } from 'next/server'
 
 async function proxy(request: NextRequest) {
   const searchParams = request.nextUrl.searchParams.toString()
-  const targetUrl = new URL(request.nextUrl.pathname, process.env.BACKEND_URL)
+  const targetUrl = new URL('/', process.env.BACKEND_URL)
+  targetUrl.pathname = request.nextUrl.pathname
   targetUrl.search = searchParams
 
   const headers = new Headers(request.headers)
@@ -16,8 +17,7 @@ async function proxy(request: NextRequest) {
 
   const fetchOptions: RequestInit & { duplex?: 'half' } = {
     method: request.method,
-    headers,
-    redirect: 'manual'
+    headers
   }
 
   if (request.method !== 'GET' && request.method !== 'HEAD') {
@@ -26,7 +26,10 @@ async function proxy(request: NextRequest) {
   }
 
   try {
-    const response = await fetch(targetUrl, fetchOptions)
+    const response = await fetch(targetUrl, {
+      ...fetchOptions,
+      redirect: 'manual'
+    })
     const responseHeaders = new Headers(response.headers)
 
     // fetch() decodes compressed upstream responses, so these headers no longer

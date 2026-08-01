@@ -29,8 +29,6 @@
     "valibot": "^1.4.2"
   },
   "devDependencies": {
-    "@montanaaq/oxfmt": "^0.1.1",
-    "@montanaaq/oxlint": "^0.1.1",
     "@siberiacancode/apicraft": "^1.12.0",
     "@tailwindcss/postcss": "^4.3.2",
     "@types/node": "^26.1.1",
